@@ -1,0 +1,12 @@
+<button class="btn btnDark close" ng-click="closeOverlay($event)"></button>
+<h3>Add to playlist</h3>
+<input id="newPlaylistName" type="text" ng-model="playlistName" ng-keypress="addTrackToNewPlaylist(playlistName, $event)" title="add to a new playlist (type and press enter)" placeholder="add to a new playlist">
+<ul id="playlistsForSaving" class="dropdown acc1">
+    <li ng-click="addTrackToNewPlaylist('My first nodspot playlist', $event)" ng-show="myFirstPlaylistVisibility">My first nodspot playlist</li>
+    <li ng-repeat="playlist in playlists"
+        ng-click="addTrackToPlaylist($index, playlist.state, playlist.playlist_id, $event)"
+        ng-class="{notSaved: playlist.state == 'notSaved', saved: playlist.state == 'saved'}">
+        {{playlist.playlist_name}}
+        <playlist-Item-Options index="$index" playlist="playlist" rename-Playlist="renamePlaylist" delete-Playlist="deletePlaylist" playlist-Edit-Mode="playlistEditMode"></playlist-Item-Options>
+    </li>
+</ul>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" class="darkTheme">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Connect with YouTube</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body onload="window.opener.setTimeout(function(){
+    var token = window.location.hash,
+        start = token.search('='),
+        end = token.search('&');
+        token = token.substring(start + 1, end);
+
+    window.opener.ytObj.token = token;
+    window.opener.document.dispatchEvent(window.opener.eventsObj.ytTokenRetrieved);
+    window.close();
+}, 1000)">
+<p id="informativePopup" style="height: 1em; text-align: center;" class="absoluteCenter">This popup should automatically close in a few seconds</p>
+</body>
+</html>

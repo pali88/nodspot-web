@@ -1,0 +1,1580 @@
+/* START GENERAL, HELPERS, RESETS, ETC */
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+
+.animate.ng-enter,
+.animate.ng-leave
+{
+    -webkit-transition: 100ms ease-in-out all;
+    -moz-transition: 100ms ease-in-out all;
+    -ms-transition: 100ms ease-in-out all;
+    -o-transition: 100ms ease-in-out all;
+    transition: 100ms ease-in-out all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+.animate.ng-leave.animate.ng-leave-active,
+.animate.ng-enter {
+    opacity: 0;
+    right: -20px;
+}
+
+.animate.ng-enter.ng-enter-active,
+.animate.ng-leave {
+    opacity: 1;
+    right: 0;
+}
+
+
+div#progressIndicator {
+    height: 4px;
+    bottom: -4px;
+    opacity: .9;
+    transition: all .3s ease-in-out;
+    -webkit-animation: progressBar 2s infinite;
+    position: absolute;
+    z-index: 19;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+}
+
+#overlay.overlay {
+    position: fixed;
+    z-index: 999999999;
+    opacity: .95;
+}
+
+.tag-wrapper .overlay {
+    position: absolute;
+}
+
+html, body {
+    min-height:100%;
+}
+
+html.mainBackground {
+    background: #fff url("../images/genresBackground4a.jpg") fixed no-repeat;
+    background-size: 100%;
+}
+
+html.searchBackground {
+    background: #f4f4f4;
+    background-size: 100%;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body, #ytTrackList a, #ytTrackList a:visited, input, h2, h3 {
+    color: rgb(34, 34, 65);
+}
+
+
+.btn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    transition: all 0.3 ease-out;
+    color: #ffffff;
+}
+
+.btnDark {
+    opacity: .7;
+}
+
+
+.btn:hover, .repeat:hover {
+    opacity: .85;
+}
+
+.btn:active, .repeat:active {
+    opacity: 1;
+}
+
+.darkTheme, .dropdown, button, .overlay {
+    background: rgba(50,50,80,1);
+    color: #ffffff;
+}
+.darkTheme p {
+    color: #ffffff;
+}
+
+
+header, footer {
+    vertical-align: middle;
+    width: 100%;
+    color: #ffffff;
+    position: fixed;
+    z-index: 999999999;
+    transition: all 0.3 ease-out;
+}
+
+
+#tabs { width: 320px; font-size: .9em; }
+
+.topTabs {
+    color: rgba(255,255,255,.45);
+    border: 0;
+    height: 100%;
+    width: 120px;
+    padding: 5px 0 6px 0;
+    text-align: center;
+    -webkit-transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -ms-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out; transition: all 0.3s ease-out;
+}
+
+.topTabs.active, .topTabs:hover { color: rgba(255,255,255,1); background: rgba(255,255,255,.15); }
+.topTabs.active:hover { background: rgba(255,255,255,.1); }
+
+
+
+#slider {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 920px;
+    margin-top: 4px;
+    display: none;
+}
+
+#sliderHandle {
+    background: #666e80;
+    border-color: rgba(255,255,255,0.6);
+    width: 10px;
+}
+
+header {
+    /*height: 30px;*/
+    height: 2.3em;
+    margin-bottom: 30px;
+}
+
+header img {
+    padding-left: 20px;
+    transition: all 0.3s ease-out;
+}
+
+header img:hover {
+    opacity: .5;
+}
+
+#userName {
+    font-size: .6em;
+    cursor: pointer;
+    /*height: 35px;*/
+    padding-right: 10px;
+    text-align: right;
+    float: right;
+    width: 22em;
+}
+
+#errorMessageWrapper {
+    position: fixed;
+    top: -50px;
+    padding: 10px;
+    width: 100%;
+    background: rgba(255,255,255,0.8);
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all .7s ease-in-out;
+    z-index: 70;
+}
+
+#errorMessageWrapper.expanded {
+    opacity: 1;
+    top: 30px;
+}
+
+#beta {
+    display: inline;
+    position: absolute;
+    top: 10px;
+    left: 130px;
+}
+
+#logo {
+    height: 1.1em;
+}
+
+#signinDropdown {
+    /*width: 200px;*/
+    position: fixed;
+    top: 37px;
+    right: 0;
+    z-index: 9999999991;
+    transition: all .3s ease;
+}
+
+#signinDropdown.collapsed {
+    /*right: -300px;*/
+    right: -17em;
+}
+
+
+#background {
+    background-size: 100%;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -999;
+    opacity: .4;
+}
+
+a, a:visited {
+    color: #11a6a3;
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: .8;
+}
+
+a:active {
+    opacity: 1;
+}
+
+
+iframe { border: 0; }
+
+h1, h2, h3, ul, img {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+ul { list-style: none; }
+    li {
+        cursor: pointer;
+        padding: 10px;
+        position: relative;
+        -webkit-transition: border .2s linear, background-color .15s linear;
+        -ms-transition: border .2s linear, background-color .15s linear;
+        -moz-transition: border .2s linear, background-color .15s linear;
+        transition: border .2s linear, background-color .15s linear;
+        transition: all 0.3s ease-in-out;
+    }
+    li:hover {
+        background: rgba(102,110,128, 0.1);
+        /*color: #272c38;*/
+    }
+    #favouritesWrapper li:hover {
+        background: rgba(255,255,255, 0.1);
+        color: #272c38;
+    }
+    #playlistsForPlaying li:hover {
+        color: rgba(255,255,255,.8);
+    }
+    li:active {
+        background: rgba(102,110,128, 0.17);
+        color: #272c38;
+    }
+    li.active {
+        background: rgba(50,50,80,.1);
+        color: rgba(50,50,80,1);
+        border-left: 4px solid rgba(50,50,80,.5);
+    }
+    li.youtube {
+        background: url('../images/ytLogo.png') no-repeat right;
+    }
+
+h2.center {
+    text-align: center;
+    display: inline-block;
+    margin-top: 60px;
+}
+
+p { text-transform: none; }
+
+footer {
+    text-align: center;
+    padding: 5px 0;
+    bottom: 0;
+    font-size: .75em;
+    opacity: .97;
+    height: 20px;
+}
+
+footer:hover div {
+    opacity: 1;
+}
+
+footer span {
+    height: 1em;
+}
+
+footer .fb-like {
+    opacity: 0;
+    margin-left: 10px;
+    float: left;
+    transition: all 0.3s ease-out;
+}
+
+.center {
+    /*width: 920px;*/
+    width: 95%;
+    margin: 0 auto;
+}
+
+.absoluteCenter {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.verticalCenter {
+    margin: auto;
+    position: absolute;
+    top: 0; bottom: 0; ;
+}
+
+.popup {
+    position: absolute;
+    border: 1px solid rgba(102,110,128, 0.3);
+    background: #ffffff;
+    z-index: 99;
+    text-transform: none;
+}
+
+.fadeOut {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+.fadeIn {
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+
+button.edit {
+    background: rgba(255,255,255,.5) url('../images/edit.png') no-repeat center;
+}
+
+button.delete {
+    background: rgba(255,255,255,.5) url('../images/delete.png') no-repeat center;
+}
+
+button.addToPlaylist {
+    background-image: url('../images/addToPlaylist.png');
+}
+
+button.repeat {
+    background: rgb(175,180,190) url('../images/repeat.png') no-repeat center;
+}
+
+button.close {
+    background: rgb(175,180,190) url('../images/close.png') no-repeat center;
+    height: 30px;
+    width: 30px;
+    float: right;
+}
+
+.absoluteRight {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+
+.dropdown {
+    border: 1px solid rgba(255,255,255,.2);
+    color: #ffffff;
+}
+
+ul.dropdown {
+    padding: 0;
+    font-size: .9em
+}
+
+ul.dropdown li, #playlistsForSaving.dropdown li {
+    padding-left: 20px;
+}
+
+
+/* START IE < 10 */
+#ieBlockerWrapper, #blockerContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#ieBlockerWrapper {
+    height: 100%;
+    width: 100%;
+    z-index: 9999999991;
+    color: white;
+    display: none;
+}
+
+#blockerContent {
+    width: 643px;
+    height: 158px;
+}
+/* END IE < 10 */
+
+#panoramaWrapper {
+    transition: all .35s cubic-bezier(0.165, 0.84, 0.44, 1);;
+    /*margin-left: -920px;*/
+    position: relative;
+}
+
+#panoramaWrapper.sc {
+    margin-left: -1000px;
+    min-height: 2100px;
+}
+
+#nodspotWrapper {
+}
+
+#soundcloudWrapper, #mixcloudWrapper {
+    position: absolute;
+    top: 0;
+    width: 920px;
+    height: auto;
+}
+
+#soundcloudWrapper {
+    left: 1000px;
+}
+
+#mixcloudWrapper {
+    background: green;
+    left: 1840px;
+}
+
+/* START CONTENT WRAPPERS */
+#mainWrapper {
+    /*width: 920px;*/
+    width: 75%;
+    overflow: hidden;
+    padding-top: 70px;
+    text-transform: capitalize;
+    margin: 0 auto;
+}
+#contentWrapper {
+    position: relative;
+}
+
+input {
+    border: 1px solid rgba(102,110,128, 0.3);
+    opacity: 0.8;
+    transition: all .3s ease-out;
+    padding: 8px;
+    margin-bottom: 20px;
+}
+
+input:hover {
+    opacity: 1;
+}
+
+/* START SEARCH INPUT BOX */
+#searchWrapper {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+#searchInput {
+    width: 100%;
+    font-size: 2.2em;
+    border: 1px solid rgba(50,50,80,.3);
+    padding: 12px 80px 14px 150px;
+    text-transform: capitalize;
+    box-sizing: border-box;
+}
+
+#searchInput:hover, #searchInput:active {
+    opacity: 1;
+    border: 1px solid rgba(50,50,80,.4);
+}
+
+#searchInput.docked {
+    padding: 12px 80px 14px 40px;
+    /*width: 800px;*/
+    transition: all .3s ease-out;
+}
+
+#surpriseMe {
+    position: absolute;
+    cursor: pointer;
+    top: 15px;
+    left: 18px;
+    padding: 10px 15px;
+    font-size: 0.8em;
+}
+
+#suggestions {
+    opacity: .97;
+    position: absolute;
+    z-index: 9;
+}
+
+.play {
+    display: inline-block;
+    width: 1.2em;
+    height: .9em;
+    background: url('../images/favourite-sprite.png') -62px center no-repeat;
+}
+
+.dropdown .suggestion-buttons, .suggestion-buttons button {
+    padding: 0;
+    margin: 0 0 20px 0;
+    height: 60px;
+}
+
+.dropdown .suggestion-buttons:hover {
+    background: none;
+}
+
+.suggestion-searchterm {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-left: 20px;
+    margin: 6px 0 3px 0;
+    font-size: .7em;
+    opacity: .4;
+}
+
+.suggestion-buttons {
+    display: flex;
+    background-size: 10%;
+}
+
+.suggestion-buttons button {
+    /*width: 33.3333%;*/
+    font-size: .8em;
+    font-weight: 500;
+    padding: 0 20px;
+    float: left;
+    text-transform: uppercase;
+    flex: 1;
+}
+
+#tagPlaylistBtn {
+    color: #385e66;
+    background: #70bdcc url('../images/play-btn.png') left bottom no-repeat;
+}
+
+#topTracksBtn {
+    color: #5b6638;
+    background: #b5cb6f url('../images/play-btn.png') left bottom no-repeat;
+}
+
+#onYtBtn {
+    color: #664241;
+    background: #de8f8e url('../images/play-btn.png') left bottom no-repeat;
+}
+
+
+/* START SEARCH INPUT BOX */
+#genres {
+    position: absolute;
+    top: 50px;
+    left: 18px;
+    width: 260px;
+    z-index: 20;
+    opacity: 1;
+    padding-top: 10px;
+    /*display: none;*/
+}
+
+.surprise {
+    padding-bottom: 130px;
+    display: block;
+    width: 1000px;
+}
+
+#genres li:active, #surpriseMe:active, #mainGenresWrapper li:active {
+    opacity: .8;
+    transition: opacity .2s ease;
+}
+
+ul.dropdown li:hover, ul.dropdown li.active {
+    background: rgba(255,255,255, 0.5);
+}
+
+#playlistsForSaving li.saved {
+    padding-left: 45px;
+    background: url('../images/tick.png') no-repeat 20px;
+}
+
+#playlistsForSaving li.saved:hover {
+    background: rgba(255,255,255, 0.5) url('../images/tick.png') no-repeat 20px;
+}
+
+#playlistsForSaving li.notSaved {
+    background: url('../images/tick.png') no-repeat -40px;
+}
+
+#playlistsForSaving li.notSaved:hover {
+    background: rgba(255,255,255, 0.5) url('../images/tick.png') no-repeat -40px;
+}
+
+#genres li:last-child {
+    margin-bottom: 10px;
+}
+#surpriseMe:hover, #shareFacebook:hover {
+    opacity: .8;
+    /*transition: opacity .2s ease;*/
+}
+
+
+/* START PLAYER */
+#suggestions, #playerWrapper {
+    /*width: 580px;*/
+    width: 65%;
+}
+#embeddedPlayer {
+    width: 100%;
+}
+
+
+#playerWrapper {
+    /*margin-right: 30px;*/
+    margin-right: 2%;
+}
+
+#playerWrapper:hover > #shareFacebook {
+    opacity: 1;
+}
+
+
+#playerWrapper.expanded {
+    display: block;
+}
+
+#shareFacebook {
+    position: absolute;
+    left: 0px;
+    background: #3B5998;
+    padding: 20px;
+    font-size: 1em;
+    border: 0;
+    top: 360px;
+    color: #ffffff;
+    transition: all .3s ease;
+}
+
+#sc-widget {
+    /*display: none;*/
+    height: 165px;
+    overflow: hidden;
+    padding-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+#sc-widget.expanded { height: 410px; }
+
+#ytTrackList li, #discography, #releaseName { font-size: .95em }
+
+#ytTrackList {
+    overflow: hidden;
+    padding-left: 0;
+    margin-top: 10px;
+    clear: both;
+}
+
+#ytTrackList li {
+    /*height: 20px;*/
+    white-space: nowrap;
+    padding: 10px 10px 10px 0;
+}
+
+#scTrackList li { padding: 10px 10px 10px 0; }
+
+#ytTrackList li div:first-child { width: 100%; }
+#ytTrackList li.active, #ytTrackList li:hover, #scTrackList li.active div, #scTrackList li:hover div {
+    padding-left: 10px;
+    transition: all 0.1s ease-out time;
+}
+
+/*on mouse hover of the track, reveal Repeat and Buy buttons*/
+#ytTrackList li:hover > a, #ytTrackList li:hover > .options, li:hover > playlist-item-options .options {
+    opacity: 1;
+}
+
+.repeat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.1s;
+    padding: 10px 15px;
+}
+
+.juno {
+    text-decoration: none;
+    height: 20px;
+    font-size: .9em;
+}
+
+/*wrapper for buttons for playlist items (edit playlist, delete playlist) and tracks in the playlist*/
+.options {
+    float: right;
+    height: 100%;
+    display: inline;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    transition: all 0.2s ease-int-out;
+}
+
+.options button {
+    margin-left: 1px;
+    float: right;
+}
+
+.options button, .repeat {
+    width: 40px;
+    height: 100%;
+}
+
+#ytTrackList li:last-child { margin-bottom: 30px; }
+
+#playerWrapper, footer { float: left; }
+
+.artistName {
+    line-height: 1em;
+    font-size: 1.5em;
+    display: inline-block;
+}
+
+#topTracks {
+    height: 2em;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    padding: 0px 15px 0 24px;
+    margin-left: 5px;
+    background-image: url('../images/favourite-sprite.png');
+    background-position: -53px;
+    background-repeat: no-repeat;
+    vertical-align: bottom;
+}
+
+h2#artistName {
+    margin: 25px 0 0 0;
+    -webkit-transition: all 0.3 ease-out;
+    -moz-transition: all 0.3 ease-out;
+    -ms-transition: all 0.3 ease-out;
+    -o-transition: all 0.3 ease-out;
+    transition: all 0.3 ease-out;
+}
+#artistName:hover { color: rgba(102,110,128, 0.8); }
+
+#scArtistName {
+    margin: 0;
+}
+#releaseName, #scTrackName {
+    opacity: .5;
+    float: left;
+}
+#releaseName {
+    margin: 0 5px 20px 0;
+}
+
+#releaseName, #favouriteAlbum {
+    height: 1.3em;
+}
+
+#scTrackName {
+    margin: 0 0 15px 0;
+}
+
+add-to-playlist {
+    width: 500px;
+    background: rgba(255,255,255,.9);
+    text-transform: capitalize;
+    position: absolute;
+    height: 100%;
+    top: 35px;
+    right: 0;
+}
+
+add-to-playlist.expanded, add-to-playlist.collapsed {
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    background: rgba(102,110,128, 0.2);
+    border-top: 1px solid rgba(102,110,128, 0.2);
+}
+
+add-to-playlist.expanded {
+    height: auto;
+    opacity: 1;
+    display: block;
+}
+
+add-to-playlist.collapsed {
+    display: none;
+}
+
+add-to-playlist h3 {
+    margin: 5px 20px 0 20px;
+    padding: 10px 0;
+}
+
+add-to-playlist .btn {
+    /*width: 40px;*/
+}
+
+input#newPlaylistName {
+    margin: 0 0 20px 20px;
+    width: 90%;
+}
+
+#playlistsForPlaying {
+    overflow: hidden;
+}
+
+#playlistsForSaving {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#playlistsForPlaying input {
+    width: 180px;
+}
+
+#playlistsForSaving input, #playlistsForPlaying input {
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 1px;
+}
+
+#playlistsForSaving input.collapsed, #playlistsForPlaying input.collapsed {
+    left: -300px;
+}
+
+#playlistsForSaving input.expanded, #playlistsForPlaying input.expanded {
+    left: 6px;
+}
+
+#playlistsForSaving li:last-child {
+    margin-bottom: 0;
+}
+
+#favouriteAlbum {
+    width: 1.1em;
+    border: 0;
+    float: left;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: all 0.2s ease-out;
+}
+
+#favouriteAlbum.favourited { background: url('../images/favourite-sprite.png') -7px -3px no-repeat; }
+#favouriteAlbum.unfavourited { background: url('../images/favourite-sprite.png') -35px -3px no-repeat; }
+/* END PLAYER */
+
+
+/* START SIDE PANEL - RELEASES AND SIMILAR ARTISTS */
+aside {
+    float: left;
+    width: 33%;
+    margin-top: -6px;
+    right: 0px;
+    font-size: 0.9em;
+}
+
+aside h2, h2 {
+    border: none;
+    font-size: 1.8em;
+    font-weight: 400;
+    margin: 0 0 4px 10px;
+    text-transform: capitalize;
+}
+
+aside .btn {
+    text-transform: capitalize;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-weight: 100;
+}
+
+#discographyWrapper {
+    background: transparent;
+    /*display: none;*/
+}
+
+#discography {
+    transition: all 0.3 ease-out;
+    margin-bottom: 60px;
+}
+
+#discography.collapsed {
+    /*height: 600px;*/
+    overflow: hidden;
+    transition: all 0.3 ease-out;
+}
+
+.acc1 {
+    background: rgba(68, 68, 105,1);
+}
+.acc2 {
+    background: rgba(68, 68, 105,.8);
+}
+.acc3 {
+    background: rgba(68, 68, 105,.6);
+}
+.acc4 {
+    background: rgba(46, 166, 162, 1);
+}
+.acc5 {
+    background: rgba(46, 166, 162, 0.7);
+}
+.acc6 {
+    background: rgba(46, 166, 162, 0.5);
+}
+.acc7 {
+    background: rgba(46, 166, 162, 0.3);
+}
+
+/*.acc1 {*/
+    /*background: rgba(102,110,128, 0.4);*/
+/*}*/
+/*.acc2 {*/
+    /*background: rgba(102,110,128, 0.6);*/
+/*}*/
+/*.acc3 {*/
+    /*background: rgba(102,110,128, 0.8);*/
+/*}*/
+/*.acc4 {*/
+    /*background: rgba(17,166,163, .55);*/
+/*}*/
+
+#discographyWrapper:hover > #moreReleases.btn {
+    opacity: 1;
+}
+
+#moreReleases.btn {
+    float: right;
+    color: #272c38;
+    padding: 20px 10px;
+    width: 300px;
+    opacity: 0;
+    text-align: right;
+    transition: all 0.2s ease-in;
+}
+
+/*#moreReleases.btn:hover {*/
+    /*opacity: .7;*/
+/*}*/
+
+#discography li, #similarArtitsWrapper li {
+    height: auto;
+}
+
+    /* START RELEASE ITEMS AND SIMILAR ARTIST ITEMS */
+    .thumbWrapper {
+        position: relative;
+    }
+    .thumbWrapper div.artistName {
+        opacity: .5;
+        font-size: .7em;
+        text-transform: uppercase;
+        font-weight: 100;
+        letter-spacing: 0px;
+        display: block;
+    }
+    .thumb {
+        height: 40px;
+        width: 40px;
+        color: rgba(255,255,255, 1);
+    }
+
+/*.thumb, .thumbWrapper {*/
+        /*height: 40px;*/
+        /*width: 40px;*/
+    /*}*/
+
+    .title, .year {
+        position: absolute;
+    }
+    .title {
+        left: 47px;
+        top: -2px;
+        line-height: 1.2em;
+        height: 2.4em;
+        overflow: hidden;
+        display: inline;
+        padding-right: 10px;
+        width: 100%;
+    }
+    .year {
+        left: 0px;
+        bottom: 0px;
+        font-size: .6em;
+        opacity: .6;
+        background: #000000;
+        color: #ffffff;
+        padding: 0 3px;
+        max-width: 34px;
+    }
+    /* END RELEASE ITEMS AND SIMILAR ARTIST ITEMS */
+
+#similarArtitsWrapper {
+    width: 100%;
+    display: inline-block;
+}
+#similarArtists li:last-child {
+    margin-bottom: 100px;
+}
+/* END SIDE PANEL - RELEASES AND SIMILAR ARTISTS */
+
+
+
+#artistInfoWrapper {
+    display: none;
+    top: -1px;
+    right: 1px;
+    width: 308px;
+}
+    #artistImage { width: 100%; }
+    #artistName2 {
+        color: white;
+        padding: 3px 15px;
+        margin: -4px 0 0 0;
+    }
+    #artistInfoWrapper p {
+        margin-bottom: 0;
+    }
+
+    #bioWrapper {
+        padding: 20px 30px 30px 30px;
+    }
+/* END ARTIST BIOGRAPHY POPUP */
+
+
+/* START ARTIST IMAGES WRAPPER & FAVOURITES */
+#artistImagesWrapper, #favouritesWrapper {
+    height: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 999999998;
+}
+
+#favouritesWrapper {
+    width: 30%;
+    opacity: .3;
+    font-size: .9em;
+    transition: all 0.2s ease;
+    color: rgba(255,255,255,0.8);
+    white-space: normal;
+    cursor: pointer;
+    overflow-x: hidden;
+}
+
+#favouritesWrapper p {
+    margin: auto;
+    position: absolute;
+    top: -20px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 2.4em;
+    width: 200px;
+    font-size: 1.8em;
+    font-weight: 100;
+}
+
+#searchFavourites {
+    width: 100%;
+}
+
+#favouritesWrapper.collapsed {
+    right: -25%;
+}
+#favouritesWrapper.expanded {
+    right: 0;
+    opacity: 1;
+    z-index: 999999999;
+}
+
+#favouritesWrapper .title, #playlistsForPlaying li {
+    color: rgba(255,255,255,0.8);
+}
+
+#favourites li:last-child {
+    margin-bottom: 30px;
+}
+
+#favourites {
+    padding-bottom: 20px;
+}
+
+#favourites.verticalStretch {
+    height: 100%;
+}
+
+#artistImagesWrapper {
+    transition: 0.2s all ease;
+    width: 20%;
+    white-space: nowrap;
+    display: block;
+}
+
+#artistImagesWrapper.hidden { display: none; }
+
+#artistImagesWrapper.collapsed {
+    left: -17%;
+    opacity: 0.3;
+    overflow-y: hidden;
+}
+
+#artistImagesWrapper.expanded {
+    left: 0;
+    opacity: 1;
+    overflow-y: scroll;
+    z-index: 9999999999;
+}
+    #artistImages img {
+        width: 100%;
+        display: block;
+    }
+    #artistImages img:active, #artistInfoWrapper img:active {
+        opacity: 0.75;
+        padding-left: 1px;
+    }
+/* END ARTIST IMAGES WRAPPER ON THE LEFT EDGE OF THE SCREEN */
+
+
+/* START SURPRISE ME IN THE SEARCH INPUT BOX */
+#surpriseMeGenresWrapper {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 18px;
+    width: 260px;
+    z-index: 20;
+    opacity: 1;
+    padding-top: 10px;
+}
+#surpriseMeGenresWrapper li {
+    padding: 10px 30px;
+    font-size: 0.9em;
+}
+/* END SURPRISE ME IN THE SEARCH INPUT BOX */
+
+
+/* START GENRES ON THE FRONT PAGE */
+#mainGenresWrapper {
+    width: 100%;
+}
+
+#mainGenresWrapper ul {
+    opacity: .9;
+}
+
+
+.tag-wrapper img, .tag-name {
+    transition: all 0.2s ease-out;
+}
+
+.surprise .tag-wrapper {
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: none;
+    float: left;
+}
+
+.tag-wrapper img {
+    width: 210px;
+    opacity: .65;
+}
+
+.tag-wrapper:hover img {
+    width: 220px;
+    opacity: 0.3;
+}
+
+.tag-wrapper:hover .tag-name {
+    font-size: 1.3em;
+    /*border-bottom: 1px solid;*/
+    width: 80%;
+    padding-left: 20px;
+}
+
+.tag-name {
+    font-size: 1.8em;
+    font-weight: 100;
+    position: absolute;
+    bottom: 20px;
+    text-align: left;
+    padding-left: 20px;
+    text-transform: uppercase;
+    line-height: .9em;
+    white-space: nowrap;
+}
+
+div.surprise.tag-name {
+    font-size: 1.2em;
+    padding: 0 0 0 20px;
+    border: none;
+}
+
+
+#mainGenresWrapper h2 {
+    text-transform: none;
+}
+/* END GENRES ON THE FRONT PAGE */
+
+
+/* START WHY NODSPOT - FRONT PAGE */
+#whyNodSpotWrapper {
+    opacity: .9;
+    padding: 50px 0 70px 0;
+    margin-top: 100px;
+}
+
+#whyNodSpotWrapper {
+    color: #ffffff;
+}
+
+#whyNodSpotWrapper a {
+    margin-top: 20px;
+    display: block;
+    color: #ffffff;
+}
+
+#whyNodSpotWrapper h1 {
+    font-weight: 300;
+    font-size: 3.5em;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+#whyNodSpotWrapper ul.whyNodSpot li {
+    background: 0;
+    border: 0;
+    cursor: default;
+    font-size: 1.1em;
+    font-weight: 300;
+    margin-left: 3px;
+    opacity: .7;
+    padding: 15px 0 0 0;
+    text-align: left;
+}
+
+#whyNodSpotWrapper > div {
+    margin-left: 10%;
+}
+
+ul.whyNodSpot {
+    margin-bottom: 30px;
+}
+
+/* END WHY NODSPOT - FRONT PAGE */
+
+
+/* START ALBUMS NOT FOUND*/
+#notFound {
+    display: none;
+    text-transform: none;
+}
+#notFound p {
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+#notFound h2 {
+    text-transform: none;
+}
+/* END ALBUMS NOT FOUND*/
+
+
+/* START TIPS POPUP */
+#tipWrapper {
+    background: #666e80;
+    bottom: 40px;
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 0;
+    padding: 10px 20px 13px 20px;
+    position: fixed;
+    right: -400px;
+    width: 350px;    
+    transition: right 1.5s ease-out;
+    -moz-transition: all 1.5s ease-out;
+    -webkit-transition: all 1.5s ease-out;
+    -ms-transition: all 1.5s ease-out;
+}
+
+#tipWrapper h3 {
+    font-size: .7em;
+    font-weight: bold;
+}
+
+#tipWrapper p {
+    font-size: .8em;
+    margin: 0;
+    opacity: .7;
+    padding-top: 5px;
+}
+
+#tipWrapper.popupAnimateIn {
+    right: 0;
+    opacity: 1;
+}
+
+#tipWrapper.popupAnimateIn:hover {
+    opacity: .8;
+}
+/* END TIPS POPUP */
+
+
+/* ANIMATIONS */
+@-webkit-keyframes progressBar {
+    0% {
+        width: 20%;
+    }
+    50% {
+        width: 70%;
+    }
+    70% {
+        width: 90%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+
+@-webkit-keyframes tag-name {
+    70% {
+        -webkit-transform: translate(10px, 0);
+    }
+    100% {
+        -webkit-transform: translate(20px, 0);
+        font-size: 2em;
+        border-bottom: 2px solid;
+        padding-left: 40px;
+    }
+}
+
+
+@-webkit-keyframes translate {
+    0% {
+        -webkit-transform: translate(0px, 0);
+        -moz-transform: translate(0px, 0);
+    }
+    90% {
+        -webkit-transform: translate(10px, 0);
+        -moz-transform: translate(10px, 0);
+    }
+    100% {
+        -webkit-transform: translate(0px, 0);
+        -moz-transform: translate(0px, 0);
+    }
+}
+/* END GRAB USER'S ATTENTION TO CLICK ON THE ARTIST */
+
+
+#scrollToTop {
+    background: #272c38 url('../images/top.png') no-repeat center;
+    border: none;
+    bottom: -80px;
+    height: 70px;
+    left: 0;
+    margin: auto;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    transition: all 0.4s ease-out;
+    width: 90px;
+}
+#scrollToTop.expanded {
+    bottom: 30px;
+    opacity: .4;
+}
+#scrollToTop.expanded:hover {
+    opacity: 1;
+}
+
+::selection {
+    color: #ffffff;
+    background: #11a6a3;
+}
+
+/* START SCROLLBAR STYLING */
+::-webkit-scrollbar {
+    width: 11px;
+} /* this targets the default scrollbar (compulsory) */
+
+::-webkit-scrollbar-track {
+    background-color: rgba(50,50,80,.1);
+} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(50,50,80,.8);
+    /*border-radius: 3px;*/
+} /* this will style the thumb, ignoring the track */
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(50,50,80,.5);
+    opacity: .8;
+} /* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+    background-color: rgba(50,50,80,.5);
+    height: 0;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+::-webkit-scrollbar-corner {
+    background-color: black;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+/* END SCROLLBAR STYLING */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*media queries*/
+
+/*@media screen and (device-width: 360px) and (device-height: 592px) and (-webkit-device-pixel-ratio: 3) {*/
+@media only screen and (max-width: 1080px) {
+
+    body {
+        font-size: 2em;
+    }
+
+
+    #logo {
+        height: 1.45em;
+    }
+
+    #userName {
+        font-size: 1.2em;
+        width: 10em;
+    }
+
+    #mainWrapper {
+        width: 75%;
+        padding-top: 12%;
+    }
+
+    #searchInput {
+        font-size: 1em;
+    }
+
+    #surpriseMe {
+        top: 14px;
+        left: 16px;
+        font-size: 0.4em;
+    }
+
+    aside {
+        clear: both;
+        width: 100%;
+    }
+
+    #playerWrapper, #suggestions {
+        width: 100%;
+    }
+
+    #favouriteAlbum.unfavourited {
+        background: url('../images/favourite-sprite.png') -42px center no-repeat;
+        background-size: 290%;
+
+    }
+
+    #favouriteAlbum.favourited {
+        background: url('../images/favourite-sprite.png') 0 center no-repeat;
+        background-size: 290%;
+    }
+
+    #ytTrackList li {
+        padding: 20px 10px 20px 0;
+    }
+
+    #ytTrackList li.active, #ytTrackList li:hover {
+        padding-left: 25px;
+    }
+
+    .options button {
+        width: 2.5em;
+    }
+
+    .title {
+        left: 3em;
+        width: 80%;
+    }
+
+    .year {
+        left: 0;
+    }
+
+    .thumb, .thumbWrapper {
+        height: 2.5em;
+        width: 2.5em;
+    }
+
+    .thumbWrapper {
+        width: 100%;
+    }
+
+    #artistImagesWrapper, #favouritesWrapper {
+        width: 85%;
+    }
+
+    #favouritesWrapper.collapsed {
+        right: -75%;
+    }
+
+    #searchFavourites {
+        width: 95%;
+        font-size: 1.5em;
+    }
+
+    #favouritesWrapper.expanded {
+        right: 0%;
+    }
+
+    ul#playlistsForPlaying li {
+        padding: 20px;
+    }
+
+    .surprise li {
+        text-align: left;
+        width: 30%;
+        display: inline-block;
+        /*float: left;*/
+    }
+
+    #whyNodSpotWrapper > div {
+        margin-left: auto;
+    }
+
+    #artistImagesWrapper.collapsed {
+        left: -80%;
+    }
+
+    #artistImagesWrapper.expanded {
+        left: 0%;
+    }
+
+}
+

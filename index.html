@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html ng-app="nodspot" ng-controller="MainCtrl" ng-class="appBackground">
+<head>
+    <title>nodspot.com - Music discovery & unlimited streaming for those who know what they want!</title>
+    <meta name="author" content="Mantvydas Baranauskas">
+    <meta name="description" content="Nodspot.com - tens of millions of tracks, people curated music playlists and more for free.">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500' rel='stylesheet' type='text/css'>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
+    <!--<meta property="og:type" content="song" />-->
+    <!--<meta property="og:site_name" content="nodspotas" />-->
+    <!--<meta property="og:url" content="http://www.nodspot.com" />-->
+    <!--&lt;!&ndash;<meta property="og:title" content="{{release.artistName}}" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<meta property="og:description" content="{{release.artistName}}" />&ndash;&gt;-->
+    <!--<meta property="og:image" content="../images/genresBackground4a.jpg/" />-->
+
+
+    <script src="https://apis.google.com/js/client.js?onload=load"></script>
+    <!--<script src="combined.js"></script>-->
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-touch.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/services/favouritesServices.js"></script>
+    <script src="scripts/services/youtubeServices.js"></script>
+    <script src="scripts/services/releasesServices.js"></script>
+    <script src="scripts/services/playerServices.js"></script>
+    <script src="scripts/services/artistServices.js"></script>
+    <script src="scripts/services/lastfmServices.js"></script>
+    <script src="scripts/services/facebookServices.js"></script>
+    <script src="scripts/services/genresServices.js"></script>
+    <script src="scripts/services/searchServices.js"></script>
+    <script src="scripts/directives/directives.js"></script>
+    <script src="scripts/controllers/favouritesController.js"></script>
+    <script src="scripts/controllers/playerController.js"></script>
+    <script src="scripts/controllers/releasesController.js"></script>
+    <script src="scripts/controllers/searchController.js"></script>
+    <script src="scripts/controllers/artistsController.js"></script>
+    <script src="scripts/controllers/genresController.js"></script>
+    <script src="scripts/controllers/overlayController.js"></script>
+    <script src="scripts/controllers/loginController.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-animate.js"></script>-->
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-43852920-1', 'nodspot.com');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+
+<div id="overlay" class="overlay" ng-controller="OverlayCtrl" ng-click="closeOverlay($event)" ng-show="overlayVisibility">
+    <add-to-playlist ng-controller="AddToPlaylistCtrl">
+    </add-to-playlist>
+</div>
+
+<header ng-controller="LoginCtrl" class="darkTheme">
+    <div id="progressIndicator" class="darkTheme acc4" ng-show="progressBarVisibility"></div>
+    <a href="/" id="logo" ng-click="expandGenres()" class="verticalCenter" title="nodspot.com"><img src="images/logo.png"></a>
+    <!--<div id="tabs" class="absoluteCenter">-->
+        <!--<button id="nodspotBtn" class="topTabs active btn" title="your nodspot">main</button>-->
+        <!--<button id="scBtn" class="topTabs btn" title="your soundcloud stream">soundcloud</button>-->
+    <!--</div>-->
+    <button id="userName" ng-click="toggleVisibility()" class="topTabs btn">Hello {{user.firstName}}</button>
+    <ul id="signinDropdown" class="dropdown" ng-mouseleave="toggleVisibility()" ng-class="loginMenuClass">
+        <li id="fbLogin" ng-click="fbLogin()">{{facebookBtn}}</li>
+        <li id="scLogin">Sing in to Soundcloud (Soon!)</li>
+        <li id="ytLogin" ng-click="ytLogin()">Import YouTube playlists (Soon!)</li>
+    </ul>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '695184173844128',
+                status     : true,
+                xfbml      : true
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</header>
+
+<div id="errorMessageWrapper">The error message goes here</div>
+<!--<div id="ieBlockerWrapper">-->
+    <!--<div id="blockerContent" class="absoluteCenter">-->
+        <!--<img src="images/bigLogo.png">-->
+        <!--<p>Dear Sir or Madam, I'm afraid you will have to download a sane browser to use me.</p>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div id="mainWrapper">
+    <div id="panoramaWrapper">
+        <div id="nodspotWrapper">
+
+            <div ng-controller="SearchCtrl">
+                <ul id="genres" ng-show="stylesDropdownVisibility" ng-mouseleave="collapseSurpriseDropdown()" class="dropdown">
+                    <li ng-repeat="style in styles | orderBy: 'name'" ng-click="getReleasesByStyle(style.name)">{{style.name}}</li>
+                </ul>
+                <div id="searchWrapper">
+                    <input
+                            type="text"
+                            id="searchInput"
+                            ng-model="searchTerm"
+                            ng-class="searchInputClass"
+                            ng-click="expandSuggestions()"
+                            lookup="on"
+                            ng-keypress="handleKeypress(searchTerm, '', $event)"
+                            title="Search for artists, songs, albums, compilations, OSTs (soundtracks)..."
+                            placeholder="Search for tags, artists, albums, soundtracks">
+                    <suggestions id="suggestions" ng-show="suggestionsVisibility" suggestions="suggestions" suggestions-Visibility="suggestionsVisibility">
+                        <div class="suggestion-searchterm">quick play</div>
+                        <li class="suggestion-buttons" ng-show="suggestionButtonsVisibility">
+                            <button id="tagPlaylistBtn" ng-click="playTagsTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn">{{searchTerm}} playlist</button>
+                            <button id="topTracksBtn" ng-click="playTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn">{{searchTerm}} top tracks</button>
+                            <button id="onYtBtn" ng-click="getVideosFromYoutube(searchTerm)" class="btn">{{searchTerm}} on YouTube</button>
+                        </li>
+                        <div class="suggestion-searchterm">suggestions</div>
+                        <li ng-repeat="suggestion in suggestions" ng-class="{active: suggestion.state == 'active'}" ng-click="search(suggestion.searchTerm, '', $event)">{{suggestion.searchTerm}}</li>
+                    </suggestions>
+                    <div id="surpriseMeWrapper" ng-show="surpriseMeVisibility" title="Select a genre and get surprised!">
+                        <div id="surpriseMe" ng-show="surpriseMeVisibility" class="btn btnDark darkTheme" ng-click="toggleStylesDropdown()">Surprise Me</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contentWrapper">
+                <div id="playerWrapper" ng-controller="PlayerCtrl" ng-show="playerVisibility">
+                    <div id="embeddedPlayer">
+                        <script>
+                            var tag = document.createElement('script');
+                            tag.src = "https://www.youtube.com/iframe_api";
+                            var firstScriptTag = document.getElementsByTagName('script')[0];
+                            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                        </script>
+                    </div>
+                    <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
+                    <section id="videoListWrapper">
+                        <div>
+                            <h2 id="artistName" class="artistName">{{currentlyPlaying.title}}</h2>
+                            <button id="topTracks" ng-show="favouriteBtnVisibility" class="btn darkTheme btnDark" ng-click="playTopTracks()">{{currentlyPlaying.title}} top tracks</button>
+                            <!--<button class="btn btnDark" ng-click="playTagsTopTracks('drum%27n%27bass')">{{release.artistName}} top tracks</button>-->
+                        </div>
+                        <div>
+                            <div id="favouriteAlbum"
+                             ng-click="addReleaseToFavourites(
+                             currentlyPlaying.releaseTitle,
+                             currentlyPlaying.title,
+                             currentlyPlaying.releaseId,
+                             currentlyPlaying.releaseYear,
+                             currentlyPlaying.searchType)"
+                             ng-class="currentlyPlaying.state"
+                             ng-show="favouriteBtnVisibility"
+                             title="{{currentlyPlaying.state}}">
+                            </div>
+                            <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
+                        </div>
+                        <ol id="ytTrackList">
+                            <li ng-repeat="track in playlist" ng-class="track.state">
+                                <div ng-click="playTrack($index)">{{track.snippet.title}}</div>
+                                <div class="options">
+                                    <button ng-click="captureTrackInfo($index, track.id.videoId, track.snippet.title)" class="btn btnDark darkTheme addToPlaylist" title="Add track to playlist">&nbsp;</button>
+                                    <!--<button class="btn btnDark juno" url="http://www.junodownload.com/search/?q%5Ball%5D%5B%5D={{track.snippet.title}}&amp;solrorder=&amp;submit-search=SEARCH&amp;ref=kcp">BUY</button>-->
+                                </div>
+                                <!--<button class="btn btnDark repeat" repeatvideo="{{$index}}" title="Repeat!">&nbsp;</button>-->
+                            </li>
+                        </ol>
+
+                    </section>
+                </div>
+                <aside ng-controller="ReleasesCtrl" ng-show="sidebarVisibility">
+                    <div id="notFound">
+                        <h2></h2>
+                        <p></p>
+                    </div>
+                    <section id="discographyWrapper">
+                        <div ng-show="releasesVisibility">
+                            <h2>Releases</h2>
+                            <ul id="discography" class="collapsed">
+                                <release-item releases="releases" play-Release="playRelease"></release-item>
+                            </ul>
+                        </div>
+                        <!--<button id="moreReleases" class="btn">More</button>-->
+                    </section>
+                    <section id="similarArtitsWrapper" ng-controller="ArtistsCtrl">
+                        <h2>Similar</h2>
+                        <ul id="similarArtists">
+                            <li ng-repeat="artist in similarArtists" ng-click="searchArtist(artist.name)">
+                                <div class="thumbWrapper">
+                                    <button class="thumb btn darkTheme acc4">{{artist.initials}}</button>
+                                    <div title="{{artist.name}}" class="title">{{artist.name}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                    <div id="artistInfoWrapper" ng-controller="ArtistsCtrl" class="popup">
+                        <img id="artistImage" src=""/>
+                        <h2 id="artistName2">{{artist.name}}</h2>
+                        <div id="bioWrapper">
+                            <p id="artistBio">{{artist.bio.content}}</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <div id="mainGenresWrapper" ng-controller="GenresCtrl" ng-show="visibility">
+                <h2 class="center">...or select a people curated playlist to start!</h2>
+                <ul class="surprise center">
+                    <li class="tag-wrapper" ng-click="playTagsTopTracks(tag.name)" ng-repeat="tag in tags | orderBy: 'name'">
+                        <div class="overlay">
+                            <div class="tag-name">{{tag.name}}</div>
+                        </div>
+                        <img class="absoluteCenter" src="{{tag.src}}" alt="{{tag.name}}"/>
+                    </li>
+                </ul>
+
+                <h2 class="center">...or select a genre and be surprised with a random release!</h2>
+                <ul class="surprise center">
+                    <li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">
+                        <div class="surprise tag-name">{{style.name}}</div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <!--<div id="soundcloudWrapper">-->
+            <!--<div id="scContentWrapper">-->
+                <!--<div id="scStreamWrapper">-->
+                    <!--<h2 id="scArtistName" class="artistName"></h2>-->
+                    <!--<p id="scTrackName"></p>-->
+                    <!--<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/kondencuotaspienas&color=11a6a3" width="100%"></iframe>-->
+                    <!--<div id="scPlayerWrapper">-->
+                        <!--<ul id="scTrackList"></ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div id="mixcloudWrapper">pienas</div>-->
+    </div>
+</div>
+
+<section id="artistImagesWrapper" ng-controller="ArtistsCtrl" ng-show="artistImagesVisibility" ng-class="state" ng-swipe-right="expandPanel()" ng-swipe-left="collapsePanel()" ng-mouseenter="expandPanel()" ng-mouseleave="collapsePanel()" class="collapsed">
+    <div id="artistImages">
+        <img ng-repeat="image in images" src="{{image.url}}" rel="lightbox">
+    </div>
+</section>
+
+<section id="favouritesWrapper" class="collapsed darkTheme" ng-mouseenter="expandPanel()" ng-show="favouritesPanelVisibility" ng-swipe-left="expandPanel()" ng-swipe-right="collapsePanel()" ng-mouseleave="collapsePanel()" ng-class="state" ng-controller="FavouritesCtrl">
+    <p ng-show="placeholderVisibility">Your favourites will appear here</p>
+    <input id="searchFavourites" placeholder="find in your favourites" ng-model="searchFavourites"/>
+    <ul id="playlistsForPlaying">
+        <li class="animate" ng-repeat="playlist in playlists | filter:searchFavourites"
+            ng-click="getPlaylistTracks($index, playlist.playlist_id)"
+            data-playlistid="{{playlist.playlist_id}}"
+            data-source="{{playlist.kind}}">{{playlist.playlist_name}}
+            <playlist-Item-Options index="$index" playlist="playlist" rename-Playlist="renamePlaylist" delete-Playlist="deletePlaylist" playlist-Edit-Mode="playlistEditMode"></playlist-Item-Options>
+        </li>
+    </ul>
+    <ul id="favourites" title="Sign in to see your favourites" class="verticalStretch">
+        <release-item releases="releases" search-Favourites="searchFavourites" play-Release="playRelease"></release-item>
+    </ul>
+</section>
+
+<!--<div id="progressRingb" class="absoluteCenter">-->
+    <!--<div class="ball"></div>-->
+<!--</div>-->
+
+<div id="whyNodSpotWrapper" class="darkTheme">
+    <div class="center">
+        <h1>Why NODSPOT.COM</h1>
+        <ul class="whyNodSpot">
+            <li>Unlimited, free music streaming</li>
+            <li>Tens of millions of albums, singles and film soundtracks. Growing every day!</li>
+            <li>Loads of people curated music playlists, such as "rain", "night", "acoustic" and many more..</li>
+            <li>Great "Surprise me" feature that allows you to play a random release in a genre you like!</li>
+            <li>Millions of songs with official video clips</li>
+            <li>We have "The Beatles" & "Led Zeppelin" so you do not need to go elsewhere</li>
+            <li>We do not show any video ads!</li>
+            <!--<li>You can listen to tracks from your SoundCloud stream!</li>-->
+            <li>Incredibly fast & super easy to use!</li>
+            <li>Finally, your friends are probably already using nodspot and they can't all be wrong ;)</li>
+        </ul>
+        <div class="fb-like" data-colorscheme="dark" data-href="https://www.facebook.com/nodspot" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
+        <a target="_blank" href="https://twitter.com/kondencuotas">contact us @kondencuotas</a>
+    </div>
+</div>
+
+<!--<div id="tipWrapper" title="Close & don't show it again." class="popup">-->
+    <!--<h3>DID YOU KNOW?</h3>-->
+    <!--<p>Hover the leftmost or the rightmost corner of a track in the playlist to reveal additional features.</p>-->
+<!--</div>-->
+
+<!--<footer>-->
+    <!--<span id="copyRight" class="absoluteCenter">&copy; MB, 2013</span>-->
+    <!--&lt;!&ndash;<div class="fb-like" data-href="https://www.facebook.com/nodspot" data-colorscheme="dark"  data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button id="scrollToTop" onclick="helpersObj.scrollPageToTop()" title="Scroll to top"></button>&ndash;&gt;-->
+    <!--<div id="slider" class="center"/>-->
+<!--</footer>-->
+
+<!--<script src="http://connect.soundcloud.com/sdk.js"></script>-->
+<!--<script src="js.js"></script>-->
+<script>
+//    SC.initialize({
+//        client_id: soundcloudObj.clientID,
+//        redirect_uri: soundcloudObj.redirectUrl,
+//        access_token: soundcloudObj.getAccessToken()
+//    });
+</script>
+
+</div>
+
+
+</body>
+</html>

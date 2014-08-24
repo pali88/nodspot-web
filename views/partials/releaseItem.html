@@ -1,0 +1,19 @@
+<li ng-repeat="release in releases | filter:searchFavourites"
+    ng-click="playRelease(release.id, release.type, release.search_term, release.artist_name)"
+    ng-class="release.state"
+    mid="{{release.id}}"
+    id="{{release.id}}"
+    new="{{searchFavourites}}"
+    type="{{release.type}}"
+    searchterm="{{release.search_term}}"
+    artist="{{release.artist_name}}">
+    <div class="thumbWrapper">
+        <!--<button class="thumb btn acc1">{{release.initials}}</button>-->
+        <button class="thumb btn darkTheme {{release.colour}}">{{release.initials}}</button>
+        <!--<img class="thumb {{release.colour}}" src="images/noReleaseThumbnail.png">-->
+        <!--<div class="year">{{release.year}}</div>-->
+        <div title="{{release.artist_name}} {{release.title}}" class="title">{{release.title}}
+            <div class="artistName">{{release.artist_name}}</div>
+        </div>
+    </div>
+</li>
