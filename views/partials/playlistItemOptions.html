@@ -1,0 +1,5 @@
+<input type="text" ng-class="{collapsed: playlist.editMode == false, expanded: playlist.editMode == true}" ng-model="newPlaylistName" ng-init="newPlaylistName=playlist.playlist_name" ng-click="$event.stopPropagation()" ng-keypress="renamePlaylist($index, playlist.playlist_id, newPlaylistName, $event)"/>
+<div class="options">
+    <button ng-click="deletePlaylist($index, playlist.playlist_id, $event)" title="Delete playlist" class="btn btnLight delete"/>
+    <button ng-click="playlistEditMode($index, $event)" title="Rename playlist" class="btn btnLight edit"/>
+</div>
