@@ -22,4 +22,4 @@ Route::resource('user/{id}/playlists', 'UsersController@getPlaylists');
 Route::resource('playlist', 'PlaylistsController');
 Route::resource('playlist/{user_id}/{playlist_name}/new', 'PlaylistsController@createPlaylist');
 Route::resource('playlist/{playlist_id}/{user_id}/delete', 'PlaylistsController@deletePlaylist');
-//Route::resource('playlist/{playlist_id}/{user_id}/update', 'PlaylistsController@updatePlaylist');
+Route::resource('playlist/{playlist_id}/{user_id}/{new_playlist_name}/update', 'PlaylistsController@updatePlaylist');
