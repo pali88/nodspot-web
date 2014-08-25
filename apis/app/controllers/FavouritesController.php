@@ -12,15 +12,8 @@ class FavouritesController extends BaseController {
     public function delete($user_id, $release_id) {
         return DB::delete('DELETE FROM ns_saved_albums WHERE (user_id = ? AND id = ?)', [$user_id, $release_id]);
 	}
-}
 
-//    case "getAlbumState" : {
-//    $query = $con->prepare("SELECT id FROM ns_saved_albums WHERE user_id = $user_id_nodspot AND id = :album_id");
-//    $query->bindParam(':album_id', $album_id, PDO::PARAM_INT);
-//    $query->execute();
-//    $results = $query->fetchAll();
-//    if ($results) {
-//        echo 1; //album exists
-//    }
-//    break;
-//}
+    public function isExisting($user_id, $release_id) {
+        return DB::select('SELECT id FROM ns_saved_albums WHERE user_id = ? AND id = ?', [$user_id, $release_id]);
+	}
+}
