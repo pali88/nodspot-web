@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function() {
-    return View::make('hello');
-});
-
 Route::resource('user', 'UsersController');
 Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
 Route::resource('user/{id}/favourites', 'UsersController@getFavourites');
