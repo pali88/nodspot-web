@@ -11,4 +11,8 @@ class UsersController extends BaseController {
         return DB::select('SELECT * FROM ns_saved_albums WHERE user_id = ?', [$id]);
     }
 
+    public function du($id) {
+        return DB::select('SELECT * FROM ns_saved_albums WHERE user_id = ?', [$id]);
+    }
+
 }
