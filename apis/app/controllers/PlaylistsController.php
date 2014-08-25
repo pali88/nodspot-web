@@ -13,5 +13,6 @@ class PlaylistsController extends BaseController {
 
     public function deletePlaylist($playlist_id, $user_id) {
         DB::delete('DELETE FROM ns_playlists WHERE (user_id = ? AND playlist_id = ?)', [$user_id, $playlist_id]);
+        return DB::delete('DELETE FROM ns_playlist_tracks WHERE playlist_id = ?', [$playlist_id]);
     }
 }
