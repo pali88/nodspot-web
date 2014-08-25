@@ -1,6 +1,5 @@
 <?php
 
-
 class PlaylistsController extends BaseController {
 
     public function show($id) {
