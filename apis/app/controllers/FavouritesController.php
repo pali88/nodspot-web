@@ -1,6 +1,5 @@
 <?php
 
-
 class FavouritesController extends BaseController {
 
 	public function add($user_id, $release_id, $release_type, $search_term, $release_title, $release_year, $artist_name) {
