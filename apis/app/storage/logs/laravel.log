@@ -2731,3 +2731,44 @@ Stack trace:
 #19 F:\wamp\www\apis\bootstrap\compiled.php(663): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
 #20 F:\wamp\www\apis\public\index.php(49): Illuminate\Foundation\Application->run()
 #21 {main} [] []
+[2014-08-25 14:45:31] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected 'var' (T_VAR)' in F:\wamp\www\apis\app\controllers\UsersController.php:15
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2014-08-25 14:50:27] local.ERROR: exception 'ErrorException' with message 'Array to string conversion' in F:\wamp\www\apis\app\controllers\UsersController.php:18
+Stack trace:
+#0 F:\wamp\www\apis\app\controllers\UsersController.php(18): Illuminate\Exception\Handler->handleError(8, 'Array to string...', 'F:\\wamp\\www\\api...', 18, Array)
+#1 [internal function]: UsersController->isExisting('7214379062', 'mantvydo@gmail....')
+#2 F:\wamp\www\apis\vendor\laravel\framework\src\Illuminate\Routing\Controller.php(231): call_user_func_array(Array, Array)
+#3 F:\wamp\www\apis\bootstrap\compiled.php(5628): Illuminate\Routing\Controller->callAction('isExisting', Array)
+#4 F:\wamp\www\apis\bootstrap\compiled.php(5616): Illuminate\Routing\ControllerDispatcher->call(Object(UsersController), Object(Illuminate\Routing\Route), 'isExisting')
+#5 F:\wamp\www\apis\bootstrap\compiled.php(4815): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'UsersController', 'isExisting')
+#6 [internal function]: Illuminate\Routing\Router->Illuminate\Routing\{closure}('7214379062', 'mantvydo@gmail....')
+#7 F:\wamp\www\apis\bootstrap\compiled.php(5174): call_user_func_array(Object(Closure), Array)
+#8 F:\wamp\www\apis\bootstrap\compiled.php(4840): Illuminate\Routing\Route->run(Object(Illuminate\Http\Request))
+#9 F:\wamp\www\apis\bootstrap\compiled.php(4828): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#10 F:\wamp\www\apis\bootstrap\compiled.php(721): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#11 F:\wamp\www\apis\bootstrap\compiled.php(702): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#12 F:\wamp\www\apis\bootstrap\compiled.php(7533): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#13 F:\wamp\www\apis\bootstrap\compiled.php(8136): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#14 F:\wamp\www\apis\bootstrap\compiled.php(8083): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#15 F:\wamp\www\apis\bootstrap\compiled.php(10719): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#16 F:\wamp\www\apis\bootstrap\compiled.php(663): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#17 F:\wamp\www\apis\public\index.php(49): Illuminate\Foundation\Application->run()
+#18 {main} [] []
+[2014-08-25 14:51:34] local.ERROR: exception 'UnexpectedValueException' with message 'The Response content must be a string or object implementing __toString(), "boolean" given.' in F:\wamp\www\apis\bootstrap\compiled.php:9748
+Stack trace:
+#0 F:\wamp\www\apis\bootstrap\compiled.php(10121): Symfony\Component\HttpFoundation\Response->setContent(true)
+#1 F:\wamp\www\apis\bootstrap\compiled.php(9650): Illuminate\Http\Response->setContent(true)
+#2 F:\wamp\www\apis\bootstrap\compiled.php(5034): Symfony\Component\HttpFoundation\Response->__construct(true)
+#3 F:\wamp\www\apis\bootstrap\compiled.php(4842): Illuminate\Routing\Router->prepareResponse(Object(Illuminate\Http\Request), true)
+#4 F:\wamp\www\apis\bootstrap\compiled.php(4828): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#5 F:\wamp\www\apis\bootstrap\compiled.php(721): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#6 F:\wamp\www\apis\bootstrap\compiled.php(702): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#7 F:\wamp\www\apis\bootstrap\compiled.php(7533): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#8 F:\wamp\www\apis\bootstrap\compiled.php(8136): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#9 F:\wamp\www\apis\bootstrap\compiled.php(8083): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#10 F:\wamp\www\apis\bootstrap\compiled.php(10719): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#11 F:\wamp\www\apis\bootstrap\compiled.php(663): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#12 F:\wamp\www\apis\public\index.php(49): Illuminate\Foundation\Application->run()
+#13 {main} [] []
