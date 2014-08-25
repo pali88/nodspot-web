@@ -25,3 +25,5 @@ Route::resource('playlist/{playlist_id}/{user_id}/{new_playlist_name}/update', '
 Route::resource('playlist/{playlist_id}/{track_id}/{track_title}/add', 'PlaylistsController@addTrack');
 Route::resource('playlist/{playlist_id}/{track_id}/remove', 'PlaylistsController@removeTrack');
 Route::resource('playlist/{user_id}/{track_id}/belongs', 'PlaylistsController@trackBelongsTo');
+
+Route::resource('favourites/{user_id}/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add', 'FavouritesController@add');
