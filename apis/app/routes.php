@@ -27,3 +27,4 @@ Route::resource('playlist/{playlist_id}/{track_id}/remove', 'PlaylistsController
 Route::resource('playlist/{user_id}/{track_id}/belongs', 'PlaylistsController@trackBelongsTo');
 
 Route::resource('favourites/{user_id}/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add', 'FavouritesController@add');
+Route::resource('favourites/{user_id}/{release_id}/delete', 'FavouritesController@delete');

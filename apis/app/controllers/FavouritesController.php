@@ -9,17 +9,11 @@ class FavouritesController extends BaseController {
         return DB::getPDO()->lastInsertId();
 	}
 
+    public function delete($user_id, $release_id) {
+        return DB::delete('DELETE FROM ns_saved_albums WHERE (user_id = ? AND id = ?)', [$user_id, $release_id]);
+	}
 }
 
-//
-//    case "unfavouriteAlbum" : {
-//    $query = $con->prepare("DELETE FROM ns_saved_albums WHERE (user_id = $user_id_nodspot AND id = :album_id)");
-//    $query->bindParam(':album_id', $album_id, PDO::PARAM_INT);
-//    $query->execute();
-//    $rowsAffected = $query->rowCount();
-//    echo $rowsAffected;
-//    break;
-//
 //    case "getAlbumState" : {
 //    $query = $con->prepare("SELECT id FROM ns_saved_albums WHERE user_id = $user_id_nodspot AND id = :album_id");
 //    $query->bindParam(':album_id', $album_id, PDO::PARAM_INT);
