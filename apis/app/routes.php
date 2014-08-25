@@ -15,6 +15,8 @@ Route::get('/', function() {
     return View::make('hello');
 });
 
-Route::get('/favourites', 'FavouritesController@init');
+Route::resource('user', 'UsersController');
+Route::resource('user/{id}/favourites', 'UsersController@getFavourites');
+Route::resource('user/{id}/playlists', 'UsersController@getPlaylists');
 
-Route::controller('users', 'UsersController');
+Route::resource('playlist', 'PlaylistsController');
