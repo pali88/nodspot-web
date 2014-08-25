@@ -16,6 +16,7 @@ Route::get('/', function() {
 });
 
 Route::resource('user', 'UsersController');
+Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
 Route::resource('user/{id}/favourites', 'UsersController@getFavourites');
 Route::resource('user/{id}/playlists', 'UsersController@getPlaylists');
 
