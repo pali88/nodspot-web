@@ -253,6 +253,7 @@ $app->booted(function() use ($app, $env)
 
 	if (file_exists($path)) require $path;
 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Load The Application Routes
