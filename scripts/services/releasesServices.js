@@ -84,10 +84,10 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         var perPage = 50, url = '';
 
         switch (newSearchType) {
-            case "master":
+            case "masters":
                 url = 'type=' + newSearchType + '&artist=' + searchTerm + "&per_page=" + perPage;
                 break;
-            case "release":
+            case "releases":
                 url = 'type=' + newSearchType + '&artist=' + searchTerm + "&per_page=" + perPage;
                 break;
             case "simple":
@@ -106,10 +106,10 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             if (SearchServices.searchAttempt <= 3 && SearchServices.searchAttempt < 5) {
                 switch (SearchServices.searchAttempt) {
                     case 0 :
-                        newSearchType = "master";
+                        newSearchType = "masters";
                         break;
                     case 1 :
-                        newSearchType = "release";
+                        newSearchType = "releases";
                         break;
                     case 2 :
                         newSearchType = "simple";
@@ -216,7 +216,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
-        ReleasesServices.getReleaseTracklist(releaseId, releaseType).success(function (tracklist) {
+        ReleasesServices.getReleaseTracklist(releaseId, releaseType + 's').success(function (tracklist) {
             var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist, releaseType);
             PlayerServices.currentlyPlaying.releaseId = releaseId;
             PlayerServices.currentlyPlaying.releaseType = releaseType;
@@ -235,22 +235,11 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         });
     };
 
-    ReleasesServices.makeTracklistNodspotFriendly = function (releaseObj, releaseType) {
+    ReleasesServices.makeTracklistNodspotFriendly = function (releaseObj) {
         var originalTracklist = [],
             artistName = '',
             trackName = '',
-            release = [];
-
-        switch (releaseType) {
-            case 'master': {
-                release = releaseObj.resp.master;
-                break;
-            }
-            case 'release': {
-                release = releaseObj.resp.release;
-                break;
-            }
-        }
+            release = releaseObj;
 
         if (release.artists) {
             PlayerServices.currentlyPlaying.title = release.artists[0].name.split(" (")[0];
