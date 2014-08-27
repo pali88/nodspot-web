@@ -1,7 +1,5 @@
 <?php
 
-const T_PLAYLIST_TRACKS = 'ns_playlist_tracks'; //T for table
-const T_PLAYLISTS = 'ns_playlists';
 
 class PlaylistsController extends BaseController {
 

@@ -1,6 +1,5 @@
 <?php
 
-const T_USERS = 'ns_users';
 
 class UsersController extends BaseController {
 

@@ -1,6 +1,5 @@
 <?php
 
-const T_SAVED_ALBUMS = 'ns_saved_albums';
 
 class FavouritesController extends BaseController {
 
