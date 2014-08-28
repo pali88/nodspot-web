@@ -753,7 +753,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
     text-transform: uppercase;
     font-size: 0.7em;
     padding: 0px 15px 0 24px;
-    margin-left: 5px;
+    margin: -2px 0 0 5px;
     background-image: url('../images/favourite-sprite.png');
     background-position: -53px;
     background-repeat: no-repeat;
@@ -761,7 +761,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
 }
 
 h2#artistName {
-    margin: 25px 0 0 0;
+    margin: 25px 0 0 5px;
     -webkit-transition: all 0.3 ease-out;
     -moz-transition: all 0.3 ease-out;
     -ms-transition: all 0.3 ease-out;
@@ -866,7 +866,7 @@ input#newPlaylistName {
     border: 0;
     float: left;
     cursor: pointer;
-    margin-right: 5px;
+    margin: -2px 5px 0 0;
     transition: all 0.2s ease-out;
 }
 
