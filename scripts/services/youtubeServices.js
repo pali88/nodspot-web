@@ -25,11 +25,11 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         }
 
         angular.forEach(tracklist, function (track, i) {
-            YoutubeServices.buildPlaylist(decodeURIComponent(track.track_title), i, maxResults);
+            YoutubeServices.fetchVideo(decodeURIComponent(track.track_title), i, maxResults);
         });
     };
 
-    YoutubeServices.buildPlaylist = function (trackName, i, maxResults) {
+    YoutubeServices.fetchVideo = function (trackName, i, maxResults) {
         var url;
 
         url = baseUrl + '&maxResults='
