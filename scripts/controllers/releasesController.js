@@ -70,9 +70,4 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
         }
     });
 
-    $scope.$watch(PlayerServices.getCurrentlyPlaying, function (newValue, oldValue) {
-        $scope.releaseInfo = PlayerServices.getCurrentlyPlaying();
-    });
-
-
 }]);
