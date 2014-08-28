@@ -63,7 +63,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
     $scope.playTopTracks = function () {
-        ArtistServices.getTopTracks($scope.currentlyPlaying.title);
+        ArtistServices.getTopTracks($scope.currentlyPlaying.artistName);
     };
 
     $scope.playTagsTopTracks = function (tagName) {
@@ -78,7 +78,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function () {
         $scope.currentlyPlaying = PlayerServices.getCurrentlyPlaying();
         $scope.highlightTrack($scope.currentlyPlaying.track);
-//        PlayerServices.currentlyPlaying.title = $scope.playlist[$scope.currentlyPlaying.track].snippet.title;
     });
 
     //favourite Services > favouriting an album when not logged in
@@ -109,6 +108,9 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
                 track.state = undefined;
             });
             $scope.playlist[index].state = 'active';
+
+            //update currentlyPlaying track's title so that it can be displayed in the UI - under the player.
+            PlayerServices.currentlyPlaying.title = $scope.playlist[index].snippet.title;
         }
     };
 

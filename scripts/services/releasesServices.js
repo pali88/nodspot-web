@@ -163,7 +163,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         SearchServices.searchTerm = searchTerm;
         SearchServices.searchAttempt = 0;
 
-        PlayerServices.currentlyPlaying.title = searchTerm;
+        PlayerServices.currentlyPlaying.artistName = searchTerm;
         PlayerServices.currentlyPlaying.releaseTitle = 'Tracks straight from youtube';
         PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
 
@@ -242,11 +242,11 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             release = releaseObj;
 
         if (release.artists) {
-            PlayerServices.currentlyPlaying.title = release.artists[0].name.split(" (")[0];
+            PlayerServices.currentlyPlaying.artistName = release.artists[0].name.split(" (")[0];
         }
 
-        ArtistServices.fetchImages(PlayerServices.currentlyPlaying.title);
-        ArtistServices.getSimilar(PlayerServices.currentlyPlaying.title);
+        ArtistServices.fetchImages(PlayerServices.currentlyPlaying.artistName);
+        ArtistServices.getSimilar(PlayerServices.currentlyPlaying.artistName);
         PlayerServices.currentlyPlaying.releaseTitle = release.title;
         PlayerServices.currentlyPlaying.releaseYear = release.year;
 
