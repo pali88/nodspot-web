@@ -152,8 +152,6 @@
                     <section id="videoListWrapper">
                         <div>
                             <h2 id="artistName" class="artistName">{{currentlyPlaying.title}}</h2>
-                            <button id="topTracks" ng-show="favouriteBtnVisibility" class="btn darkTheme btnDark" ng-click="playTopTracks()">{{currentlyPlaying.artistName}} top tracks</button>
-                            <!--<button class="btn btnDark" ng-click="playTagsTopTracks('drum%27n%27bass')">{{release.artistName}} top tracks</button>-->
                         </div>
                         <div>
                             <div id="favouriteAlbum"
@@ -168,6 +166,7 @@
                              title="{{currentlyPlaying.state}}">
                             </div>
                             <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
+                            <button id="topTracks" ng-show="favouriteBtnVisibility" class="btn darkTheme btnDark" ng-click="playTopTracks()">{{currentlyPlaying.artistName}} top tracks</button>
                         </div>
                         <ol id="ytTrackList">
                             <li ng-repeat="track in playlist" ng-class="track.state">
