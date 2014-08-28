@@ -61,6 +61,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
             }
 
 
+            //check if we've built the playlist we were expected to. If yes, broadcast. PlayerCtrl will be waiting.
             if (YoutubeServices.returnedVideosCounter == YoutubeServices.playlistLength) {
                 $rootScope.$broadcast(EventsConstants.playlistReady, YoutubeServices.returnedVideos);
                 YoutubeServices.returnedVideos = [];

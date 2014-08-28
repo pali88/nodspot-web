@@ -81,14 +81,13 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 //        PlayerServices.currentlyPlaying.title = $scope.playlist[$scope.currentlyPlaying.track].snippet.title;
     });
 
-
     //favourite Services > favouriting an album when not logged in
     $scope.$on(EventsConstants.releaseFavourited, function () {
         $scope.currentlyPlaying.state = 'favourited';
     });
 
     //listen for the search source change - if there is nothing to favourite, the favourite btn is collapsed
-    $scope.$watch(SearchServices.getSearchSource, function (newValue, oldValue) {
+    $scope.$watch(SearchServices.getSearchSource, function () {
         var searchSource = SearchServices.getSearchSource();
 
         if (searchSource == SearchServices.searchSources.directYoutube || searchSource == SearchServices.searchSources.tag ||
