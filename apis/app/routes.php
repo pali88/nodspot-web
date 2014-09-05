@@ -11,6 +11,27 @@
 |
 */
 
+//Route::get('/', function () {
+//
+//    if (Auth::attempt(array('user_id' => '721437906', 'password' => 'mantvydas'))) {
+//        return 'logged in';
+//    }
+//
+//    if (Auth::check()) {
+//        return Auth::check();
+//    } else {
+//        return 'not logged in';
+//    }
+//});
+
+
+Route::get('/', array('before' => 'auth.basic', function()
+{
+    return 'autentikuotas';
+}));
+
+
+
 Route::resource('user', 'UsersController');
 Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
 Route::resource('user/{id}/favourites', 'UsersController@getFavourites');

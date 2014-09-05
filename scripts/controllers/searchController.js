@@ -13,35 +13,36 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
     $scope.highlightedSuggestion = -1;
 
     $scope.handleKeypress = function (searchTerm, searchType, event) {
-        var searchSubmitted = false;
+        $scope.searchSubmitted = false;
 
         if (event.which === 13 && searchTerm != '') {
             $scope.search(searchTerm, searchType, event);
-            searchSubmitted = true;
+            $scope.searchSubmitted = true;
         } else {
-            searchSubmitted = false;
-        }
+            //start retrieving suggestions only after the second character
+            if (searchTerm.length > 1) {
+                $scope.suggestions = ReleasesServices.getSuggestions(searchTerm).success(function (suggestions) {
+                    $scope.suggestions = suggestions[1];
 
-        //start retrieving suggestions only after the second character
-        if (searchTerm.length > 1 && searchSubmitted == false) {
-            $scope.suggestions = ReleasesServices.getSuggestions(searchTerm).success(function (suggestions) {
-                $scope.suggestions = suggestions[1];
+                    angular.forEach($scope.suggestions, function (suggestion, i) {
+                        $scope.suggestions[i] = {
+                            searchTerm: suggestion,
+                            state: undefined
+                        }
+                    });
 
-                angular.forEach($scope.suggestions, function (suggestion, i) {
-                    $scope.suggestions[i] = {
-                        searchTerm: suggestion,
-                        state: undefined
-                    }
+                    try {
+                        if ($scope.suggestions.length > 0 && $scope.searchSubmitted == false) {
+                            $scope.expandSuggestions();
+                        }
+                    } catch (e) {}
                 });
-
-                try {
-                    if ($scope.suggestions.length > 0) {
-                        $scope.expandSuggestions();
-                    }
-                } catch (e) {}
-            });
+            }
         }
     };
+
+
+    //pienas
 
     $scope.getSearchTerm = function () {
         return $scope.searchTerm;
@@ -92,7 +93,8 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
         SearchServices.logSearch(searchTerm, 'search');
         PlayerServices.resetCurrentlyPlaying();
         ReleasesServices.getAllReleases(searchTerm, searchType);
-        $scope.suggestionsVisibility = false;
+        $scope.collapseSuggestions();
+        $scope.searchSubmitted = true;
     };
 
     $scope.expandSuggestions = function () {
@@ -101,6 +103,9 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
         }
     };
 
+    $scope.collapseSuggestions = function () {
+        $scope.suggestionsVisibility = false;
+    };
 
     $scope.toggleStylesDropdown = function () {
         if ($scope.stylesDropdownVisibility == false) {
