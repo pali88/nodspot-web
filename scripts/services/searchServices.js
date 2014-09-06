@@ -47,6 +47,7 @@ nodspot.factory('SearchServices', ['$http', function ($http) {
         return SearchServices.searchSource;
     };
 
+
     SearchServices.logSearch = function (searchTerm, searchType) {
         $http.get('favourites.php?action=logSearch&search_term=' + searchTerm + '&search_type=' + searchType);
     };

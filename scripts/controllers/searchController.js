@@ -1,4 +1,4 @@
-nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices', 'GenresServices', 'SearchServices', 'PlayerServices', 'LastfmServices', '$window', function ($scope, ReleasesServices, ArtistServices, GenresServices, SearchServices, PlayerServices, LastfmServices, $window) {
+nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices', 'GenresServices', 'SearchServices', 'PlayerServices', 'LastfmServices', '$window', '$http' , function ($scope, ReleasesServices, ArtistServices, GenresServices, SearchServices, PlayerServices, LastfmServices, $window, $http) {
 
     //visibility
     $scope.surpriseMeVisibility = false;
@@ -42,8 +42,6 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
     };
 
 
-    //pienas
-
     $scope.getSearchTerm = function () {
         return $scope.searchTerm;
     };
@@ -73,13 +71,16 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
         }
     };
 
+
     $scope.playTagsTopTracks = function (tagName) {
         LastfmServices.playTagsTopTracks(tagName);
     };
 
+
     $scope.playTopTracks = function (searchTerm) {
         ArtistServices.getTopTracks(searchTerm);
     };
+
 
     $scope.getVideosFromYoutube = function (searchTerm) {
         ReleasesServices.getVideosFromYoutube(searchTerm, 20);
@@ -97,15 +98,18 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
         $scope.searchSubmitted = true;
     };
 
+
     $scope.expandSuggestions = function () {
         if ($scope.suggestions.length > 0) {
             $scope.suggestionsVisibility = true;
         }
     };
 
+
     $scope.collapseSuggestions = function () {
         $scope.suggestionsVisibility = false;
     };
+
 
     $scope.toggleStylesDropdown = function () {
         if ($scope.stylesDropdownVisibility == false) {
@@ -114,6 +118,7 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
             $scope.collapseSurpriseDropdown();
         }
     };
+
 
     $scope.collapseSurpriseDropdown = function () {
         $scope.stylesDropdownVisibility = false;

@@ -62,9 +62,11 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         }, 120);
     };
 
+
     $scope.playTopTracks = function () {
         ArtistServices.getTopTracks($scope.currentlyPlaying.artistName);
     };
+
 
     $scope.playTagsTopTracks = function (tagName) {
         var playlist = [];
@@ -74,16 +76,19 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         });
     };
 
+
     //currently playing track/release metadata
     $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function () {
         $scope.currentlyPlaying = PlayerServices.getCurrentlyPlaying();
         $scope.highlightTrack($scope.currentlyPlaying.track);
     });
 
+
     //favourite Services > favouriting an album when not logged in
     $scope.$on(EventsConstants.releaseFavourited, function () {
         $scope.currentlyPlaying.state = 'favourited';
     });
+
 
     //listen for the search source change - if there is nothing to favourite, the favourite btn is collapsed
     $scope.$watch(SearchServices.getSearchSource, function () {
@@ -97,10 +102,12 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         }
     });
 
+
     //show player wrapper once the tag or suprise me has been clicked on the home page
     $scope.$on(EventsConstants.showPlayer, function (event) {
         $scope.playerVisibility = true;
     });
+
 
     $scope.highlightTrack = function (index) {
         if ($scope.playlist) {
@@ -114,10 +121,12 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         }
     };
 
+
     $scope.playTrack = function (index) {
         PlayerServices.playTrack(index);
         $scope.highlightTrack(index);
     };
+
 
     //once "add to playlist" is clicked, capture the tracks info and retrieve playlist ids this track belongs to.
     $scope.captureTrackInfo = function (index, trackId, trackTitle) {
@@ -127,6 +136,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         FavouritesServices.trackTitle = encodeURIComponent(trackTitle);
         $rootScope.$broadcast(EventsConstants.trackInfoCaptured);
     };
+
 
     $scope.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, searchType) {
         if ($scope.currentlyPlaying.state == 'unfavourited') {
@@ -138,11 +148,13 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         }
     };
 
+
     $scope.removeReleaseFromFavourites = function (releaseId) {
         FavouritesServices.removeReleaseFromFavourites(releaseId).success(function () {
             $scope.isReleaseFavourite(releaseId);
         });
     };
+
 
     //share currently played release/playlist/favourite on FB
     $scope.share = function () {
@@ -175,7 +187,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             }
             case SearchServices.searchSources.tag: {
                 imgUrl = 'http://www.nodspot.com/' + GenresServices.imagesPath + PlayerServices.currentlyPlaying.title.replace(/ /g, '-') + '1.jpg';
-                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' playlist, containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.'
+                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' playlist, containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
                 break
             }
         }
@@ -192,6 +204,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         );
     };
 
+
     $scope.isReleaseFavourite = function (releaseId) {
         FavouritesServices.isReleaseFavourite(releaseId).success(function (state) {
             if (state == 1) {
@@ -203,6 +216,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             }
         });
     };
+
 
     //react to keypresses
     myWindow.on('keypress', function (e) {
@@ -216,6 +230,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             }
         }
     });
+
 
     //change player's class on scroll
     myWindow.on('scroll', function () {
