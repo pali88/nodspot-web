@@ -19,7 +19,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.$on(EventsConstants.playlistReady, function (event, returnedVideos) {
         $scope.playlist = PlayerServices.removeEmptyItemsFromArray(returnedVideos);
         $scope.playerVisibility = true;
-        $scope.playlistIds = [];
+        $scope.playlistIds = []; //clear playlist ids
         GenresServices.stylesVisibility = false;
 
         angular.forEach($scope.playlist, function (track, index) {
@@ -69,11 +69,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     $scope.playTagsTopTracks = function (tagName) {
-        var playlist = [];
-        LastfmServices.getTagsTopTracks(tagName).then(function (topTracks) {
-            playlist = LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag');
-            YoutubeServices.findVideos(playlist);
-        });
+        LastfmServices.playTagsTopTracks(tagName);
     };
 
 
