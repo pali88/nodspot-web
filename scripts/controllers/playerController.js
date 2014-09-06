@@ -132,7 +132,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         if ($scope.currentlyPlaying.state == 'unfavourited') {
             FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, searchType, SearchServices.searchTerm).then(function () {
                 $scope.isReleaseFavourite(releaseId);
-//                $scope.currentlyPlaying.state = "favourited";
             });
         } else {
             $scope.removeReleaseFromFavourites(releaseId);
@@ -141,7 +140,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
     $scope.removeReleaseFromFavourites = function (releaseId) {
         FavouritesServices.removeReleaseFromFavourites(releaseId).success(function () {
-//            $scope.currentlyPlaying.state = "unfavourited";
             $scope.isReleaseFavourite(releaseId);
         });
     };
