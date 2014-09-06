@@ -131,7 +131,8 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, searchType) {
         if ($scope.currentlyPlaying.state == 'unfavourited') {
             FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, searchType, SearchServices.searchTerm).then(function () {
-                $scope.currentlyPlaying.state = "favourited";
+                $scope.isReleaseFavourite(releaseId);
+//                $scope.currentlyPlaying.state = "favourited";
             });
         } else {
             $scope.removeReleaseFromFavourites(releaseId);
@@ -140,7 +141,8 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
     $scope.removeReleaseFromFavourites = function (releaseId) {
         FavouritesServices.removeReleaseFromFavourites(releaseId).success(function () {
-            $scope.currentlyPlaying.state = "unfavourited";
+//            $scope.currentlyPlaying.state = "unfavourited";
+            $scope.isReleaseFavourite(releaseId);
         });
     };
 
@@ -196,8 +198,10 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         FavouritesServices.isReleaseFavourite(releaseId).success(function (state) {
             if (state == 1) {
                 $scope.currentlyPlaying.state = "favourited";
+                $scope.currentlyPlaying.favouriteBtnTitle = "Unfavourite release";
             } else {
                 $scope.currentlyPlaying.state = "unfavourited";
+                $scope.currentlyPlaying.favouriteBtnTitle = "Favourite release";
             }
         });
     };

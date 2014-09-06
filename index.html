@@ -163,7 +163,7 @@
                              currentlyPlaying.searchType)"
                              ng-class="currentlyPlaying.state"
                              ng-show="favouriteBtnVisibility"
-                             title="{{currentlyPlaying.state}}">
+                             title="{{currentlyPlaying.favouriteBtnTitle}}">
                             </div>
                             <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
                             <button id="topTracks" ng-show="favouriteBtnVisibility" class="btn darkTheme btnDark" ng-click="playTopTracks()">{{currentlyPlaying.artistName}} top tracks</button>
