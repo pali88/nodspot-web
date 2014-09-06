@@ -563,7 +563,7 @@ input:hover {
     background: #70bdcc url('../images/play-btn.png') left bottom no-repeat;
 }
 
-#topTracksBtn {
+.topTracksBtn {
     color: #5b6638;
     background: #b5cb6f url('../images/play-btn.png') left bottom no-repeat;
 }
