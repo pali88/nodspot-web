@@ -164,13 +164,13 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
                 break;
             }
             case SearchServices.searchSources.directYoutube: {
-                caption = PlayerServices.currentlyPlaying.title + 'all tracks from youtube here at nodspot.com!';
+                caption = PlayerServices.currentlyPlaying.title + ' all tracks from youtube here at nodspot.com!';
                 imgUrl = nodspotLogo;
                 break;
             }
             case SearchServices.searchSources.topTracks: {
                 caption = 'Listen to top tracks from ' + PlayerServices.currentlyPlaying.title + ' at nodspot.com!';
-
+                imgUrl = nodspotLogo;
                 break;
             }
             case SearchServices.searchSources.tag: {
