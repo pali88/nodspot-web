@@ -13,6 +13,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         YoutubeServices.playlistLength = playlistLength;
     };
 
+    //wrapper function firing firing "fetchVideo" for every track in the tracklist
     YoutubeServices.findVideos = function (tracklist, maxResults) {
         if (typeof (tracklist) == "object") {
             YoutubeServices.setPlaylistLength(tracklist.length);
@@ -29,6 +30,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         });
     };
 
+
+    //try to fetch video from youtube
     YoutubeServices.fetchVideo = function (trackName, i, maxResults) {
         var url;
 
