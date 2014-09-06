@@ -44,7 +44,8 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
             case 'tag': {
                 angular.forEach(topTracks.data.toptracks.track, function (track, i) {
                     newPlaylist[i] = {
-                        track_title: track.artist.name + ' ' + track.name
+                        track_title: track.artist.name + ' ' + track.name,
+                        artist_name: track.artist.name
                     };
                 });
                 break

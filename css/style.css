@@ -760,6 +760,14 @@ ul.dropdown li:hover, ul.dropdown li.active {
     vertical-align: bottom;
 }
 
+.playTop {
+    background-image: url('../images/play-btn.png');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+}
+
+
 h2#artistName {
     margin: 25px 0 0 5px;
     -webkit-transition: all 0.3 ease-out;

@@ -217,7 +217,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
         ReleasesServices.getReleaseTracklist(releaseId, releaseType + 's').success(function (tracklist) {
-            var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist, releaseType);
+            var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
             PlayerServices.currentlyPlaying.releaseId = releaseId;
             PlayerServices.currentlyPlaying.releaseType = releaseType;
             YoutubeServices.findVideos(friendlyTracklist);
@@ -260,7 +260,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             artistName = artistName.split(" (")[0];
             trackName = track.title;
             originalTracklist[i] = {
-                'track_title': artistName + ' ' + trackName
+                'track_title': artistName + ' ' + trackName,
+                'artist_name': artistName
             };
         });
 

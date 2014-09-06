@@ -26,13 +26,13 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         }
 
         angular.forEach(tracklist, function (track, i) {
-            YoutubeServices.fetchVideo(decodeURIComponent(track.track_title), i, maxResults);
+            YoutubeServices.fetchVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults);
         });
     };
 
 
     //try to fetch video from youtube
-    YoutubeServices.fetchVideo = function (trackName, i, maxResults) {
+    YoutubeServices.fetchVideo = function (artistName, trackName, i, maxResults) {
         var url;
 
         url = baseUrl + '&maxResults='
@@ -47,6 +47,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
                 switch (maxResults) {
                     case 1: {
                         YoutubeServices.returnedVideos[i] = res.data.items[0];
+                        YoutubeServices.returnedVideos[i].artistName = artistName;
                         YoutubeServices.returnedVideosCounter++;
                         break;
                     }

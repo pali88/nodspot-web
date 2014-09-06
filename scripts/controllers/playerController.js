@@ -63,8 +63,8 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    $scope.playTopTracks = function () {
-        ArtistServices.getTopTracks($scope.currentlyPlaying.artistName);
+    $scope.playTopTracks = function (artistName) {
+        ArtistServices.getTopTracks(artistName);
     };
 
 
