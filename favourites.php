@@ -165,7 +165,7 @@ if ($con) {
         }
 
         case "getTracksFromPlaylist" : {
-            $sql = "SELECT track_id, track_title FROM ns_playlist_tracks WHERE playlist_id = ?";
+            $sql = "SELECT track_id, track_title, artist_name FROM ns_playlist_tracks WHERE playlist_id = ?";
             $query = $con->prepare($sql);
             $query->execute(array($playlist_id));
             $results = $query->fetchAll();
@@ -212,11 +212,12 @@ if ($con) {
                 $query->execute();
 
                 //add track to playlist
-                $sql = "INSERT INTO ns_playlist_tracks (playlist_id, track_id, track_title) VALUES (:playlist_id, :track_id, :track_title)";
+                $sql = "INSERT INTO ns_playlist_tracks (playlist_id, track_id, track_title, artist_name) VALUES (:playlist_id, :track_id, :track_title, :artist_name)";
                 $query = $con->prepare($sql);
                 $query->bindParam(':playlist_id', $playlist_id, PDO::PARAM_INT);
                 $query->bindParam(':track_id', $track_id, PDO::PARAM_STR);
                 $query->bindParam(':track_title', $track_title, PDO::PARAM_STR);
+                $query->bindParam(':artist_name', $artist_name, PDO::PARAM_STR);
                 $query->execute();
 
                 //return list of playlists this track belongs to

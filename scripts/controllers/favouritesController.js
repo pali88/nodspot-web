@@ -33,6 +33,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
         }
     });
 
+
     //watch for changes in playlists
     $scope.$watch(FavouritesServices.getPlaylists, function () {
         $scope.playlists = FavouritesServices.getPlaylists();
@@ -45,6 +46,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
         $scope.hidePlaceholder();
         $scope.releases = ReleasesServices.generateThumbnails('artist_name', $scope.releases);
     });
+
 
     $scope.getPlaylistTracks = function (index, playlistId) {
         FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistTracks) {
@@ -89,6 +91,7 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
     $scope.playlistName = '';
     $scope.myFirstPlaylistVisibility = true;
 
+
     $scope.$watch(FavouritesServices.getPlaylists, function () {
         $scope.playlists = FavouritesServices.playlists;
 
@@ -114,7 +117,7 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
     $scope.addTrackToPlaylist = function (index, trackState, playlistId, event) {
         if (event.target.localName != 'input') {
             if (trackState == 'notSaved' && playlistId != '') {
-                FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, playlistId, null, FavouritesServices.trackTitle).success(function () {
+                FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, playlistId, null, FavouritesServices.trackTitle, FavouritesServices.artistName).success(function () {
                     $scope.playlists[index].state = 'saved';
                 });
             } else if (trackState == 'saved') {
@@ -124,9 +127,11 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
         }
     };
 
+
     $scope.renamePlaylist = function (index, playlistId, newPlaylistName, event) {
         FavouritesServices.renamePlaylist(index, playlistId, newPlaylistName, event);
     };
+
 
     $scope.deletePlaylist = function (index, playlistId, event) {
         FavouritesServices.deletePlaylist(index, playlistId, event);
@@ -135,7 +140,7 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
 
     $scope.addTrackToNewPlaylist = function (playlistName, event) {
         if (event.which == 13 || event.which == 1) {
-            FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, '', playlistName, FavouritesServices.trackTitle).success(function () {
+            FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, '', playlistName, FavouritesServices.trackTitle, FavouritesServices.artistName).success(function () {
                 FavouritesServices.fetchPlaylists();
             });
         }

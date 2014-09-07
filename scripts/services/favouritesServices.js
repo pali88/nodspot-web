@@ -88,7 +88,8 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                         },
                         id: {
                             videoId: track.track_id
-                        }
+                        },
+                        artistName: track.artist_name
                     }
                 });
 
@@ -184,11 +185,12 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         };
 
 
-        FavouritesServices.addTrackToPlaylist = function (trackId, playlistId, playlistName, trackTitle) {
+        FavouritesServices.addTrackToPlaylist = function (trackId, playlistId, playlistName, trackTitle, artistName) {
             if (FacebookServices.isConnected()) {
                 return $http.get(baseUrl + 'addTrackToPlaylist' +
                     '&track_id=' + trackId +
                     '&track_title=' + trackTitle +
+                    '&artist_name=' + artistName +
                     '&playlist_id=' + playlistId +
                     '&playlist_name=' + playlistName
                 );
