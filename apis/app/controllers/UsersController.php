@@ -5,11 +5,11 @@ class UsersController extends BaseController {
 
     public function isExisting($fb_id, $email) {
         $user_id = DB::select('SELECT id FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
-
+        
         if ($user_id) {
             return $user_id;
         } else {
-            //adding a new user
+            //user does not exist, create it
             DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email) VALUES (?, ?)', [$fb_id, $email]);
             return DB::getPdo()->lastInsertId();
         }
