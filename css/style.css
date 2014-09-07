@@ -754,19 +754,20 @@ ul.dropdown li:hover, ul.dropdown li.active {
     font-size: 0.7em;
     padding: 0px 15px 0 24px;
     margin: -2px 0 0 5px;
-    background-image: url('../images/favourite-sprite.png');
-    background-position: -53px;
-    background-repeat: no-repeat;
     vertical-align: bottom;
 }
 
-.playTop {
+
+#topTracks.topTracksBtn {
     background-image: url('../images/play-btn.png');
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: 0 bottom;
 }
 
+#topTracks.topTracksBtn {
+    background-size: 16%;
+}
 
 h2#artistName {
     margin: 25px 0 0 0;
