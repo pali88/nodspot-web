@@ -60,13 +60,16 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 SearchServices.searchTerm = urlParams.term.replace(/-/g, ' ');
             }
 
+            PlayerServices.currentlyPlaying.track = urlParams.track;
+            PlayerServices.currentlyPlaying.releaseTitle = 'Top tracks';
+            PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
+
             switch (urlParams.type) {
                 case 'search': {
                     try {
                         SearchServices.searchType = urlParams.searchType;
                         SearchServices.hash.releaseId = urlParams.id;
                         SearchServices.searchSource = SearchServices.searchSources.userInput;
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                         ReleasesServices.getAllReleases(SearchServices.searchTerm, SearchServices.searchType);
                     } catch (e) {}
                     break;
@@ -74,34 +77,26 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 case 'playlist': {
                     try {
                         FavouritesServices.playPlaylist(urlParams.id);
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                     } catch (e) {}
                     break;
                 }
                 case 'surprise':{
                     try {
                         ReleasesServices.getReleasesByStyle(urlParams.style, urlParams.page, urlParams.id);
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                     } catch (e) {}
                     break;
                 }
                 case 'youtube':{
                     try {
                         ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 20);
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                        PlayerServices.currentlyPlaying.releaseTitle = 'Tracks straight from youtube';
-                        PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
                     } catch (e) {}
                     break;
                 }
                 case 'topTracks':{
                     try {
                         SearchServices.searchSource = SearchServices.searchSources.topTracks;
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                        PlayerServices.currentlyPlaying.releaseTitle = 'Top tracks';
-                        PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
                         ArtistServices.getTopTracks(SearchServices.searchTerm);
                         ArtistServices.getSimilar(SearchServices.searchTerm);
                     } catch (e) {}
@@ -110,10 +105,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 case 'tag':{
                     try {
                         SearchServices.searchSource = SearchServices.searchSources.tag;
-                        PlayerServices.currentlyPlaying.track = urlParams.track;
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                        PlayerServices.currentlyPlaying.releaseTitle = 'Top tracks';
-                        PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
                         LastfmServices.playTagsTopTracks(SearchServices.searchTerm);
                     } catch (e) {}
                     break;
