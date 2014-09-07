@@ -61,8 +61,6 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
             }
 
             PlayerServices.currentlyPlaying.track = urlParams.track;
-            PlayerServices.currentlyPlaying.releaseTitle = 'Top tracks';
-            PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
 
             switch (urlParams.type) {
                 case 'search': {

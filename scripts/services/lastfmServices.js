@@ -27,6 +27,8 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
             YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag'));
         });
         SearchServices.logSearch(tagName, 'tag');
+        PlayerServices.currentlyPlaying.releaseTitle = tagName;
+        PlayerServices.currentlyPlaying.releaseYear = 'Top tracks, all good :)';
     };
 
     LastfmServices.lastfmPlaylistToNodspot = function (artistName, topTracks, type) {
