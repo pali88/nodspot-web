@@ -757,20 +757,8 @@ ul.dropdown li:hover, ul.dropdown li.active {
     vertical-align: bottom;
 }
 
-
-#topTracks.topTracksBtn {
-    background-image: url('../images/play-btn.png');
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position: 0 bottom;
-}
-
-#topTracks.topTracksBtn {
-    background-size: 16%;
-}
-
 h2#artistName {
-    margin: 25px 0 0 0;
+    margin: 25px 0 5px 0;
     -webkit-transition: all 0.3 ease-out;
     -moz-transition: all 0.3 ease-out;
     -ms-transition: all 0.3 ease-out;
@@ -782,10 +770,12 @@ h2#artistName {
 #scArtistName {
     margin: 0;
 }
+
 #releaseName, #scTrackName {
     opacity: .5;
     float: left;
 }
+
 #releaseName {
     margin: 0 5px 20px 0;
 }
@@ -806,6 +796,13 @@ add-to-playlist {
     height: 100%;
     top: 35px;
     right: 0;
+}
+
+#topTracks.topTracksBtn {
+    background-image: url('../images/play-btn.png');
+    background-size: 16%;
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
 }
 
 add-to-playlist.expanded, add-to-playlist.collapsed {

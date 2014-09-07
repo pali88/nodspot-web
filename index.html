@@ -126,7 +126,7 @@
                         <div class="suggestion-searchterm">quick play</div>
                         <li class="suggestion-buttons" ng-show="suggestionButtonsVisibility">
                             <button id="tagPlaylistBtn" ng-click="playTagsTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn">{{searchTerm}} playlist</button>
-                            <button id="topTracksBtn" ng-click="playTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn topTracksBtn">{{searchTerm}} top tracks</button>
+                            <button ng-click="playTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn topTracksBtn">{{searchTerm}} top tracks</button>
                             <button id="onYtBtn" ng-click="getVideosFromYoutube(searchTerm)" class="btn">{{searchTerm}} on YouTube</button>
                         </li>
                         <div class="suggestion-searchterm">suggestions</div>
