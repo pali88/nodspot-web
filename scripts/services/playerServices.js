@@ -15,6 +15,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         playlistId: undefined
     };
 
+
     $window.ytPlayer = undefined;
     $window.onYouTubeIframeAPIReady = function () {
         $window.ytPlayer = new YT.Player('embeddedPlayer', {
@@ -27,6 +28,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
             }
         });
     };
+
 
     PlayerServices.onReady = function () {
         ytPlayer.addEventListener('onStateChange', function (e) {});
