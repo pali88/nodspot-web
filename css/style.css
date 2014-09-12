@@ -800,7 +800,7 @@ add-to-playlist {
 
 #topTracks.topTracksBtn {
     background-image: url('../images/play-btn.png');
-    background-size: 16%;
+    background-size: 2em;
     background-repeat: no-repeat;
     background-position: 0 bottom;
 }
