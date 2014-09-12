@@ -12,8 +12,8 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         state: 'unfavourited'
     };
 
-    $scope.playlist = undefined;
-    $scope.playlistIds = undefined;
+    $scope.playlist = [];
+    $scope.playlistIds = [];
 
     //build a playlist ids array from youtube's returned videos and load them to yt player
     $scope.$on(EventsConstants.playlistReady, function (event, returnedVideos) {
