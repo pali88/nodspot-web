@@ -5,6 +5,7 @@ nodspot.directive('addToPlaylist', function () {
     };
 });
 
+
 nodspot.directive('releaseItem', function () {
     return {
         restrict: 'E',
@@ -16,6 +17,7 @@ nodspot.directive('releaseItem', function () {
         }
     }
 });
+
 
 nodspot.directive('playlistItemOptions', [function () {
     return {
@@ -31,6 +33,7 @@ nodspot.directive('playlistItemOptions', [function () {
         }
     }
 }]);
+
 
 nodspot.directive('suggestions', [function () {
     return {
@@ -52,15 +55,6 @@ nodspot.directive('suggestions', [function () {
                 scope.suggestionsVisibility = true;
                 scope.$apply();
             };
-
-//            scope.$watchCollection(scope.suggestions, function (newValue, oldValue) {
-//                if (scope.suggestions.length > 0) {
-//                    scope.expand();
-//                } else {
-//                    scope.collapse();
-//                }
-//            });
-
         },
         scope: {
             suggestionsVisibility: "=",
@@ -70,10 +64,12 @@ nodspot.directive('suggestions', [function () {
 
 }]);
 
+
 nodspot.directive('lookup', [function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
+
 
             //listen for up/down arrow keys
             element.bind('keydown', function (event) {
@@ -86,6 +82,7 @@ nodspot.directive('lookup', [function () {
                 } catch (e) {
                 }
             });
+
 
             //returns index of the next item that's going to be highlighted
             scope.getSelectionIndex = function (direction) {
@@ -104,6 +101,7 @@ nodspot.directive('lookup', [function () {
 
                 scope.highlightItem(scope.$parent.highlightedSuggestion);
             };
+
 
             //highlight item in the suggestions list
             scope.highlightItem = function (index) {
