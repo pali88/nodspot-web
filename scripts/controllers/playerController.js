@@ -91,8 +91,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.$watch(SearchServices.getSearchSource, function () {
         var searchSource = SearchServices.getSearchSource();
 
-        if (searchSource == SearchServices.searchSources.directYoutube || searchSource == SearchServices.searchSources.tag ||
-            searchSource == SearchServices.searchSources.topTracks || searchSource == SearchServices.searchSources.userPlaylist) {
+        if (searchSource == SearchServices.searchSources.directYoutube) {
             $scope.collapseFavouriteBtn();
         } else {
             $scope.expandFavouriteBtn();
