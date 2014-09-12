@@ -76,6 +76,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     //currently playing track/release metadata
     $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function () {
         $scope.currentlyPlaying = PlayerServices.getCurrentlyPlaying();
+        $scope.currentlyPlaying.artistName = $scope.playlist[$scope.currentlyPlaying.track].artistName; //for top tracks btn
         $scope.highlightTrack($scope.currentlyPlaying.track);
     });
 
