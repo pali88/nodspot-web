@@ -87,6 +87,7 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
     $scope.getVideosFromYoutube = function (searchTerm) {
         ReleasesServices.getVideosFromYoutube(searchTerm, 20);
         SearchServices.logSearch(searchTerm, 'youtube');
+        $scope.searchSubmitted = true;
     };
 
 
