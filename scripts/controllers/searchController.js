@@ -74,11 +74,13 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
 
     $scope.playTagsTopTracks = function (tagName) {
         LastfmServices.playTagsTopTracks(tagName);
+        $scope.searchSubmitted = true;
     };
 
 
     $scope.playTopTracks = function (searchTerm) {
         ArtistServices.getTopTracks(searchTerm);
+        $scope.searchSubmitted = true;
     };
 
 
