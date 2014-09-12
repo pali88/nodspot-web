@@ -9,7 +9,7 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
     $scope.searchTerm = '';
     $scope.styles = GenresServices.getStyles();
     $scope.searchInputClass = '';
-    $scope.suggestions = '';
+    $scope.suggestions = [];
     $scope.highlightedSuggestion = -1;
 
     $scope.handleKeypress = function (searchTerm, searchType, event) {
