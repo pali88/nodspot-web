@@ -12,8 +12,8 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         FavouritesServices.trackTitle = undefined;
         FavouritesServices.tracksPlaylists = [];
 
-        FavouritesServices.playlists = undefined;
-        FavouritesServices.favourites = undefined;
+        FavouritesServices.playlists = [];
+        FavouritesServices.favourites = [];
 
 
         FavouritesServices.fetchFavourites = function () {

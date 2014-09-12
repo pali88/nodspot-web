@@ -3,8 +3,8 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
     //"your favourites will appear here" placeholder
     $scope.placeholderVisibility = true;
     $scope.favouritesPanelVisibility = false;
-    $scope.releases = undefined;
-    $scope.playlists = undefined;
+    $scope.releases = [];
+    $scope.playlists = [];
     $scope.predicate = '-artist_name';
 
 
