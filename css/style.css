@@ -639,7 +639,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
 
 #embeddedPlayerWrapper.docked {
     position: fixed;
-    right: 20px;
+    right: 6%;
     bottom: 20px;
     width: 18em;
     z-index: 9999999999;
