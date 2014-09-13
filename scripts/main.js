@@ -29,7 +29,6 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
     function ($scope, EventsConstants, $location, ReleasesServices, FacebookServices, FavouritesServices, PlayerServices, SearchServices, ArtistServices, LastfmServices) {
 
         $scope.appBackground = "mainBackground";
-        $scope.release = '';
         $scope.progressBarVisibility = true;
 
         FacebookServices.isLive();
