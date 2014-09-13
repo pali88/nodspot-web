@@ -140,13 +140,15 @@
 
             <div id="contentWrapper">
                 <div id="playerWrapper" ng-controller="PlayerCtrl" ng-show="playerVisibility">
-                    <div id="embeddedPlayer">
-                        <script>
-                            var tag = document.createElement('script');
-                            tag.src = "https://www.youtube.com/iframe_api";
-                            var firstScriptTag = document.getElementsByTagName('script')[0];
-                            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                        </script>
+                    <div id="embeddedPlayerWrapper" dock="topNew">
+                        <div id="embeddedPlayer">
+                            <script>
+                                var tag = document.createElement('script');
+                                tag.src = "https://www.youtube.com/iframe_api";
+                                var firstScriptTag = document.getElementsByTagName('script')[0];
+                                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                            </script>
+                        </div>
                     </div>
                     <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
                     <section id="videoListWrapper">

@@ -632,13 +632,29 @@ ul.dropdown li:hover, ul.dropdown li.active {
     /*width: 580px;*/
     width: 65%;
 }
-#embeddedPlayer {
-    width: 100%;
+
+#embeddedPlayerWrapper {
+    transition: all .3s ease-in-out;
 }
 
+#embeddedPlayerWrapper.docked {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 18em;
+    z-index: 9999999;
+}
+
+#embeddedPlayerWrapper.docked #embeddedPlayer {
+    height: 13em;
+}
+
+#embeddedPlayer {
+    width: 100%;
+    height: 480px;
+}
 
 #playerWrapper {
-    /*margin-right: 30px;*/
     margin-right: 2%;
 }
 

@@ -120,3 +120,20 @@ nodspot.directive('lookup', [function () {
         }
     };
 }]);
+
+
+nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServices, $interval) {
+
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var checkScrollYInterval = $interval(function() {
+                if (PlayerServices.scrollY >= 700) {
+                    element.addClass('docked');
+                } else {
+                    element.removeClass('docked');
+                }
+            }, 1000);
+        }
+    };
+}]);

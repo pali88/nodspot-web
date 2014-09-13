@@ -12,8 +12,10 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         state: 'unfavourited'
     };
 
+
     $scope.playlist = [];
     $scope.playlistIds = [];
+
 
     //build a playlist ids array from youtube's returned videos and load them to yt player
     $scope.$on(EventsConstants.playlistReady, function (event, returnedVideos) {
@@ -32,13 +34,16 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         SearchServices.collapseProgressBar();
     });
 
+
     $scope.collapseFavouriteBtn = function () {
         $scope.favouriteBtnVisibility = false;
     };
 
+
     $scope.expandFavouriteBtn = function () {
         $scope.favouriteBtnVisibility = true;
     };
+
 
     //get the track where we have to start playing the playlist from
     $scope.getStartFrom = function () {
@@ -50,6 +55,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
         return startFrom;
     };
+    
 
     $scope.playPlaylist = function () {
         var interval = setInterval(function () {
@@ -234,11 +240,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
     //change player's class on scroll
     myWindow.on('scroll', function () {
-//       if ($window.scrollY > 500) {
-//           $scope.playerClass = 'dockedplayer';
-//       } else {
-//           $scope.playerClass = 'not';
-//       }
+        PlayerServices.scrollY = $window.scrollY;
     });
 
 }]);
