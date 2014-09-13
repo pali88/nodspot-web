@@ -153,7 +153,15 @@
                     <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
                     <section id="videoListWrapper">
                         <div>
-                            <h2 id="artistName" class="artistName">{{currentlyPlaying.title}}</h2>
+                            <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px" dx="auto" z="9999999999" w1="auto" w2="auto" h1="auto" h2="auto" colour="white" treshold="600">{{currentlyPlaying.title}}</h2>
+
+                            <!--position: fixed;-->
+                            <!--top: -18px;-->
+                            <!--z-index: 99999999999;-->
+                            <!--color: white;-->
+
+
+
                         </div>
                         <div>
                             <div id="favouriteAlbum"

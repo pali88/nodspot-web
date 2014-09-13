@@ -137,6 +137,7 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                 w2 = attrs.w2,      //docked width
                 h1 = attrs.h1,      //initial height
                 h2 = attrs.h2;      //docked height
+                colour = attrs.colour;      //docked colour
                 treshold = attrs.treshold;      //when to start docking
 
             var checkScrollYInterval = $interval(function() {
@@ -178,14 +179,16 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                         position: 'fixed',
                         width: w2,
                         height: h2,
-                        'z-index': z
+                        'z-index': z,
+                        color: colour
                     });
 
                 } else {
                     element.css({
                         position: 'static',
                         width: w1,
-                        height: h1
+                        height: h1,
+                        color: 'inherit'
                     });
                 }
             }, 500);
