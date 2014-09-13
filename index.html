@@ -159,15 +159,15 @@
                         </div>
                         <div>
                             <div id="favouriteAlbum"
-                             ng-click="addReleaseToFavourites(
-                             currentlyPlaying.releaseTitle,
-                             currentlyPlaying.title,
-                             currentlyPlaying.releaseId,
-                             currentlyPlaying.releaseYear,
-                             currentlyPlaying.searchType)"
-                             ng-class="currentlyPlaying.state"
-                             ng-show="favouriteBtnVisibility"
-                             title="{{currentlyPlaying.favouriteBtnTitle}}">
+                                 ng-click="addReleaseToFavourites(
+                                 currentlyPlaying.releaseTitle,
+                                 currentlyPlaying.title,
+                                 currentlyPlaying.releaseId,
+                                 currentlyPlaying.releaseYear,
+                                 currentlyPlaying.searchType)"
+                                 ng-class="currentlyPlaying.state"
+                                 ng-show="favouriteBtnVisibility"
+                                 title="{{currentlyPlaying.favouriteBtnTitle}}">
                             </div>
                             <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
                             <button id="topTracks" class="btn darkTheme topTracksBtn" ng-show="favouriteBtnVisibility" ng-click="playTopTracks(currentlyPlaying.artistName)">{{currentlyPlaying.artistName}} top tracks</button>
