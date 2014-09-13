@@ -159,7 +159,7 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                         }
                     }
 
-                    //elemtn docking on x axis
+                    //element docking on x axis
                     switch (x) {
                         case 'left': {
                             element.css({
