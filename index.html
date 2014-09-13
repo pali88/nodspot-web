@@ -12,14 +12,6 @@
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500' rel='stylesheet' type='text/css'>
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
-    <!--<meta property="og:type" content="song" />-->
-    <!--<meta property="og:site_name" content="nodspotas" />-->
-    <!--<meta property="og:url" content="http://www.nodspot.com" />-->
-    <!--&lt;!&ndash;<meta property="og:title" content="{{release.artistName}}" />&ndash;&gt;-->
-    <!--&lt;!&ndash;<meta property="og:description" content="{{release.artistName}}" />&ndash;&gt;-->
-    <!--<meta property="og:image" content="../images/genresBackground4a.jpg/" />-->
-
-
     <script src="https://apis.google.com/js/client.js?onload=load"></script>
     <!--<script src="combined.js"></script>-->
     <script src="scripts/libs/angular.min.js"></script>
@@ -66,10 +58,6 @@
 <header ng-controller="LoginCtrl" class="darkTheme">
     <div id="progressIndicator" class="darkTheme acc4" ng-show="progressBarVisibility"></div>
     <a href="/" id="logo" ng-click="expandGenres()" class="verticalCenter" title="nodspot.com"><img src="images/logo.png"></a>
-    <!--<div id="tabs" class="absoluteCenter">-->
-        <!--<button id="nodspotBtn" class="topTabs active btn" title="your nodspot">main</button>-->
-        <!--<button id="scBtn" class="topTabs btn" title="your soundcloud stream">soundcloud</button>-->
-    <!--</div>-->
     <button id="userName" ng-click="toggleVisibility()" class="topTabs btn">Hello {{user.firstName}}</button>
     <ul id="signinDropdown" class="dropdown" ng-mouseleave="toggleVisibility()" ng-class="loginMenuClass">
         <li id="fbLogin" ng-click="fbLogin()">{{facebookBtn}}</li>
@@ -264,10 +252,6 @@
     </ul>
 </section>
 
-<!--<div id="progressRingb" class="absoluteCenter">-->
-    <!--<div class="ball"></div>-->
-<!--</div>-->
-
 <div id="whyNodSpotWrapper" class="darkTheme">
     <div class="center">
         <h1>Why NODSPOT.COM</h1>
@@ -299,19 +283,6 @@
     <!--&lt;!&ndash;<button id="scrollToTop" onclick="helpersObj.scrollPageToTop()" title="Scroll to top"></button>&ndash;&gt;-->
     <!--<div id="slider" class="center"/>-->
 <!--</footer>-->
-
-<!--<script src="http://connect.soundcloud.com/sdk.js"></script>-->
-<!--<script src="js.js"></script>-->
-<script>
-//    SC.initialize({
-//        client_id: soundcloudObj.clientID,
-//        redirect_uri: soundcloudObj.redirectUrl,
-//        access_token: soundcloudObj.getAccessToken()
-//    });
-</script>
-
-</div>
-
 
 </body>
 </html>
