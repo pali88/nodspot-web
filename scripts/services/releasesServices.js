@@ -98,6 +98,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         return url;
     };
 
+
     //work out what should the search type be for the next search.
     ReleasesServices.workoutSearchType = function (searchType) {
         var newSearchType = '';
@@ -122,6 +123,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
         return newSearchType;
     };
+
 
     ReleasesServices.excludeLabelsFromResults = function (releases) {
         var cleanReleases = [];
@@ -155,6 +157,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         return searchType;
     };
 
+
     ReleasesServices.getVideosFromYoutube = function (searchTerm, maxResults) {
         SearchServices.expandProgressBar();
         YoutubeServices.findVideos(searchTerm, maxResults);
@@ -168,6 +171,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
 
     };
+
 
     ReleasesServices.getReleasesByStyle = function (style, pageNumber, releaseId) {
         var tmpPageNumber = 0,
@@ -205,14 +209,17 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         });
     };
 
+
     ReleasesServices.broadcast = function (eventName, object) {
         $rootScope.$broadcast(eventName, object);
     };
+
 
     ReleasesServices.getReleaseTracklist = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
         return $http.get(baseUrl + 'getReleaseById' + '&release_id=' + releaseId + '&release_type=' + releaseType);
     };
+
 
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
@@ -225,6 +232,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         });
     };
 
+
     ReleasesServices.highlightRelease = function (releaseId) {
         angular.forEach(ReleasesServices.returnedReleases, function (release) {
             if (releaseId == release.id) {
@@ -234,6 +242,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             }
         });
     };
+
 
     ReleasesServices.makeTracklistNodspotFriendly = function (releaseObj) {
         var originalTracklist = [],
