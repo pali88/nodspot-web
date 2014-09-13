@@ -227,18 +227,17 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     //react to keypresses
     myWindow.on('keypress', function (e) {
         if (e.target.localName != 'input') {
-            if (e.which == 120) { //x
+            if (e.which == 120) {               //x
                 ytPlayer.nextVideo();
-            } else if (e.which == 122) { //z
+            } else if (e.which == 122) {        //z
                 ytPlayer.previousVideo();
-            } else if (e.which == 97) { //a
+            } else if (e.which == 97) {         //a
                 ytPlayer.seekTo(ytPlayer.getCurrentTime() + 40);
             }
         }
     });
 
 
-    //change player's class on scroll
     myWindow.on('scroll', function () {
         PlayerServices.scrollY = $window.scrollY;
     });
