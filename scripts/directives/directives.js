@@ -127,11 +127,66 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
+
+            var y = attrs.y,        //dock to top or bottom
+                x = attrs.x,        //dock left or right
+                dy = attrs.dy,      //y margin
+                dx = attrs.dx,      //x margin
+                z = attrs.z,        //z-index
+                w1 = attrs.w1,      //initial width
+                w2 = attrs.w2,      //docked width
+                h1 = attrs.h1,      //initial height
+                h2 = attrs.h2;      //docked height
+                treshold = attrs.treshold;      //when to start docking
+
             var checkScrollYInterval = $interval(function() {
-                if (PlayerServices.scrollY >= 700) {
-                    element.addClass('docked');
+                if (PlayerServices.scrollY >= treshold) {
+
+                    //element docking on y axis
+                    switch (y) {
+                        case 'bottom': {
+                            element.css({
+                                bottom: dy
+                            });
+                            break;
+                        }
+                        case 'top': {
+                            element.css({
+                                top: dy
+                            });
+                            break;
+                        }
+                    }
+
+                    //elemtn docking on x axis
+                    switch (x) {
+                        case 'left': {
+                            element.css({
+                                left: dx
+                            });
+                            break;
+                        }
+                        case 'right': {
+                            element.css({
+                                right: dx
+                            });
+                            break;
+                        }
+                    }
+
+                    element.css({
+                        position: 'fixed',
+                        width: w2,
+                        height: h2,
+                        'z-index': z
+                    });
+
                 } else {
-                    element.removeClass('docked');
+                    element.css({
+                        position: 'static',
+                        width: w1,
+                        height: h1
+                    });
                 }
             }, 500);
         }
