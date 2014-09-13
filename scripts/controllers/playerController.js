@@ -55,7 +55,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
         return startFrom;
     };
-    
+
 
     $scope.playPlaylist = function () {
         var interval = setInterval(function () {
