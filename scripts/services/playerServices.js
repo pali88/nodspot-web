@@ -1,6 +1,8 @@
 nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$rootScope', function ($window, SearchServices, $location, $rootScope) {
 
-    var PlayerServices = {};
+    var PlayerServices = {
+        scrollY: 0
+    };
 
     PlayerServices.currentlyPlaying = { //used when favouriting an album
         artistName: '',
@@ -19,7 +21,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     $window.ytPlayer = undefined;
     $window.onYouTubeIframeAPIReady = function () {
         $window.ytPlayer = new YT.Player('embeddedPlayer', {
-            height: '480',
+            height: '100%',
             width: '100%',
 //            width: '580',
             events: {
@@ -127,9 +129,15 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         $rootScope.$digest();
     };
 
+
     PlayerServices.playTrack = function (index) {
           ytPlayer.setLoop(true);
           ytPlayer.playVideoAt(index);
+    };
+
+
+    PlayerServices.getScrollY = function (index) {
+        return PlayerServices.scrollY;
     };
 
     return PlayerServices;
