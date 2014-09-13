@@ -133,7 +133,7 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                 } else {
                     element.removeClass('docked');
                 }
-            }, 1000);
+            }, 500);
         }
     };
 }]);
