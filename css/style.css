@@ -642,7 +642,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
     right: 20px;
     bottom: 20px;
     width: 18em;
-    z-index: 9999999;
+    z-index: 9999999999;
 }
 
 #embeddedPlayerWrapper.docked #embeddedPlayer {
