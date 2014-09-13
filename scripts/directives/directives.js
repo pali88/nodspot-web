@@ -128,16 +128,16 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
         restrict: 'A',
         link: function (scope, element, attrs) {
 
-            var y = attrs.y,        //dock to top or bottom
-                x = attrs.x,        //dock left or right
-                dy = attrs.dy,      //y margin
-                dx = attrs.dx,      //x margin
-                z = attrs.z,        //z-index
-                w1 = attrs.w1,      //initial width
-                w2 = attrs.w2,      //docked width
-                h1 = attrs.h1,      //initial height
-                h2 = attrs.h2;      //docked height
-                colour = attrs.colour;      //docked colour
+            var y = attrs.y,                    //dock to top or bottom
+                x = attrs.x,                    //dock left or right
+                dy = attrs.dy,                  //y margin
+                dx = attrs.dx,                  //x margin
+                z = attrs.z,                    //z-index
+                w1 = attrs.w1,                  //initial width
+                w2 = attrs.w2,                  //docked width
+                h1 = attrs.h1,                  //initial height
+                h2 = attrs.h2,                  //docked height
+                colour = attrs.colour,          //docked objects colour
                 treshold = attrs.treshold;      //when to start docking
 
             var checkScrollYInterval = $interval(function() {

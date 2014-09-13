@@ -140,7 +140,7 @@
 
             <div id="contentWrapper">
                 <div id="playerWrapper" ng-controller="PlayerCtrl" ng-show="playerVisibility">
-                    <div id="embeddedPlayerWrapper" dock="true" y="bottom" x="right" dy="5%" dx="5%" z="9999999999" w1="auto" w2="18em" h1="480px" h2="12em" treshold="700">
+                    <div id="embeddedPlayerWrapper" dock="true" y="bottom" x="right" dy="5%" dx="8%" z="99999999" w1="auto" w2="18em" h1="480px" h2="12em" treshold="700">
                         <div id="embeddedPlayer">
                             <script>
                                 var tag = document.createElement('script');
@@ -153,7 +153,7 @@
                     <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
                     <section id="videoListWrapper">
                         <div>
-                            <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px" dx="auto" z="9999999999" w1="auto" w2="auto" h1="auto" h2="auto" colour="white" treshold="600">{{currentlyPlaying.title}}</h2>
+                            <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px"  z="9999999999" colour="white" treshold="600">{{currentlyPlaying.title}}</h2>
 
                             <!--position: fixed;-->
                             <!--top: -18px;-->
