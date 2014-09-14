@@ -44,13 +44,16 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
             $scope.progressBarVisibility = SearchServices.getProgressBarVisibility();
         });
 
+
         $scope.$on(EventsConstants.showPlayer, function (event) {
             $scope.appBackground = "searchBackground";
         });
 
+
         $scope.closeOverlays = function () {
             $scope.$broadcast(EventsConstants.mainCtrlClicked);
         };
+
 
         $scope.newUrlParser = function () {
             var urlParams = $location.search();
