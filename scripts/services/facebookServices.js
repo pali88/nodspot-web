@@ -3,6 +3,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
     var FacebookServices = {};
 
     FacebookServices.connected = false;
+
     FacebookServices.isConnected = function () {
         return FacebookServices.connected;
     };
@@ -30,7 +31,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
                     }
                 }
             });
-        }, {scope: 'email,user_likes'}); //publish_actions, publish_stream
+        }, {scope: 'email, user_likes'}); //publish_actions, publish_stream
     };
 
     FacebookServices.getUserInfo = function (callback) {
@@ -40,6 +41,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
                 userId: res.id,
                 userEmail: res.email
             };
+
             FacebookServices.getUserNodspotId(FacebookServices.userInfo.userId, FacebookServices.userInfo.userEmail);
 
             if (typeof (callback) == 'function') {
@@ -51,8 +53,10 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
     FacebookServices.getUserNodspotId = function (fbUserId, fbEmail) {
         $http.get('favourites.php?action=' + 'getUserID' +
             '&user_id=' + fbUserId +
-            '&email=' + fbEmail).then(function (nodspotId) {
+            '&email=' + fbEmail)
+            .then(function (nodspotId) {
                 FacebookServices.userInfo.nodspotId = nodspotId;
+                localStorage['nodspotUserId'] = nodspotId.data;
             });
     };
 
@@ -73,6 +77,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
                     } else {
                         FacebookServices.connected = false;
                     }
+
                     return FacebookServices.connected;
                 }
             );

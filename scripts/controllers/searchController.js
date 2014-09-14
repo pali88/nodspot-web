@@ -21,7 +21,7 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
         } else {
             //start retrieving suggestions only after the second character
             if (searchTerm.length > 1) {
-                $scope.suggestions = ReleasesServices.getSuggestions(searchTerm).success(function (suggestions) {
+                ReleasesServices.getSuggestions(searchTerm).success(function (suggestions) {
                     $scope.suggestions = suggestions[1];
 
                     angular.forEach($scope.suggestions, function (suggestion, i) {
