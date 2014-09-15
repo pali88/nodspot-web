@@ -21,8 +21,8 @@ Route::get('/pienas', function () {
 
 Route::resource('user', 'UsersController');
 Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
-Route::resource('user/favourites', 'UsersController@getFavourites');
-Route::resource('user/playlists/', 'UsersController@getPlaylists');
+Route::resource('favourites', 'UsersController@getFavourites');
+Route::resource('playlists', 'UsersController@getPlaylists');
 
 Route::resource('playlist', 'PlaylistsController');
 Route::resource('playlist/{playlist_name}/existing', 'PlaylistsController@isExisting');
