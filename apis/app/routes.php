@@ -11,45 +11,32 @@
 |
 */
 
-//Route::get('/', function () {
-//
-//    if (Auth::attempt(array('user_id' => '721437906', 'password' => 'mantvydas'))) {
-//        return 'logged in';
-//    }
-//
-//    if (Auth::check()) {
-//        return Auth::check();
-//    } else {
-//        return 'not logged in';
-//    }
-//});
+Route::get('/', function () {
+    return 'Welcome back, Mantvydas';
+});
 
-
-Route::get('/', array('before' => 'auth.basic', function()
-{
-    return 'autentikuotas';
-}));
-
-
+Route::get('/pienas', function () {
+    return Session::all();
+});
 
 Route::resource('user', 'UsersController');
 Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
-Route::resource('user/{id}/favourites', 'UsersController@getFavourites');
-Route::resource('user/{id}/playlists', 'UsersController@getPlaylists');
+Route::resource('user/favourites', 'UsersController@getFavourites');
+Route::resource('user/playlists/', 'UsersController@getPlaylists');
 
 Route::resource('playlist', 'PlaylistsController');
-Route::resource('playlist/{user_id}/{playlist_name}/existing', 'PlaylistsController@isExisting');
-Route::resource('playlist/{user_id}/{playlist_name}/new', 'PlaylistsController@createPlaylist');
-Route::resource('playlist/{playlist_id}/{user_id}/delete', 'PlaylistsController@deletePlaylist');
-Route::resource('playlist/{playlist_id}/{user_id}/{new_playlist_name}/update', 'PlaylistsController@updatePlaylist');
+Route::resource('playlist/{playlist_name}/existing', 'PlaylistsController@isExisting');
+Route::resource('playlist/{playlist_name}/new', 'PlaylistsController@createPlaylist');
+Route::resource('playlist/{playlist_id}/delete', 'PlaylistsController@deletePlaylist');
+Route::resource('playlist/{playlist_id}/{{new_playlist_name}/update', 'PlaylistsController@updatePlaylist');
 
 Route::resource('playlist/{playlist_id}/{track_id}/{track_title}/add', 'PlaylistsController@addTrack');
 Route::resource('playlist/{playlist_id}/{track_id}/remove', 'PlaylistsController@removeTrack');
-Route::resource('playlist/{user_id}/{track_id}/belongs', 'PlaylistsController@trackBelongsTo');
+Route::resource('track/{track_id}/belongsTo', 'PlaylistsController@trackBelongsTo');
 
-Route::resource('favourites/{user_id}/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add', 'FavouritesController@add');
-Route::resource('favourites/{user_id}/{release_id}/delete', 'FavouritesController@delete');
-Route::resource('favourites/{user_id}/{release_id}/existing', 'FavouritesController@isExisting');
+Route::resource('favourites/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add', 'FavouritesController@add');
+Route::resource('favourites/{release_id}/delete', 'FavouritesController@delete');
+Route::resource('favourites/{release_id}/existing', 'FavouritesController@isExisting');
 
-Route::resource('log/{user_id}/{search_term}/{search_type}', 'LogController@logSearch');
+Route::resource('log/{search_term}/{search_type}', 'LogController@logSearch');
 
