@@ -3,20 +3,6 @@
 
 class UsersController extends BaseController {
 
-//    public function isExisting($fb_id, $email) {
-//        $user_id = DB::select('SELECT id FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
-//
-//        if ($user_id) {
-//            return $user_id;
-//        } else {
-//            //user does not exist, create it
-//            DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email) VALUES (?, ?)', [$fb_id, $email]);
-//            return DB::getPdo()->lastInsertId();
-//        }
-//
-////        return Request::header('nsUserId');
-//    }
-
     public function isExisting($fb_id, $email) {
         $hash = self::getHashByUserId($fb_id, $email);
 
@@ -34,7 +20,7 @@ class UsersController extends BaseController {
         return DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
     }
 
-    public function getUserByHash() {
+    public static function getUserByHash() {
         $hash = Request::header('hash');
         $user_id = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $user_id = $user_id[0]->id;
@@ -57,6 +43,7 @@ class UsersController extends BaseController {
     }
 
     public function getFavourites() {
-        return DB::select('SELECT * FROM ' . T_SAVED_ALBUMS . ' WHERE user_id = ?', [self::getUserByHash()]);
+        $user_id = self::getUserByHash();
+        return DB::select('SELECT * FROM ' . T_SAVED_ALBUMS . ' WHERE user_id = ?', [$user_id]);
     }
 }
