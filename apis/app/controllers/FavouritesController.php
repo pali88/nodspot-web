@@ -11,6 +11,7 @@ class FavouritesController extends BaseController {
     }
 
 
+    //add this release to logged in users favourites
 	public function add($release_id, $release_type, $search_term, $release_title, $release_year, $artist_name) {
         $user_id = UsersController::getUserIdByHash();
         DB::insert('INSERT INTO ' . T_SAVED_ALBUMS . ' (user_id, id, type, search_term, title, year, artist_name)
@@ -27,6 +28,7 @@ class FavouritesController extends BaseController {
 	}
 
 
+    //check if the release is already favourited by the logged in user
     public function isExisting($release_id) {
         $user_id = UsersController::getUserIdByHash();
 
