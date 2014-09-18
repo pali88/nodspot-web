@@ -1,5 +1,10 @@
 <?php
 
+//Once the user logs in with FB, we assign a hash key to that user.
+//All further requests will carry that hash key in the request header.
+//App will use the hash key when looking up for a userId in nodspot DB.
+//The hash will also be used to check if the hash key is not
+
 class UsersController extends BaseController {
 
     public function isExisting($fbId, $email) {
@@ -7,9 +12,13 @@ class UsersController extends BaseController {
         //lookup user's hash by his FB_ID
         $hash = self::getHashByUserId($fbId, $email);
 
-        //if the user is found, renew his hash
+        //if the user is found, renew his hash and last used ip
         if ($hash) {
+            $userId = self::lookupUserIdByHash($hash);
+            self::updateLastIp($userId);
+            self::refreshHashExpiry($userId);
             return self::renewHash($fbId, $email);
+
         } else {
             //user does not exist, create it
             DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
@@ -22,73 +31,40 @@ class UsersController extends BaseController {
 
     //get user's hash by his FB_ID
     public static function getHashByUserId($fb_id, $email) {
-        return DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
+        $hash = DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
+        $hash = $hash[0]->hash;
+
+        return $hash;
     }
 
 
     public static function getUserIdByHash() {
+
 //        $hash = Request::header('hash');
-//        $hash = '$2y$10$1XN1G7gJUPbrJ61v79LnVehXSg65Y42jtxHMG0yuNe62/KrC0Dqbm'; //production
-        $hash = '$2y$10$wfZHTBo9NEj.Jdp7aDhSROBTuWhV31ANVwTR1hT0zcaR4Upx29w6u'; //dev
-        $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $userId = $userId[0]->id;
 
-        //check if the hash is expired - if yes, the user's request will not be authorised
-        if(self::isHashExpired($hash)) {
+        $hash = '$2y$10$rpBvXA3jxC2f/s62K9jSRO8ebVN7p5EHZqVH/XE2PHWfAr9I.4RiW'; //dev
+        $userId = self::lookupUserIdByHash($hash);
 
-            //not authorised - will have to sign in again
-            echo 'You will have to sign in again mate..';
+        if (self::isValidRequest($hash) && $userId != null) {
+
+            self::refreshHashExpiry($userId);
+            self::updateLastIp($userId);
+
+            return $userId;
         } else {
 
-            //authorised, refresh hash_expiry & clients last_ip the call was made from
-            self::refreshHashExpiry($hash);
-            self::updateClientsIp($hash);
-
-            //will be used to perform future requests for this user_id
-            return $userId;
-        };
+            //request not valide (not authorised) - will have to sign in again.
+            echo 'You will have to sign in again mate ;)';
+        }
 
     }
 
 
-    //check if currently logged in user's hash_expiry has expired
-    public static function isHashExpired($hash) {
-        $hashExpiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $hashExpiry = $hashExpiry[0]->hash_expiry;
-        $isExpired = (time() > $hashExpiry) ? true : false;
+    public static function lookupUserIdByHash($hash) {
+        $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $userId = ($userId != null) ? $userId[0]->id : null;
 
-        return $isExpired;
-    }
-
-    //check if the request is coming from the same IP the user logged in
-    public static function isSameIp($hash) {
-        $lastIp = DB::select('SELECT last_ip FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $lastIp = $lastIp[0]->last_ip;
-        $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
-
-        return $isSameIp;
-    }
-
-    //check if the request is valid - hash is valid and comes from the same ip
-    public static function isValidRequest($hash) {
-        $isValid = null;
-
-        return $isValid;
-    }
-
-
-    public static function refreshHashExpiry($hash) {
-        $hashExpiry = time() + 2*60;
-        DB::update('UPDATE ' . T_USERS . ' SET hash_expiry = ? WHERE (hash = ?)', [$hashExpiry, $hash]);
-
-        return $hashExpiry;
-    }
-
-
-    //update clients last_ip in the DB
-    public static function updateClientsIp($hash) {
-        $lastIp = Request::getClientIp();
-        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (hash = ?)', [$lastIp, $hash]);
+        return $userId;
     }
 
 
@@ -105,4 +81,47 @@ class UsersController extends BaseController {
         return $newHash;
     }
 
+    public static function refreshHashExpiry($userId) {
+        $hashExpiry = time() + 5*60;
+        DB::update('UPDATE ' . T_USERS . ' SET hash_expiry = ? WHERE (id = ?)', [$hashExpiry, $userId]);
+
+        return $hashExpiry;
+    }
+
+
+    //update user's last_ip used for authorisation with nodspot
+    public static function updateLastIp($userId) {
+        $lastIp = Request::getClientIp();
+        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (id = ?)', [$lastIp, $userId]);
+    }
+
+
+
+    //check if the request is coming from the same IP the user logged in
+    public static function isSameIp($hash) {
+        $lastIp = DB::select('SELECT last_ip FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $lastIp = ($lastIp != null) ? $lastIp[0]->last_ip : null;
+        $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
+
+        return $isSameIp;
+    }
+
+
+    //check if currently logged in user's hash_expiry has expired
+    public static function isHashExpired($hash) {
+        $hashExpiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $hashExpiry = $hashExpiry[0]->hash_expiry;
+        $isExpired = (time() > $hashExpiry) ? true : false;
+
+        return $isExpired;
+    }
+
+
+    //check if the request is valid - hash is not expired and the request comes from the same ip.
+    //return true for valid, false for invalid.
+    public static function isValidRequest($hash) {
+        $isValid = null;
+
+        return $isValid = (self::isSameIp($hash) && !self::isHashExpired($hash)) ? true : false;
+    }
 }
