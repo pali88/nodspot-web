@@ -97,9 +97,9 @@ class UsersController extends BaseController {
     }
 
 
-    public static function renewHash($fb_id, $email) {
+    public static function renewHash($fbId, $email) {
         $newHash = self::generateHash();
-        DB::update('UPDATE ' . T_USERS . ' SET hash = ? WHERE (user_id = ? AND email = ?)', [$newHash, $fb_id, $email]);
+        DB::update('UPDATE ' . T_USERS . ' SET hash = ? WHERE (user_id = ? AND email = ?)', [$newHash, $fbId, $email]);
         self::refreshHashExpiry($newHash);
 
         return $newHash;
