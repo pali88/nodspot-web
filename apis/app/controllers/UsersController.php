@@ -2,21 +2,20 @@
 
 class UsersController extends BaseController {
 
-    public function isExisting($fb_id, $email) {
+    public function isExisting($fbId, $email) {
 
         //lookup user's hash by his FB_ID
-        $hash = self::getHashByUserId($fb_id, $email);
+        $hash = self::getHashByUserId($fbId, $email);
 
         //if the user is found, renew his hash
         if ($hash) {
-            return self::renewHash($fb_id, $email);
-
+            return self::renewHash($fbId, $email);
         } else {
             //user does not exist, create it
-            DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fb_id, $email, self::generateHash()]);
+            DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
 
             //get user's hash that will be used for setting request headers
-            return self::getHashByUserId($fb_id, $email);
+            return self::getHashByUserId($fbId, $email);
         }
     }
 
@@ -29,12 +28,10 @@ class UsersController extends BaseController {
 
     public static function getUserIdByHash() {
 //        $hash = Request::header('hash');
-        $hash = '$2y$10$wfZHTBo9NEj.Jdp7aDhSROBTuWhV31ANVwTR1hT0zcaR4Upx29w6u'; //dev
 //        $hash = '$2y$10$1XN1G7gJUPbrJ61v79LnVehXSg65Y42jtxHMG0yuNe62/KrC0Dqbm'; //production
-        $user_id = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $user_id = $user_id[0]->id;
-
-
+        $hash = '$2y$10$wfZHTBo9NEj.Jdp7aDhSROBTuWhV31ANVwTR1hT0zcaR4Upx29w6u'; //dev
+        $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $userId = $userId[0]->id;
 
         //check if the hash is expired - if yes, the user's request will not be authorised
         if(self::isHashExpired($hash)) {
@@ -48,7 +45,7 @@ class UsersController extends BaseController {
             self::updateClientsIp($hash);
 
             //will be used to perform future requests for this user_id
-            return $user_id;
+            return $userId;
         };
 
     }
@@ -56,26 +53,42 @@ class UsersController extends BaseController {
 
     //check if currently logged in user's hash_expiry has expired
     public static function isHashExpired($hash) {
-        $hash_expiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $hash_expiry = $hash_expiry[0]->hash_expiry;
-        $is_expired = (time() > $hash_expiry) ? true : false;
+        $hashExpiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $hashExpiry = $hashExpiry[0]->hash_expiry;
+        $isExpired = (time() > $hashExpiry) ? true : false;
 
-        return $is_expired;
+        return $isExpired;
+    }
+
+    //check if the request is coming from the same IP the user logged in
+    public static function isSameIp($hash) {
+        $lastIp = DB::select('SELECT last_ip FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        $lastIp = $lastIp[0]->last_ip;
+        $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
+
+        return $isSameIp;
+    }
+
+    //check if the request is valid - hash is valid and comes from the same ip
+    public static function isValidRequest($hash) {
+        $isValid = null;
+
+        return $isValid;
     }
 
 
     public static function refreshHashExpiry($hash) {
-        $hash_expiry = time() + 2*60;
-        DB::update('UPDATE ' . T_USERS . ' SET hash_expiry = ? WHERE (hash = ?)', [$hash_expiry, $hash]);
+        $hashExpiry = time() + 2*60;
+        DB::update('UPDATE ' . T_USERS . ' SET hash_expiry = ? WHERE (hash = ?)', [$hashExpiry, $hash]);
 
-        return $hash_expiry;
+        return $hashExpiry;
     }
 
 
     //update clients last_ip in the DB
     public static function updateClientsIp($hash) {
-        $last_ip = Request::getClientIp();
-        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (hash = ?)', [$last_ip, $hash]);
+        $lastIp = Request::getClientIp();
+        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (hash = ?)', [$lastIp, $hash]);
     }
 
 
@@ -85,11 +98,11 @@ class UsersController extends BaseController {
 
 
     public static function renewHash($fb_id, $email) {
-        $new_hash = self::generateHash();
-        DB::update('UPDATE ' . T_USERS . ' SET hash = ? WHERE (user_id = ? AND email = ?)', [$new_hash, $fb_id, $email]);
-        self::refreshHashExpiry($new_hash);
+        $newHash = self::generateHash();
+        DB::update('UPDATE ' . T_USERS . ' SET hash = ? WHERE (user_id = ? AND email = ?)', [$newHash, $fb_id, $email]);
+        self::refreshHashExpiry($newHash);
 
-        return $new_hash;
+        return $newHash;
     }
 
 }
