@@ -29,9 +29,12 @@ class UsersController extends BaseController {
 
     public static function getUserIdByHash() {
 //        $hash = Request::header('hash');
-        $hash = '$2y$10$wfZHTBo9NEj.Jdp7aDhSROBTuWhV31ANVwTR1hT0zcaR4Upx29w6u';
+        $hash = '$2y$10$wfZHTBo9NEj.Jdp7aDhSROBTuWhV31ANVwTR1hT0zcaR4Upx29w6u'; //dev
+//        $hash = '$2y$10$1XN1G7gJUPbrJ61v79LnVehXSg65Y42jtxHMG0yuNe62/KrC0Dqbm'; //production
         $user_id = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $user_id = $user_id[0]->id;
+
+
 
         //check if the hash is expired - if yes, the user's request will not be authorised
         if(self::isHashExpired($hash)) {
@@ -84,7 +87,7 @@ class UsersController extends BaseController {
     public static function renewHash($fb_id, $email) {
         $new_hash = self::generateHash();
         DB::update('UPDATE ' . T_USERS . ' SET hash = ? WHERE (user_id = ? AND email = ?)', [$new_hash, $fb_id, $email]);
-        self::refreshHashExpiry();
+        self::refreshHashExpiry($new_hash);
 
         return $new_hash;
     }
