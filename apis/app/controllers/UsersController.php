@@ -14,18 +14,30 @@ class UsersController extends BaseController {
 
         //if the user is found, renew his hash and last used ip
         if ($hash) {
-            $userId = self::lookupUserIdByHash($hash);
-            self::updateLastIp($userId);
-            self::refreshHashExpiry($userId);
-            return self::renewHash($fbId, $email);
+
+            //only issue new hash for the user if the request is coming from the same ip as the user logged
+            //also, the hash_expiry for the user has to be valid
+            if (!self::isHashExpired($hash) && self::isSameIp($hash)) {
+                $userId = self::lookupUserIdByHash($hash);
+                self::updateLastIp($userId);
+                self::refreshHashExpiry($userId);
+
+                return self::renewHash($fbId, $email);
+            } else {
+                echo 'wow, slow down mate.. :)';
+            }
 
         } else {
             //user does not exist, create it
-            DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
-
-            //get user's hash that will be used for setting request headers
-            return self::getHashByUserId($fbId, $email);
+            self::createUser($fbId, $email);
         }
+    }
+
+    public static function createUser ($fbId, $email) {
+        DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
+
+        //get user's hash that will be used for setting request headers
+        return self::getHashByUserId($fbId, $email);
     }
 
 
@@ -42,7 +54,7 @@ class UsersController extends BaseController {
 
 //        $hash = Request::header('hash');
 
-        $hash = '$2y$10$rpBvXA3jxC2f/s62K9jSRO8ebVN7p5EHZqVH/XE2PHWfAr9I.4RiW'; //dev
+        $hash = '$2y$10$4vp8ajp4UhJqh8k/t3ZZreQOyX0Xd5bmpAcpKTudnEyYpWomKoEH2'; //dev
         $userId = self::lookupUserIdByHash($hash);
 
         if (self::isValidRequest($hash) && $userId != null) {
