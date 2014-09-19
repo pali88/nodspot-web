@@ -10,7 +10,7 @@ class PlaylistsController extends BaseController {
 
     public function getPlaylists() {
         $userId = UsersController::getUserIdByHash();
-        
+
         if ($userId) {
             return DB::select('SELECT * FROM ' . T_PLAYLISTS . ' WHERE user_id = ?', [$userId]);
         }
