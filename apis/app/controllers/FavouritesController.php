@@ -5,6 +5,7 @@ class FavouritesController extends BaseController {
 
     public function getFavourites() {
         $userId = UsersController::getUserIdByHash();
+
         if ($userId > 0) {
             return DB::select('SELECT * FROM ' . T_SAVED_ALBUMS . ' WHERE user_id = ?', [$userId]);
         }
@@ -14,6 +15,7 @@ class FavouritesController extends BaseController {
     //add this release to logged in users favourites
 	public function add($releaseId, $releaseType, $searchTerm, $releaseTitle, $releaseYear, $artistName) {
         $userId = UsersController::getUserIdByHash();
+
         DB::insert('INSERT INTO ' . T_SAVED_ALBUMS . ' (user_id, id, type, search_term, title, year, artist_name)
         VALUES (?, ?, ?, ?, ?, ?, ?)', [$userId, $releaseId, $releaseType, $searchTerm, $releaseTitle, $releaseYear, $artistName]);
 
