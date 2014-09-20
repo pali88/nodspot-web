@@ -31,7 +31,7 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
             SearchServices.searchSource = SearchServices.searchSources.userInput;
         }
 
-        ReleasesServices.playRelease(releaseId, releaseType + 's');
+        ReleasesServices.playRelease(releaseId, releaseType);
     };
 
     //@@@@@@ WATCHERS
@@ -54,7 +54,7 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
         }
 
         $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId)
-        ReleasesServices.playRelease($scope.releaseId, $scope.searchType + 's');
+        ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
     });
 
 

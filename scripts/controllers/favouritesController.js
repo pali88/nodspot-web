@@ -79,9 +79,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
 
     $scope.playRelease = function (releaseId, searchType, searchTerm, artistName) {
-        ReleasesServices.playRelease(releaseId, searchType + 's');
-        //ReleasesServices.getAllReleases(searchTerm, searchType);
-        //SearchServices.hash.releaseId = releaseId;
+        ReleasesServices.playRelease(releaseId, searchType);
         SearchServices.searchType = searchType;
         SearchServices.searchTerm = searchTerm;
         SearchServices.searchSource = SearchServices.searchSources.userInput;

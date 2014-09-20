@@ -215,7 +215,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
     ReleasesServices.getReleaseTracklist = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
-        return $http.get(baseUrl + 'getReleaseById' + '&release_id=' + releaseId + '&release_type=' + releaseType);
+        return $http.get(baseUrl + 'getReleaseById' + '&release_id=' + releaseId + '&release_type=' + releaseType + 's');
     };
 
 
