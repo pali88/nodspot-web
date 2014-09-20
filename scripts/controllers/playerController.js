@@ -164,7 +164,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     $scope.removeReleaseFromFavourites = function (releaseId) {
-        FavouritesServices.removeReleaseFromFavourites(releaseId).success(function () {
+        FavouritesServices.removeReleaseFromFavourites(releaseId).then(function () {
             $scope.isReleaseFavourite(releaseId);
         });
     };
