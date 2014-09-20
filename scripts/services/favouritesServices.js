@@ -121,7 +121,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
 
 
-        FavouritesServices.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, searchType, searchTerm) {
+        FavouritesServices.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, releaseType, searchTerm) {
             if (FacebookServices.connected == true) {
 
                 //todo check for the searchTerm is not empty - need to allow users to save supriseMe releases
@@ -129,7 +129,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                 //favourites/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add
                 return $http.get(baseUrl + 'favourites/' +
                     '/' + releaseId +
-                    '/' + searchType +
+                    '/' + releaseType +
                     '/' + searchTerm +
                     '/' + releaseTitle +
                     '/' + releaseYear +
@@ -138,7 +138,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                 );
             } else {
                 FacebookServices.login(function () {
-                    FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, searchType, searchTerm).success(function () {
+                    FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, releaseType, searchTerm).success(function () {
                         $rootScope.$broadcast(EventsConstants.releaseFavourited); //notify PlayerCtrl about the favourited release
                     });
                 });

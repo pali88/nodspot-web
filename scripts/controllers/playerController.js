@@ -152,9 +152,9 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    $scope.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, searchType) {
+    $scope.addReleaseToFavourites = function (releaseTitle, artistName, releaseId, releaseYear, releaseType) {
         if ($scope.currentlyPlaying.state == 'unfavourited') {
-            FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, searchType, SearchServices.searchTerm).then(function () {
+            FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, releaseType, SearchServices.searchTerm).then(function () {
                 $scope.isReleaseFavourite(releaseId);
             });
         } else {
