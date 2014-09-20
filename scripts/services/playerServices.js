@@ -23,7 +23,6 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         $window.ytPlayer = new YT.Player('embeddedPlayer', {
             height: '100%',
             width: '100%',
-//            width: '580',
             events: {
                 'onReady': PlayerServices.onReady,
                 'onStateChange': PlayerServices.onPlayerStateChanged
