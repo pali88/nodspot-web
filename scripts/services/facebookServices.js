@@ -58,7 +58,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
 
     FacebookServices.getNodspotUserId = function (fbUserId, fbEmail) {
         $http.get('apis/public/index.php/user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res) {
-            $http.defaults.headers.common.hash = res.data;
+            document.cookie = "hash=" + res.data;
             $rootScope.$broadcast('requestHeaderSet');
         });
     };
