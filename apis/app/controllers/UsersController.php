@@ -48,17 +48,14 @@ class UsersController extends BaseController {
         $userId = self::lookupUserIdByHash($hash);
 
         if (self::isValidRequest($hash) && $userId != null) {
-
             self::refreshHashExpiry($userId);
             self::updateLastIp($userId);
 
             return $userId;
         } else {
-
-            //request not valide (not authorised) - will have to sign in again.
+            //not authorised
             echo 'You will have to sign in again mate ;)';
         }
-
     }
 
 
