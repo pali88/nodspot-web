@@ -105,7 +105,6 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     ReleasesServices.workoutSearchType = function (searchType) {
         var newSearchType = '';
 
-        if (searchType == "" || searchType == undefined) {
             if (SearchServices.searchAttempt <= 3 && SearchServices.searchAttempt < 5) {
                 switch (SearchServices.searchAttempt) {
                     case 0 :
@@ -119,9 +118,6 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
                         break;
                 }
             }
-        } else {
-            newSearchType = searchType;
-        }
 
         return newSearchType;
     };
