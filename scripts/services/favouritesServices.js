@@ -49,8 +49,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
 
         FavouritesServices.fetchTracksPlaylists = function (trackId) {
-            $http.get(baseUrl + 'getTracksPlaylists' +
-                    '&track_id=' + trackId).success(function (tracksPlaylists) {
+            $http.get(baseUrl + 'track/' + trackId + '/belongsTo').success(function (tracksPlaylists) {
                     FavouritesServices.tracksPlaylists = tracksPlaylists;
                 });
         };
@@ -80,7 +79,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         FavouritesServices.getPlaylistTracks = function (playlistId) {
             SearchServices.expandProgressBar();
             PlayerServices.currentlyPlaying.playlistId = playlistId;
-            return $http.get(baseUrl + 'getTracksFromPlaylist' + '&playlist_id=' + playlistId).then(function (playlistTracks) {
+            return $http.get(baseUrl + 'playlist/' + playlistId).then(function (playlistTracks) {
 
                 var youtubeLikePlaylist = [];
 
@@ -128,13 +127,16 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
                 //todo check for the searchTerm is not empty - need to allow users to save supriseMe releases
 
-                return $http.get(baseUrl + 'favouriteAlbum' +
-                    '&album_name=' + releaseTitle +
-                    '&artist_name=' + artistName +
-                    '&album_id=' + releaseId +
-                    '&album_year=' + releaseYear +
-                    '&search_type=' + searchType +
-                    '&search_term=' + searchTerm);
+                //favourites/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add
+                return $http.get(baseUrl + 'favourites/' +
+                    '/' + releaseId +
+                    '/' + searchType +
+                    '/' + searchTerm +
+                    '/' + releaseTitle +
+                    '/' + releaseYear +
+                    '/' + artistName +
+                    '/add'
+                );
             } else {
                 FacebookServices.login(function () {
                     FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, searchType, searchTerm).success(function () {
@@ -144,13 +146,16 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
             }
         };
 
-
+        //playlist/{playlist_id}/{{new_playlist_name}/update
         FavouritesServices.renamePlaylist = function (index, playlistId, playlistName, event) {
             if (event.which == 13) {
                 if (FacebookServices.isConnected()) {
-                    return $http.get(baseUrl + 'updatePlaylist' +
-                            '&playlist_name=' + playlistName +
-                            '&playlist_id=' + playlistId).then(function () {
+
+                    return $http.get(baseUrl + 'playlist' +
+                            '/' + playlistId +
+                            '/' + playlistName +
+                            '/update'
+                    ).then(function () {
                             FavouritesServices.playlists[index].playlist_name = playlistName;
                             FavouritesServices.playlists[index].editMode = false;
                         });
@@ -158,44 +163,52 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
             }
         };
 
-
+        //playlist/{playlist_id}/delete
         FavouritesServices.deletePlaylist = function (index, playlistId, event) {
             event.stopPropagation();
             if (FacebookServices.isConnected()) {
                 var prompt = confirm(MessagesConstants.deletePlaylist);
 
                 if (prompt == true) {
-                    return $http.get(baseUrl + 'deletePlaylist' +
-                            '&playlist_id=' + playlistId).then(function () {
+                    return $http.get(baseUrl + 'playlist' +
+                            '/' + playlistId +
+                            '/delete'
+                    ).then(function () {
                             FavouritesServices.playlists.splice(index, 1);
                         });
                 }
             }
         };
 
-
+        //favourites/{release_id}/delete
         FavouritesServices.removeReleaseFromFavourites = function (releaseId) {
             if (FacebookServices.isConnected()) {
-                return $http.get(baseUrl + 'unfavouriteAlbum' +
-                    '&album_id=' + releaseId);
+                return $http.get(baseUrl + 'favourites' +
+                    '/' + releaseId +
+                    '/delete'
+                );
             }
         };
 
 
+        //favourites/{release_id}/existing
         FavouritesServices.isReleaseFavourite = function (releaseId) {
-            return $http.get(baseUrl + 'getAlbumState' +
-                '&album_id=' + releaseId);
+            return $http.get(baseUrl + 'favourites' +
+                '/' + releaseId +
+                '/existing'
+            );
         };
 
 
+        //playlist/{playlist_id}/{track_id}/{track_title}/{artist_name}/add
         FavouritesServices.addTrackToPlaylist = function (trackId, playlistId, playlistName, trackTitle, artistName) {
             if (FacebookServices.isConnected()) {
-                return $http.get(baseUrl + 'addTrackToPlaylist' +
-                    '&track_id=' + trackId +
-                    '&track_title=' + trackTitle +
-                    '&artist_name=' + artistName +
-                    '&playlist_id=' + playlistId +
-                    '&playlist_name=' + playlistName
+                return $http.get(baseUrl + 'playlist' +
+                    '/' + playlistId +
+                    '/' + trackId +
+                    '/' + trackTitle +
+                    '/' + artistName +
+                    '/add'
                 );
             } else {
                 FacebookServices.login(function () {
@@ -205,11 +218,13 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         };
 
 
+        //playlist/{playlist_id}/{track_id}/remove
         FavouritesServices.removeTrackFromPlaylist = function (trackId, playlistId) {
             if (FacebookServices.isConnected()) {
-                return $http.get(baseUrl + 'removeTrackFromPlaylist' +
-                    '&track_id=' + trackId +
-                    '&playlist_id=' + playlistId
+                return $http.get(baseUrl + 'playlist' +
+                    '/' + playlistId +
+                    '/' + trackId +
+                    '/remove'
                 );
             } else {
                 FacebookServices.login(function () {
