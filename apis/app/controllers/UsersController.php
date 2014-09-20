@@ -44,10 +44,7 @@ class UsersController extends BaseController {
 
 
     public static function getUserIdByHash() {
-
         $hash = Request::header('hash');
-
-//        $hash = '$2y$10$nnGf0lQYVuDUXoaS47hht.xAbA5GaTBIPK1O7qFcdVwe1kE4sqMBS'; //dev
         $userId = self::lookupUserIdByHash($hash);
 
         if (self::isValidRequest($hash) && $userId != null) {
