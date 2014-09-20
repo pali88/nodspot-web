@@ -44,7 +44,9 @@ class UsersController extends BaseController {
 
 
     public static function getUserIdByHash() {
-        $hash = Request::header('hash');
+        $hash = $_COOKIE['hash'];
+//        $hash = Request::header('hash');
+
         $userId = self::lookupUserIdByHash($hash);
 
         if (self::isValidRequest($hash) && $userId != null) {
