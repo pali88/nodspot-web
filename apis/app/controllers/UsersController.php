@@ -35,8 +35,8 @@ class UsersController extends BaseController {
 
 
     //get user's hash by his FB_ID
-    public static function getHashByUserId($fb_id, $email) {
-        $hash = DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fb_id, $email]);
+    public static function getHashByUserId($fbId, $email) {
+        $hash = DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fbId, $email]);
         $hash = $hash[0]->hash;
 
         return $hash;
@@ -45,8 +45,6 @@ class UsersController extends BaseController {
 
     public static function getUserIdByHash() {
         $hash = $_COOKIE['hash'];
-//        $hash = Request::header('hash');
-
         $userId = self::lookupUserIdByHash($hash);
 
         if (self::isValidRequest($hash) && $userId != null) {
