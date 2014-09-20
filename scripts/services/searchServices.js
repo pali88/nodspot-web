@@ -1,4 +1,6 @@
-nodspot.factory('SearchServices', ['$http', function ($http) {
+nodspot.factory('SearchServices', ['$http', 'ApiConstants', function ($http, ApiConstants) {
+
+    var baseUrl = ApiConstants.baseUrlNodspot;;
 
     var SearchServices = {
         searchTerm: '',
@@ -49,10 +51,14 @@ nodspot.factory('SearchServices', ['$http', function ($http) {
     };
 
 
+    //log/{search_term}/{search_type}
     SearchServices.logSearch = function (searchTerm, searchType) {
-        $http.get('favourites.php?action=logSearch&search_term=' + searchTerm + '&search_type=' + searchType);
+        $http.get(baseUrl +
+        'log' +
+        '/' + searchTerm +
+        '/' + searchType
+        );
     };
-
 
     return SearchServices;
 }]);
