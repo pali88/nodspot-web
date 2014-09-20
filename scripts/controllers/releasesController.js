@@ -57,9 +57,11 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
         ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
     });
 
+
     $scope.$on(EventsConstants.similarArtistsReturned, function () {
         $scope.expandSidebar();
     });
+
 
     $scope.$watch(ReleasesServices.getReleases, function (newValue, oldValue) {
         $scope.releases = ReleasesServices.getReleases();
