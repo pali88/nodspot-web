@@ -215,13 +215,20 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
     ReleasesServices.getReleaseTracklist = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
-        return $http.get(baseUrl + 'getReleaseById' + '&release_id=' + releaseId + '&release_type=' + releaseType + 's');
+
+        return $http.get(baseUrl
+        + 'getReleaseById'
+        + '&release_id='
+        + releaseId
+        + '&release_type='
+        + releaseType + 's'
+        );
     };
 
 
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
-        
+
         ReleasesServices.getReleaseTracklist(releaseId, releaseType).success(function (tracklist) {
             var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
             PlayerServices.currentlyPlaying.releaseId = releaseId;
@@ -258,6 +265,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         PlayerServices.currentlyPlaying.releaseTitle = release.title;
         PlayerServices.currentlyPlaying.releaseYear = release.year;
 
+
+        //build up a playlist, including artistNames that will be used for topTracksBtn
         angular.forEach(release.tracklist, function (track, i) {
             if (track.artists != undefined) {
                 artistName = track.artists[0].name;
