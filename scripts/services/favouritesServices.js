@@ -1,10 +1,9 @@
-nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope', 'EventsConstants', 'YoutubeServices', 'MessagesConstants', 'PlayerServices', 'SearchServices',
-    function ($http, FacebookServices, $rootScope, EventsConstants, YoutubeServices, MessagesConstants, PlayerServices, SearchServices) {
+nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope', 'EventsConstants', 'YoutubeServices', 'MessagesConstants', 'PlayerServices', 'SearchServices', 'ApiConstants',
+    function ($http, FacebookServices, $rootScope, EventsConstants, YoutubeServices, MessagesConstants, PlayerServices, SearchServices, ApiConstants) {
 
-        var baseUrl = 'apis/public/index.php/';
+        var baseUrl = ApiConstants.baseUrlNodspot;
         var FavouritesServices = {};
 
-        FavouritesServices.baseUrl = baseUrl;
 
         //will be used when saving a track to a playlist
         FavouritesServices.trackId = undefined;
