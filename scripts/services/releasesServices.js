@@ -98,6 +98,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         return url;
     };
 
+    //update ns_saved_albums set type = 'releases' where type = 'release'
+
 
     //work out what should the search type be for the next search.
     ReleasesServices.workoutSearchType = function (searchType) {
@@ -223,7 +225,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
-        ReleasesServices.getReleaseTracklist(releaseId, releaseType + 's').success(function (tracklist) {
+        ReleasesServices.getReleaseTracklist(releaseId, releaseType).success(function (tracklist) {
             var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
             PlayerServices.currentlyPlaying.releaseId = releaseId;
             PlayerServices.currentlyPlaying.releaseType = releaseType;
