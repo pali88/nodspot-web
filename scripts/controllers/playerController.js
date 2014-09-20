@@ -100,18 +100,14 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.$watch(SearchServices.getSearchSource, function () {
         var searchSource = SearchServices.getSearchSource();
 
-        if (searchSource == SearchServices.searchSources.tag || searchSource == SearchServices.searchSources.topTracks || searchSource == SearchServices.searchSources.directYoutube) {
+        if (searchSource == SearchServices.searchSources.tag || searchSource == SearchServices.searchSources.topTracks || searchSource == SearchServices.searchSources.directYoutube || searchSource == SearchServices.searchSources.userPlaylist) {
             $scope.collapseFavouriteBtn();
         } else {
             $scope.expandFavouriteBtn();
         }
 
         //hide toptracks btn for youtube searches
-        if (searchSource == SearchServices.searchSources.directYoutube) {
-            $scope.topTracksBtnVisibility = false;
-        } else {
-            $scope.topTracksBtnVisibility = true;
-        }
+        $scope.topTracksBtnVisibility = (searchSource == SearchServices.searchSources.directYoutube) ? false : true;
 
     });
 
