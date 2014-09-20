@@ -221,6 +221,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
     ReleasesServices.playRelease = function (releaseId, releaseType) {
         SearchServices.expandProgressBar();
+        
         ReleasesServices.getReleaseTracklist(releaseId, releaseType).success(function (tracklist) {
             var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
             PlayerServices.currentlyPlaying.releaseId = releaseId;

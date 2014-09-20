@@ -50,7 +50,6 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     };
 
 
-
     PlayerServices.onPlayerStateChanged = function (newState) {
         if (newState.data == 1 || newState.data == 3 || newState.data == 5) {
             PlayerServices.currentlyPlaying.track = ytPlayer.getPlaylistIndex();
@@ -61,6 +60,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
 
         return newState;
     };
+
 
     PlayerServices.removeEmptyItemsFromArray = function (list) {
         var cleanArray = [];
