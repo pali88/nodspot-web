@@ -221,7 +221,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
     $scope.isReleaseFavourite = function (releaseId) {
         FavouritesServices.isReleaseFavourite(releaseId).success(function (state) {
-            if (state == 1) {
+            if (state.length > 0) {
                 $scope.currentlyPlaying.state = "favourited";
                 $scope.currentlyPlaying.favouriteBtnTitle = "Unfavourite release";
             } else {
