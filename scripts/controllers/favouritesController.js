@@ -25,12 +25,15 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
     $scope.$watch(FacebookServices.isConnected, function () {
         if (FacebookServices.isConnected()) {
-            FacebookServices.getUserInfo(function () {
-                FavouritesServices.fetchPlaylists();
-                FavouritesServices.fetchFavourites();
-            });
             $scope.favouritesPanelVisibility = true;
         }
+    });
+
+
+    //once the request headers are set, try fetching users favourites
+    $scope.$on('requestHeaderSet', function (event) {
+        FavouritesServices.fetchPlaylists();
+        FavouritesServices.fetchFavourites();
     });
 
 

@@ -9,8 +9,6 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
             FacebookServices.getUserInfo(function (userInfo) {
                 $scope.$apply(function () {
                     $scope.user = userInfo;
-                    FavouritesServices.fetchPlaylists();
-                    FavouritesServices.fetchFavourites();
                 });
             });
         } else {

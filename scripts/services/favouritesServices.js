@@ -1,7 +1,7 @@
 nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope', 'EventsConstants', 'YoutubeServices', 'MessagesConstants', 'PlayerServices', 'SearchServices',
     function ($http, FacebookServices, $rootScope, EventsConstants, YoutubeServices, MessagesConstants, PlayerServices, SearchServices) {
 
-        var baseUrl = 'favourites.php?action=';
+        var baseUrl = 'apis/public/index.php/';
         var FavouritesServices = {};
 
         FavouritesServices.baseUrl = baseUrl;
@@ -17,7 +17,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
 
         FavouritesServices.fetchFavourites = function () {
-            $http.get(baseUrl + 'getFavouritedAlbums').success(function (favourites) {
+            $http.get(baseUrl + 'favourites').success(function (favourites) {
                 FavouritesServices.favourites = favourites;
             });
         };
@@ -29,13 +29,16 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
 
         FavouritesServices.fetchPlaylists = function () {
-            $http.get(baseUrl + 'getAllPlaylists').success(function (playlists) {
+            $http.get(baseUrl + 'playlists').success(function (playlists) {
                 angular.forEach(playlists, function (playlist) {
                     playlist.state = "notSaved"; //flag it so that no track's currently belong to this playlist
                     playlist.editMode = false; //flag so the "edit playlist name" input box is hidden
                 });
                 FavouritesServices.playlists = playlists;
-                FavouritesServices.fetchTracksPlaylists(FavouritesServices.trackId);
+
+                if (FavouritesServices.trackId) {
+                    FavouritesServices.fetchTracksPlaylists(FavouritesServices.trackId);
+                }
             });
         };
 
