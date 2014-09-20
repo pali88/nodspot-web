@@ -127,7 +127,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                 //todo check for the searchTerm is not empty - need to allow users to save supriseMe releases
 
                 //favourites/{release_id}/{type}/{search_term}/{title}/{year}/{artist_name}/add
-                return $http.get(baseUrl + 'favourites/' +
+                return $http.get(baseUrl + 'favourites' +
                     '/' + releaseId +
                     '/' + releaseType +
                     '/' + searchTerm +
