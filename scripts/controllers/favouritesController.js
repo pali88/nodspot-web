@@ -31,7 +31,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
 
     //once the request headers are set, try fetching users favourites
-    $scope.$on('requestHeaderSet', function (event) {
+    $scope.$on('requestCookieSet', function (event) {
         FavouritesServices.fetchPlaylists();
         FavouritesServices.fetchFavourites();
     });

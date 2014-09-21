@@ -1,4 +1,4 @@
-nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $rootScope) {
+nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', function ($http, $rootScope, ApiConstants) {
 
     var FacebookServices = {};
 
@@ -57,9 +57,10 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', function ($http, $ro
 
 
     FacebookServices.getNodspotUserId = function (fbUserId, fbEmail) {
-        $http.get('apis/public/index.php/user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res) {
+        $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res) {
             document.cookie = "hash=" + res.data;
-            $rootScope.$broadcast('requestHeaderSet');
+            $rootScope.$broadcast('requestCookieSet');
+            ApiConstants.baseUrlNodspot
         });
     };
 
