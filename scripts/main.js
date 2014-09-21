@@ -32,16 +32,6 @@ nodspot.constant('ApiConstants', {
 nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'ReleasesServices', 'FacebookServices', 'FavouritesServices', 'PlayerServices', 'SearchServices', 'ArtistServices', 'LastfmServices',
     function ($scope, EventsConstants, $location, ReleasesServices, FacebookServices, FavouritesServices, PlayerServices, SearchServices, ArtistServices, LastfmServices) {
 
-        //var host = $location.host(),
-        //    newUrl = '';
-        //
-        //
-        ////dirty hack: if the URL contains www, trim it out - for some reason, google won't accept API calls from www
-        //if (host.indexOf('www') > -1) {
-        //    newUrl = $location.absUrl().replace('www.', '');
-        //    window.document.location = newUrl;
-        //}
-
         $scope.appBackground = "mainBackground";
         $scope.progressBarVisibility = true;
 
@@ -69,6 +59,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
         };
 
 
+        //parse the URL when nodspot first launches, to see if there's any request to play an album or a playlist
         $scope.newUrlParser = function () {
             var urlParams = $location.search();
 
