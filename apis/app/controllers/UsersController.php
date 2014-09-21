@@ -61,9 +61,8 @@ class UsersController extends BaseController {
 
     public static function lookupUserIdByHash($hash) {
         $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        $userId = ($userId != null) ? $userId[0]->id : null;
 
-        return $userId;
+        return $userId = ($userId != null) ? $userId[0]->id : null;
     }
 
 
