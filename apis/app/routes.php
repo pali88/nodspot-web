@@ -18,7 +18,7 @@ Route::get('/', function () {
 //testing purposes
 Route::resource('getUserByHash', 'UsersController@getUserByHash');
 
-Route::resource('user', 'UsersController');
+//Route::resource('user', 'UsersController');
 Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
 
 Route::resource('playlists', 'PlaylistsController@getPlaylists');
