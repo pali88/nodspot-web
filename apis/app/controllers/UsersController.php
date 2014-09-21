@@ -100,9 +100,8 @@ class UsersController extends BaseController {
     public static function isSameIp($hash) {
         $lastIp = DB::select('SELECT last_ip FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $lastIp = ($lastIp != null) ? $lastIp[0]->last_ip : null;
-        $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
 
-        return $isSameIp;
+        return $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
     }
 
 
@@ -110,7 +109,7 @@ class UsersController extends BaseController {
     public static function isHashExpired($hash) {
         $hashExpiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $hashExpiry = $hashExpiry[0]->hash_expiry;
-        
+
         return $isExpired = (time() > $hashExpiry) ? true : false;
     }
 
