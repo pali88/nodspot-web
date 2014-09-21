@@ -26,7 +26,7 @@ class UsersController extends BaseController {
     }
 
 
-    public static function createUser ($fbId, $email) {
+    public static function createUser($fbId, $email) {
         DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
 
         //get user's hash that will be used for setting request headers
@@ -79,6 +79,7 @@ class UsersController extends BaseController {
         return $newHash;
     }
 
+
     public static function refreshHashExpiry($userId) {
         $hashExpiry = time() + 5*60;
         DB::update('UPDATE ' . T_USERS . ' SET hash_expiry = ? WHERE (id = ?)', [$hashExpiry, $userId]);
@@ -94,13 +95,12 @@ class UsersController extends BaseController {
     }
 
 
-
     //check if the request is coming from the same IP the user logged in
-    public static function isSameIp($hash) {
+    public static function isFromSameIp($hash) {
         $lastIp = DB::select('SELECT last_ip FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $lastIp = ($lastIp != null) ? $lastIp[0]->last_ip : null;
 
-        return $isSameIp = (Request::getClientIp() == $lastIp) ? true : false;
+        return $isFromSameIp = (Request::getClientIp() == $lastIp) ? true : false;
     }
 
 
@@ -118,6 +118,6 @@ class UsersController extends BaseController {
     public static function isValidRequest($hash) {
         $isValid = null;
 
-        return $isValid = (self::isSameIp($hash) && !self::isHashExpired($hash)) ? true : false;
+        return $isValid = (self::isFromSameIp($hash) && !self::isHashExpired($hash)) ? true : false;
     }
 }
