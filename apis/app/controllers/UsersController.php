@@ -110,9 +110,8 @@ class UsersController extends BaseController {
     public static function isHashExpired($hash) {
         $hashExpiry = DB::select('SELECT hash_expiry FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
         $hashExpiry = $hashExpiry[0]->hash_expiry;
-        $isExpired = (time() > $hashExpiry) ? true : false;
-
-        return $isExpired;
+        
+        return $isExpired = (time() > $hashExpiry) ? true : false;
     }
 
 
