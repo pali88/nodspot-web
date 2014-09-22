@@ -58,7 +58,8 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
 
     FacebookServices.getNodspotUserId = function (fbUserId, fbEmail) {
         $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res) {
-            document.cookie = "hash=" + res.data;
+            document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2099 12:00:00 UTC";
+
             $rootScope.$broadcast('requestCookieSet');
             ApiConstants.baseUrlNodspot
         });
