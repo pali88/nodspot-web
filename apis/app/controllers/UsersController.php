@@ -12,11 +12,6 @@ class UsersController extends BaseController {
 
         //if the user is found, renew his hash and last used ip
         if ($hash) {
-
-            $userId = self::lookupUserIdByHash($hash);
-            self::updateLastIp($userId);
-            self::refreshHashExpiry($userId);
-
             return self::renewHash($fbId, $email);
 
         } else {
@@ -47,20 +42,14 @@ class UsersController extends BaseController {
         $hash = $_COOKIE['hash'];
         $userId = self::lookupUserIdByHash($hash);
 
-        if (self::isValidRequest($hash) && $userId != null) {
-            self::refreshHashExpiry($userId);
-            self::updateLastIp($userId);
-
-            return $userId;
-        } else {
-            //not authorised
-            echo 'You will have to sign in again mate ;)';
-        }
+        return $userId;
     }
 
 
     public static function lookupUserIdByHash($hash) {
         $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
+        self::updateLastIp($userId);
+//        setcookie('pienas', 'niekosau', null, null, null, true, true);
 
         return $userId = ($userId != null) ? $userId[0]->id : null;
     }
@@ -90,8 +79,8 @@ class UsersController extends BaseController {
 
     //update user's last_ip used for authorisation with nodspot
     public static function updateLastIp($userId) {
-        $lastIp = Request::getClientIp();
-        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (id = ?)', [$lastIp, $userId]);
+        $currentIp = Request::getClientIp();
+        DB::update('UPDATE ' . T_USERS . ' SET last_ip = ? WHERE (id = ?)', [$currentIp, $userId]);
     }
 
 
