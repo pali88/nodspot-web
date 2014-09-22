@@ -16,7 +16,7 @@ class UsersController extends BaseController {
 
         } else {
             //user does not exist, create it
-            self::createUser($fbId, $email);
+            return self::createUser($fbId, $email);
         }
     }
 
@@ -24,12 +24,11 @@ class UsersController extends BaseController {
     public static function createUser($fbId, $email) {
         DB::insert('INSERT INTO ' . T_USERS . ' (user_id, email, hash) VALUES (?, ?, ?)', [$fbId, $email, self::generateHash()]);
 
-        //get user's hash that will be used for setting request headers
         return self::getHashByUserId($fbId, $email);
     }
 
 
-    //get user's hash by his FB_ID
+    //get user's hash that will be used for setting a cookie
     public static function getHashByUserId($fbId, $email) {
         $hash = DB::select('SELECT hash FROM ' . T_USERS . ' WHERE user_id = ? AND email = ?', [$fbId, $email]);
         $hash = $hash[0]->hash;
@@ -38,6 +37,7 @@ class UsersController extends BaseController {
     }
 
 
+    //will be used for every other API request, that requires the user id
     public static function getUserIdByHash() {
         $hash = $_COOKIE['hash'];
         $userId = self::lookupUserIdByHash($hash);
@@ -48,7 +48,7 @@ class UsersController extends BaseController {
 
     public static function lookupUserIdByHash($hash) {
         $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-//        setcookie('pienas', 'niekosau', null, null, null, true, true);
+//        setcookie('token', $hash, 60*60*24*12, null, null, true, true);
 
         return $userId = ($userId != null) ? $userId[0]->id : null;
     }
