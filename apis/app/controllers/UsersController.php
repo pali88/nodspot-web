@@ -48,7 +48,6 @@ class UsersController extends BaseController {
 
     public static function lookupUserIdByHash($hash) {
         $userId = DB::select('SELECT id FROM ' . T_USERS . ' WHERE hash = ?', [$hash]);
-        self::updateLastIp($userId);
 //        setcookie('pienas', 'niekosau', null, null, null, true, true);
 
         return $userId = ($userId != null) ? $userId[0]->id : null;
