@@ -51,7 +51,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
                         YoutubeServices.returnedVideosCounter++;
                         break;
                     }
-                    case 20: { //this means that we could not find any releases for this term, therefore we're returning 20 videos straight from youtube
+                    case 40: { //this means that we could not find any releases for this term, therefore we're returning 20 videos straight from youtube
                         angular.forEach(res.data.items, function (video, j) {
                             YoutubeServices.returnedVideos[j] = video;
                             YoutubeServices.returnedVideosCounter++;
