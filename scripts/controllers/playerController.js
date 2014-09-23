@@ -56,6 +56,12 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         return startFrom;
     };
 
+    //redirect user to the 3rd party website that allows them to download this video
+    $scope.downloadVideo = function ($videoId) {
+        window.location.target = '_blank';
+        window.open('http://convert2mp3.net/c-mp4.php?url=http://convert2mp3.net/share.php?url=https://www.youtube.com/watch?v=' + $videoId, '_blank');
+    };
+
 
     $scope.playPlaylist = function () {
         var interval = setInterval(function () {

@@ -366,6 +366,10 @@ button.addToPlaylist {
     background-image: url('../images/addToPlaylist.png');
 }
 
+button.download {
+    background-image: url('../images/download.png');
+}
+
 button.repeat {
     background: rgb(175,180,190) url('../images/repeat.png') no-repeat center;
 }
