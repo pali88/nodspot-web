@@ -165,8 +165,8 @@
                                 <div ng-click="playTrack($index)">{{track.snippet.title}}</div>
                                 <div class="options">
                                     <button ng-click="captureTrackInfo($index, track.id.videoId, track.snippet.title, track.artistName)" class="btn btnDark darkTheme addToPlaylist" title="Add track to playlist">&nbsp;</button>
-                                    <button ng-click="playTopTracks(track.artistName)" class="btn darkTheme topTracksBtn" title="{{track.artistName}} top tracks"></button>
                                     <button ng-click="downloadVideo(track.id.videoId)" class="btn btnDark darkTheme download" title="Download {{track.snippet.title}}"></button>
+                                    <button ng-click="playTopTracks(track.artistName)" class="btn darkTheme topTracksBtn" title="{{track.artistName}} top tracks"></button>
                                     <!--<button class="btn btnDark juno" url="http://www.junodownload.com/search/?q%5Ball%5D%5B%5D={{track.snippet.title}}&amp;solrorder=&amp;submit-search=SEARCH&amp;ref=kcp">BUY</button>-->
                                 </div>
                                 <!--<button class="btn btnDark repeat" repeatvideo="{{$index}}" title="Repeat!">&nbsp;</button>-->
