@@ -93,7 +93,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 }
                 case 'youtube':{
                     try {
-                        ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 20);
+                        ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 40);
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
                     } catch (e) {}
                     break;

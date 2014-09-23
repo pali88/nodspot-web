@@ -75,7 +75,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         }
         //if nothing is found on the 5th attempt, grab videos from youtube.
         else if (SearchServices.searchAttempt >= 3) {
-            ReleasesServices.getVideosFromYoutube(searchTerm, 20);
+            ReleasesServices.getVideosFromYoutube(searchTerm, 40);
         }
     };
 
