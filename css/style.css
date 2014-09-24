@@ -811,6 +811,7 @@ input#newPlaylistName {
 
 #playlistsForPlaying {
     overflow: hidden;
+    padding-top: 40px;
 }
 
 #playlistsForSaving {
