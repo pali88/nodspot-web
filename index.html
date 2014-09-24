@@ -13,7 +13,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
     <script src="https://apis.google.com/js/client.js?onload=load"></script>
-    <!--<script src="combined.js"></script>-->
+
     <script src="scripts/libs/angular.min.js"></script>
     <script src="scripts/libs/angular-touch.js"></script>
     <script src="scripts/main.js"></script>
@@ -84,17 +84,10 @@
 </header>
 
 <div id="errorMessageWrapper">The error message goes here</div>
-<!--<div id="ieBlockerWrapper">-->
-    <!--<div id="blockerContent" class="absoluteCenter">-->
-        <!--<img src="images/bigLogo.png">-->
-        <!--<p>Dear Sir or Madam, I'm afraid you will have to download a sane browser to use me.</p>-->
-    <!--</div>-->
-<!--</div>-->
 
 <div id="mainWrapper">
     <div id="panoramaWrapper">
         <div id="nodspotWrapper">
-
             <div ng-controller="SearchCtrl">
                 <ul id="genres" ng-show="stylesDropdownVisibility" ng-mouseleave="collapseSurpriseDropdown()" class="dropdown">
                     <li ng-repeat="style in styles | orderBy: 'name'" ng-click="getReleasesByStyle(style.name)">{{style.name}}</li>
@@ -129,7 +122,18 @@
             <div id="contentWrapper">
                 <div id="playerWrapper" ng-controller="PlayerCtrl" ng-show="playerVisibility">
                     <div style="height: 480px">
-                        <div id="embeddedPlayerWrapper" dock="true" y="bottom" x="right" dy="5%" dx="8%" z="99999999" w1="auto" w2="18em" h1="480px" h2="12em" treshold="650">
+                        <div id="embeddedPlayerWrapper"
+                             dock="true"
+                             y="bottom"
+                             x="right"
+                             dy="5%"
+                             dx="8%"
+                             z="99999999"
+                             w1="auto"
+                             w2="18em"
+                             h1="480px"
+                             h2="12em"
+                             treshold="650">
                             <div id="embeddedPlayer">
                                 <script>
                                     var tag = document.createElement('script');
@@ -141,7 +145,8 @@
                         </div>
                     </div>
                     <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
-                    <section id="videoListWrapper">
+
+                    <div id="videoListWrapper">
                         <div style="height: 55px">
                             <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px"  z="9999999999" colour="white" treshold="650">{{currentlyPlaying.title}}</h2>
                         </div>
@@ -160,6 +165,7 @@
                             <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
                             <button id="topTracks" class="btn darkTheme topTracksBtn" ng-show="topTracksBtnVisibility" ng-click="playTopTracks(currentlyPlaying.artistName)">{{currentlyPlaying.artistName}} top tracks</button>
                         </div>
+
                         <ol id="ytTrackList">
                             <li ng-repeat="track in playlist" ng-click="playTrack($index)" ng-class="track.state">
                                 <div>{{track.snippet.title}}</div>
@@ -167,20 +173,15 @@
                                     <button ng-click="captureTrackInfo($index, track.id.videoId, track.snippet.title, track.artistName)" class="btn btnDark darkTheme addToPlaylist" title="Add {{track.snippet.title}} to playlist">&nbsp;</button>
                                     <button ng-click="downloadVideo(track.id.videoId)" class="btn btnDark darkTheme download" title="Download {{track.snippet.title}}"></button>
                                     <button ng-click="playTopTracks(track.artistName)" class="btn darkTheme topTracksBtn" title="{{track.artistName}} top tracks"></button>
-                                    <!--<button class="btn btnDark juno" url="http://www.junodownload.com/search/?q%5Ball%5D%5B%5D={{track.snippet.title}}&amp;solrorder=&amp;submit-search=SEARCH&amp;ref=kcp">BUY</button>-->
                                 </div>
                                 <!--<button class="btn btnDark repeat" repeatvideo="{{$index}}" title="Repeat!">&nbsp;</button>-->
                             </li>
                         </ol>
-
-                    </section>
-                </div>
-                <aside ng-controller="ReleasesCtrl" ng-show="sidebarVisibility">
-                    <div id="notFound">
-                        <h2></h2>
-                        <p></p>
                     </div>
-                    <section id="releasesWrapper">
+                </div>
+
+                <div id="sideBarWrapper" ng-controller="ReleasesCtrl" ng-show="sidebarVisibility">
+                    <div id="releasesWrapper">
                         <div ng-show="releasesVisibility">
                             <h2>Releases</h2>
                             <ul id="releases" class="collapsed">
@@ -188,8 +189,9 @@
                             </ul>
                         </div>
                         <!--<button id="moreReleases" class="btn">More</button>-->
-                    </section>
-                    <section id="similarArtitsWrapper" ng-controller="ArtistsCtrl">
+                    </div>
+
+                    <div id="similarArtitsWrapper" ng-controller="ArtistsCtrl">
                         <h2>Similar</h2>
                         <ul id="similarArtists">
                             <li ng-repeat="artist in similarArtists" ng-click="searchArtist(artist.name)">
@@ -199,16 +201,11 @@
                                 </div>
                             </li>
                         </ul>
-                    </section>
-                    <div id="artistInfoWrapper" ng-controller="ArtistsCtrl" class="popup">
-                        <img id="artistImage" src=""/>
-                        <h2 id="artistName2">{{artist.name}}</h2>
-                        <div id="bioWrapper">
-                            <p id="artistBio">{{artist.bio.content}}</p>
-                        </div>
                     </div>
-                </aside>
+
+                </div>
             </div>
+
             <div id="mainGenresWrapper" ng-controller="GenresCtrl" ng-show="visibility">
                 <h2 class="center">...or select a people curated playlist to start!</h2>
                 <ul class="surprise center">
@@ -219,7 +216,6 @@
                         <img class="absoluteCenter" src="{{tag.src}}" alt="{{tag.name}}"/>
                     </li>
                 </ul>
-
                 <h2 class="center">...or select a genre and be surprised with a random release!</h2>
                 <ul class="surprise center">
                     <li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">
@@ -231,13 +227,13 @@
     </div>
 </div>
 
-<section id="artistImagesWrapper" ng-controller="ArtistsCtrl" ng-show="artistImagesVisibility" ng-class="state" ng-swipe-right="expandPanel()" ng-swipe-left="collapsePanel()" ng-mouseenter="expandPanel()" ng-mouseleave="collapsePanel()" class="collapsed">
+<div id="artistImagesWrapper" ng-controller="ArtistsCtrl" ng-show="artistImagesVisibility" ng-class="state" ng-swipe-right="expandPanel()" ng-swipe-left="collapsePanel()" ng-mouseenter="expandPanel()" ng-mouseleave="collapsePanel()" class="collapsed">
     <div id="artistImages">
         <img ng-repeat="image in images" src="{{image.url}}" rel="lightbox">
     </div>
-</section>
+</div>
 
-<section id="favouritesWrapper" class="collapsed darkTheme" ng-mouseenter="expandPanel()" ng-show="favouritesPanelVisibility" ng-swipe-left="expandPanel()" ng-swipe-right="collapsePanel()" ng-mouseleave="collapsePanel()" ng-class="state" ng-controller="FavouritesCtrl">
+<div id="favouritesWrapper" class="collapsed darkTheme" ng-mouseenter="expandPanel()" ng-show="favouritesPanelVisibility" ng-swipe-left="expandPanel()" ng-swipe-right="collapsePanel()" ng-mouseleave="collapsePanel()" ng-class="state" ng-controller="FavouritesCtrl">
     <p ng-show="placeholderVisibility">Your favourites will appear here</p>
     <input id="searchFavourites" placeholder="find in your favourites" ng-model="searchFavourites"/>
     <ul id="playlistsForPlaying">
@@ -251,7 +247,7 @@
     <ul id="favourites" title="Sign in to see your favourites" class="verticalStretch">
         <release-item releases="releases" search-Favourites="searchFavourites" play-Release="playRelease"></release-item>
     </ul>
-</section>
+</div>
 
 <div id="whyNodSpotWrapper" class="darkTheme">
     <div class="center">

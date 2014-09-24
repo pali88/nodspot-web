@@ -194,13 +194,6 @@ header img:hover {
     top: 30px;
 }
 
-#beta {
-    display: inline;
-    position: absolute;
-    top: 10px;
-    left: 130px;
-}
-
 #logo {
     height: 1.1em;
 }
@@ -427,33 +420,9 @@ ul.dropdown li, #playlistsForSaving.dropdown li {
 
 #panoramaWrapper {
     transition: all .35s cubic-bezier(0.165, 0.84, 0.44, 1);;
-    /*margin-left: -920px;*/
     position: relative;
 }
 
-#panoramaWrapper.sc {
-    margin-left: -1000px;
-    min-height: 2100px;
-}
-
-#nodspotWrapper {
-}
-
-#soundcloudWrapper, #mixcloudWrapper {
-    position: absolute;
-    top: 0;
-    width: 920px;
-    height: auto;
-}
-
-#soundcloudWrapper {
-    left: 1000px;
-}
-
-#mixcloudWrapper {
-    background: green;
-    left: 1840px;
-}
 
 /* START CONTENT WRAPPERS */
 #mainWrapper {
@@ -683,14 +652,6 @@ ul.dropdown li:hover, ul.dropdown li.active {
     transition: all .3s ease;
 }
 
-#sc-widget {
-    /*display: none;*/
-    height: 165px;
-    overflow: hidden;
-    padding-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
 #sc-widget.expanded { height: 410px; }
 
 #ytTrackList li, #releases, #releaseName { font-size: .95em }
@@ -711,7 +672,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
 #scTrackList li { padding: 10px 10px 10px 0; }
 
 #ytTrackList li div:first-child { width: 100%; }
-#ytTrackList li.active, #ytTrackList li:hover, #scTrackList li.active div, #scTrackList li:hover div {
+#ytTrackList li.active, #ytTrackList li:hover, #scTrackList li.active div {
     padding-left: 10px;
     transition: all 0.1s ease-out time;
 }
@@ -787,11 +748,7 @@ h2#artistName {
 }
 #artistName:hover { color: rgba(102,110,128, 0.8); }
 
-#scArtistName {
-    margin: 0;
-}
-
-#releaseName, #scTrackName {
+#releaseName {
     opacity: .5;
     float: left;
 }
@@ -802,10 +759,6 @@ h2#artistName {
 
 #releaseName, #favouriteAlbum {
     height: 1.3em;
-}
-
-#scTrackName {
-    margin: 0 0 15px 0;
 }
 
 add-to-playlist {
@@ -902,7 +855,7 @@ input#newPlaylistName {
 
 
 /* START SIDE PANEL - RELEASES AND SIMILAR ARTISTS */
-aside {
+#sideBarWrapper {
     float: left;
     width: 33%;
     margin-top: -6px;
@@ -910,7 +863,7 @@ aside {
     font-size: 0.9em;
 }
 
-aside h2, h2 {
+#sideBarWrapper h2, h2 {
     border: none;
     font-size: 1.8em;
     font-weight: 400;
@@ -918,7 +871,7 @@ aside h2, h2 {
     text-transform: capitalize;
 }
 
-aside .btn {
+#sideBarWrapper .btn {
     text-transform: capitalize;
 }
 
@@ -965,19 +918,6 @@ h3 {
     background: rgba(46, 166, 162, 0.3);
 }
 
-/*.acc1 {*/
-    /*background: rgba(102,110,128, 0.4);*/
-/*}*/
-/*.acc2 {*/
-    /*background: rgba(102,110,128, 0.6);*/
-/*}*/
-/*.acc3 {*/
-    /*background: rgba(102,110,128, 0.8);*/
-/*}*/
-/*.acc4 {*/
-    /*background: rgba(17,166,163, .55);*/
-/*}*/
-
 #releasesWrapper:hover > #moreReleases.btn {
     opacity: 1;
 }
@@ -991,10 +931,6 @@ h3 {
     text-align: right;
     transition: all 0.2s ease-in;
 }
-
-/*#moreReleases.btn:hover {*/
-    /*opacity: .7;*/
-/*}*/
 
 #releases li, #similarArtitsWrapper li {
     height: auto;
@@ -1017,11 +953,6 @@ h3 {
         width: 40px;
         color: rgba(255,255,255, 1);
     }
-
-/*.thumb, .thumbWrapper {*/
-        /*height: 40px;*/
-        /*width: 40px;*/
-    /*}*/
 
     .title, .year {
         position: absolute;
@@ -1056,29 +987,6 @@ h3 {
     margin-bottom: 100px;
 }
 /* END SIDE PANEL - RELEASES AND SIMILAR ARTISTS */
-
-
-
-#artistInfoWrapper {
-    display: none;
-    top: -1px;
-    right: 1px;
-    width: 308px;
-}
-    #artistImage { width: 100%; }
-    #artistName2 {
-        color: white;
-        padding: 3px 15px;
-        margin: -4px 0 0 0;
-    }
-    #artistInfoWrapper p {
-        margin-bottom: 0;
-    }
-
-    #bioWrapper {
-        padding: 20px 30px 30px 30px;
-    }
-/* END ARTIST BIOGRAPHY POPUP */
 
 
 /* START ARTIST IMAGES WRAPPER & FAVOURITES */
@@ -1168,7 +1076,7 @@ h3 {
         width: 100%;
         display: block;
     }
-    #artistImages img:active, #artistInfoWrapper img:active {
+    #artistImages img:active {
         opacity: 0.75;
         padding-left: 1px;
     }
@@ -1305,22 +1213,6 @@ ul.whyNodSpot {
 
 /* END WHY NODSPOT - FRONT PAGE */
 
-
-/* START ALBUMS NOT FOUND*/
-#notFound {
-    display: none;
-    text-transform: none;
-}
-#notFound p {
-    margin-bottom: 30px;
-    padding-left: 10px;
-}
-#notFound h2 {
-    text-transform: none;
-}
-/* END ALBUMS NOT FOUND*/
-
-
 /* START TIPS POPUP */
 #tipWrapper {
     background: #666e80;
@@ -1408,27 +1300,6 @@ ul.whyNodSpot {
 /* END GRAB USER'S ATTENTION TO CLICK ON THE ARTIST */
 
 
-#scrollToTop {
-    background: #272c38 url('../images/top.png') no-repeat center;
-    border: none;
-    bottom: -80px;
-    height: 70px;
-    left: 0;
-    margin: auto;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    transition: all 0.4s ease-out;
-    width: 90px;
-}
-#scrollToTop.expanded {
-    bottom: 30px;
-    opacity: .4;
-}
-#scrollToTop.expanded:hover {
-    opacity: 1;
-}
-
 ::selection {
     color: #ffffff;
     background: #11a6a3;
@@ -1512,7 +1383,7 @@ ul.whyNodSpot {
         font-size: 0.4em;
     }
 
-    aside {
+    #sideBarWrapper {
         clear: both;
         width: 100%;
     }
