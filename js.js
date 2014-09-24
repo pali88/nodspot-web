@@ -35,8 +35,8 @@ var LASTFM_API_KEY = "364727cc40706da6eb7d5829f7435bd0",
     artistImagesWrapper = $('#artistImagesWrapper'),
     artistInfoWrapper = $('#artistInfoWrapper'),
     artistImages = $('#artistImages'),
-    discography = $('#discography'),
-    discographyWrapper = $('#discographyWrapper'),
+    releases = $('#releases'),
+    releasesWrapper = $('#releasesWrapper'),
     similarArtistsWrapper = $('#similarArtitsWrapper'),
     similarArtists = $('#similarArtists'),
     mainGenresWrapper = $('#mainGenresWrapper'),
@@ -107,7 +107,7 @@ var releaseObj = {
     areCoversDownloaded: false,
     searchTerm: '',    //used for storing last search term. Needed when the user deletes artist name from the search input, but still wants to play an album. To search for videos we need both artist name and tracklist.
     searchType: '',
-    searchSources: { //0 - hash, 1 - user input from searchinput box, discography or favourites, 2 - surprise me
+    searchSources: { //0 - hash, 1 - user input from searchinput box, releases or favourites, 2 - surprise me
         hash: 0,
         userInput: 1,
         surpriseMe: 2,
@@ -397,7 +397,7 @@ var helpersObj = {
     },
 
     activateNodspotTab: function () {
-        if (discography.children().length < 0) {
+        if (releases.children().length < 0) {
             genresObj.load();
         }
 
@@ -603,14 +603,14 @@ var artistObj = {
 
 };
 
-var discographyObj = {
+var releasesObj = {
     toggleMoreLessReleases: function () {
-        if (discography.hasClass("collapsed")) {
+        if (releases.hasClass("collapsed")) {
             $('#moreReleases').text("Less");
         } else {
             $('#moreReleases').text("More");
         }
-        discography.toggleClass("collapsed", "");
+        releases.toggleClass("collapsed", "");
     }
 };
 
@@ -906,8 +906,8 @@ var fbObj = {
     shareAlbum: function () {
         var picture = '',
             rand = 0,
-            releaseTitle = discography.find('li.active').find('.title').text(),
-            year = discography.find('li.active').find('.year').text(),
+            releaseTitle = releases.find('li.active').find('.title').text(),
+            year = releases.find('li.active').find('.year').text(),
             tracksCount = ytTrackList.find('li').length,
             imagesCount = artistImages.children().length;
 
@@ -1090,7 +1090,7 @@ $('#newPlaylistName').on('keydown', function (event){
 
 
 //Click on an album to play it.
-discography.on('click', 'li', function () {
+releases.on('click', 'li', function () {
 
 });
 
@@ -1131,7 +1131,7 @@ favouriteAlbumBtn.click(function () {
 
     //if the album we're trying to write to DB does not have the searchTerm metadata attached to it, let's grab albums name.
     if (searchTerm == "") {
-        searchTerm = discography.find("li.active").children().children().eq(2).text();
+        searchTerm = releases.find("li.active").children().children().eq(2).text();
     }
 
     favouritesObj.favouriteBtnClicked(
@@ -1188,7 +1188,7 @@ playerWrapper.mouseout(function () {
 shareFacebook.click(function () {fbObj.shareAlbum();});
 
 $('#moreReleases').click(function (){
-    discographyObj.toggleMoreLessReleases();
+    releasesObj.toggleMoreLessReleases();
 });
 
 $('#nodspotBtn').click(function () {

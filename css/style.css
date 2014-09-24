@@ -693,7 +693,7 @@ ul.dropdown li:hover, ul.dropdown li.active {
 
 #sc-widget.expanded { height: 410px; }
 
-#ytTrackList li, #discography, #releaseName { font-size: .95em }
+#ytTrackList li, #releases, #releaseName { font-size: .95em }
 
 #ytTrackList {
     overflow: hidden;
@@ -927,17 +927,17 @@ h3 {
     font-weight: 100;
 }
 
-#discographyWrapper {
+#releasesWrapper {
     background: transparent;
     /*display: none;*/
 }
 
-#discography {
+#releases {
     transition: all 0.3 ease-out;
     margin-bottom: 60px;
 }
 
-#discography.collapsed {
+#releases.collapsed {
     /*height: 600px;*/
     overflow: hidden;
     transition: all 0.3 ease-out;
@@ -978,7 +978,7 @@ h3 {
     /*background: rgba(17,166,163, .55);*/
 /*}*/
 
-#discographyWrapper:hover > #moreReleases.btn {
+#releasesWrapper:hover > #moreReleases.btn {
     opacity: 1;
 }
 
@@ -996,7 +996,7 @@ h3 {
     /*opacity: .7;*/
 /*}*/
 
-#discography li, #similarArtitsWrapper li {
+#releases li, #similarArtitsWrapper li {
     height: auto;
 }
 
