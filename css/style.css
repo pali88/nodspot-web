@@ -552,11 +552,15 @@ input:hover {
     position: absolute;
     top: 50px;
     left: 18px;
-    width: 260px;
+    width: 100%;
     z-index: 20;
     opacity: 1;
     padding-top: 10px;
-    /*display: none;*/
+}
+
+#genres li {
+    display: inline-block;
+    width: 6em;
 }
 
 .surprise {
