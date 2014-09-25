@@ -29,6 +29,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
         FavouritesServices.fetchPlaylists = function () {
             $http.get(baseUrl + 'playlists').success(function (playlists) {
+
                 angular.forEach(playlists, function (playlist) {
                     playlist.state = "notSaved"; //flag it so that no track's currently belong to this playlist
                     playlist.editMode = false; //flag so the "edit playlist name" input box is hidden
