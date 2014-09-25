@@ -135,7 +135,9 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                     '/' + releaseYear +
                     '/' + artistName +
                     '/add'
-                );
+                ).then(function () {
+                        FavouritesServices.fetchFavourites();
+                    });
             } else {
                 FacebookServices.login(function () {
                     FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, releaseType, searchTerm).success(function () {
