@@ -59,7 +59,7 @@ return array(
 			'username'  => 'nodspot_pienas',
 			'password'  => 'Spotless13',
 			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
+			'collation' => 'utf8_bin',
 			'prefix'    => '',
 		),
 
