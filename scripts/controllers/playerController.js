@@ -93,6 +93,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             $scope.currentlyPlaying = PlayerServices.getCurrentlyPlaying();
             $scope.currentlyPlaying.artistName = $scope.playlist[$scope.currentlyPlaying.track].artistName; //for top tracks btn
             $scope.highlightTrack($scope.currentlyPlaying.track);
+            ArtistServices.getSimilar($scope.currentlyPlaying.artistName);
         } catch (e) {
         }
     });
