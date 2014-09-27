@@ -72,6 +72,7 @@ html.searchBackground {
 }
 
 body {
+    /*font-family: 'Open Sans', sans-serif;*/
     font-family: 'Ubuntu', sans-serif;
 }
 
@@ -749,7 +750,12 @@ h2#artistName {
     -ms-transition: all 0.3 ease-out;
     -o-transition: all 0.3 ease-out;
     transition: all 0.3 ease-out;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
 }
+
 #artistName:hover { color: rgba(102,110,128, 0.8); }
 
 #releaseName {
