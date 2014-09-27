@@ -56,11 +56,21 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     };
 
 
+    //check if hash cookie exists
+    FacebookServices.isCookieSet = function () {
+        return document.cookie.indexOf('hash') > -1;
+    };
+
     FacebookServices.getNodspotUserId = function (fbUserId, fbEmail) {
-        $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res, status, headers, config) {
-            document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2099 12:00:00 UTC";
-            $rootScope.$broadcast('requestCookieSet');
-        });
+        var eventCookieSet = 'requestCookieSet'
+        if (!FacebookServices.isCookieSet()) {
+            $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res, status, headers, config) {
+                document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2015 12:00:00 UTC";
+                $rootScope.$broadcast(eventCookieSet);
+            });
+        } else {
+            $rootScope.$broadcast(eventCookieSet);
+        }
     };
 
 
