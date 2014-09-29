@@ -137,21 +137,6 @@ header, footer {
 .topTabs.active:hover { background: rgba(255,255,255,.1); }
 
 
-
-#slider {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    width: 920px;
-    margin-top: 4px;
-    display: none;
-}
-
-#sliderHandle {
-    background: #666e80;
-    border-color: rgba(255,255,255,0.6);
-    width: 10px;
-}
-
 header {
     /*height: 30px;*/
     height: 2.3em;
