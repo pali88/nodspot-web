@@ -88,14 +88,14 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     //currently playing track/release metadata
-    $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function (newValue, oldValue) {
+    $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function (newCurrentlyPlaying, oldCurrentlyPlaying) {
         try {
-            $scope.currentlyPlaying = newValue;
+            $scope.currentlyPlaying = newCurrentlyPlaying;
             $scope.currentlyPlaying.artistName = $scope.playlist[$scope.currentlyPlaying.track].artistName; //for top tracks btn
             $scope.highlightTrack($scope.currentlyPlaying.track);
 
             //do not request to get similar artists if the artistName does not change
-            if (newValue.artistName != oldValue.artistName) {
+            if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
                 ArtistServices.getSimilar($scope.currentlyPlaying.artistName);
             }
 
