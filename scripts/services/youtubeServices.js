@@ -44,6 +44,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
 
         $http.get(encodeURI(url)).then(function (res) {
             if (res.data.pageInfo.totalResults > 0) {
+
                 switch (maxResults) {
                     case 1: {
                         YoutubeServices.returnedVideos[i] = res.data.items[0];
@@ -60,6 +61,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
                         break;
                     }
                 }
+
             } else {
                 YoutubeServices.playlistLength--;
             }

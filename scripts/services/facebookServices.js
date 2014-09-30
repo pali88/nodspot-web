@@ -84,6 +84,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     FacebookServices.getLoginStatus = function () {
         FB.getLoginStatus(function (res) {
             $rootScope.$apply(function () {
+
                     if (res.status === "connected") {
                         FacebookServices.connected = true;
                     } else {
