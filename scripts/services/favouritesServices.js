@@ -79,10 +79,12 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         FavouritesServices.getPlaylistTracks = function (playlistId) {
             SearchServices.expandProgressBar();
             PlayerServices.currentlyPlaying.playlistId = playlistId;
+
             return $http.get(baseUrl + 'playlist/' + playlistId).then(function (playlistTracks) {
 
                 var youtubeLikePlaylist = [];
 
+                //format playlist obj in the same way as youtube returned videos
                 angular.forEach(playlistTracks.data, function (track, i) {
                     youtubeLikePlaylist[i] = {
                         snippet: {
@@ -95,8 +97,11 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                     }
                 });
 
+                //Notify PlayerCtrl about a new playlist he needs to play. Also, send it.
                 $rootScope.$broadcast(EventsConstants.playlistReady, youtubeLikePlaylist);
-                return playlistTracks.data;
+
+                //return playlist tracks
+                return youtubeLikePlaylist;
             });
         };
 
