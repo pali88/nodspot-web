@@ -55,7 +55,7 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         if (SearchServices.searchAttempt < 3) {
             $http.get(baseUrl + 'getAllReleases&' + url)
                 .success(function (releases) {
-                    ReleasesServices.returnedReleases = ReleasesServices.excludeLabelsFromResults(releases.results);
+                    ReleasesServices.returnedReleases = ReleasesServices.cleanUpReleases(releases.results);
                     returnedReleasesCounter = ReleasesServices.returnedReleases.length;
 
                     //if more than 5 releases returned, broadcast them. ReleasesCtrl will be waiting.
@@ -123,11 +123,14 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     };
 
 
-    ReleasesServices.excludeLabelsFromResults = function (releases) {
+    //filters out labels, also removes ([0-9]) from the artist name
+    ReleasesServices.cleanUpReleases = function (releases) {
         var cleanReleases = [];
 
         angular.forEach(releases, function (release, i) {
             if (release.type == 'master' || release.type == 'release') {
+            //\([0-9]+\)
+                release.title = release.title.replace(/\([0-9]+\)/g, '').replace('  ', ' ');
                 cleanReleases.push(release);
             }
         });
