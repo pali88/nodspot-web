@@ -196,20 +196,24 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         switch (SearchServices.searchSource) {
             case SearchServices.searchSources.surpriseMe:
             case SearchServices.searchSources.userInput:
+
             default: {
                 caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' album ' + PlayerServices.currentlyPlaying.releaseTitle + ' containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
                 break;
             }
+
             case SearchServices.searchSources.directYoutube: {
                 caption = PlayerServices.currentlyPlaying.title + ' all tracks from youtube here at nodspot.com!';
                 imgUrl = nodspotLogo;
                 break;
             }
+                
             case SearchServices.searchSources.topTracks: {
                 caption = 'Listen to top tracks from ' + PlayerServices.currentlyPlaying.title + ' at nodspot.com!';
                 imgUrl = nodspotLogo;
                 break;
             }
+
             case SearchServices.searchSources.tag: {
                 imgUrl = 'http://www.nodspot.com/' + GenresServices.imagesPath + PlayerServices.currentlyPlaying.title.replace(/ /g, '-') + '1.jpg';
                 caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' playlist, containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
