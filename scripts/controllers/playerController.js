@@ -207,7 +207,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
                 imgUrl = nodspotLogo;
                 break;
             }
-                
+
             case SearchServices.searchSources.topTracks: {
                 caption = 'Listen to top tracks from ' + PlayerServices.currentlyPlaying.title + ' at nodspot.com!';
                 imgUrl = nodspotLogo;
