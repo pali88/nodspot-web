@@ -1,5 +1,4 @@
 <?php
-include 'users.php';
 
 error_reporting(0);
 $life_time = 99999999999; //seconds
@@ -11,13 +10,13 @@ session_start();
 setcookie(session_name(), session_id(), time() + $life_time);
 session_set_cookie_params($life_time);
 
-$dsn = 'mysql:dbname=nodspot_db;host=localhost';
-$user = 'nodspot_pienas';
-$password = 'Spotless13';
+//$dsn = 'mysql:dbname=nodspot_db;host=localhost';
+//$user = 'nodspot_pienas';
+//$password = 'Spotless13';
 
-//$dsn = 'mysql:dbname=marso_pienas;host=localhost';
-//$user = 'root';
-//$password = '';
+$dsn = 'mysql:dbname=nodspot_db;host=localhost';
+$user = 'root';
+$password = '';
 
 
 try {
@@ -153,15 +152,12 @@ if ($con) {
         }
 
         case "getAllPlaylists" : {
-//            echo 'is get all pl: ' . $_COOKIE['nsusrid'];
-
-            $sql = "SELECT playlist_id, playlist_name FROM ns_playlists WHERE user_id = $user_id_nodspot ORDER BY playlist_name ASC";
-            $query = $con->prepare($sql);
-            $query->execute();
-            $results = $query->fetchAll();
-            echo json_encode($results);
-            break;
-//            $FavouritesServices->getAllPlaylists($user_id_nodspot);
+//            $sql = "SELECT playlist_id, playlist_name FROM ns_playlists WHERE user_id = $user_id_nodspot ORDER BY playlist_name ASC";
+//            $query = $con->prepare($sql);
+//            $query->execute();
+//            $results = $query->fetchAll();
+//            echo json_encode($results);
+//            break;
         }
 
         case "getTracksFromPlaylist" : {
