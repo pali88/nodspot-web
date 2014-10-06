@@ -12,7 +12,8 @@ class UsersController extends BaseController {
 
         //if the user is found, renew his hash and last used ip
         if ($hash) {
-            return self::renewHash($fbId, $email);
+            return $hash;
+//            return self::renewHash($fbId, $email);
 
         } else {
             //user does not exist, create it
