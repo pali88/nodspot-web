@@ -35,7 +35,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
         $scope.appBackground = "mainBackground";
         $scope.progressBarVisibility = true;
 
-        FacebookServices.isLive();
+        FacebookServices.isSDKLoaded();
 
         //change background image once the playlist is ready
         $scope.$on(EventsConstants.playlistReady, function () {
