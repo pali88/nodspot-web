@@ -66,9 +66,9 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
         var eventCookieSet = 'requestCookieSet';
 
         $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res, status, headers, config) {
-            document.cookie = "hash=" + res.data;
             console.log('new cookie: ' + document.cookie);
             document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2015 12:00:00 UTC";
+
             $rootScope.$broadcast(eventCookieSet);
         });
     };

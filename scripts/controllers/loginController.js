@@ -3,7 +3,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
     $scope.loginMenuClass = 'collapsed';
 
     $scope.$watch(FacebookServices.isConnected, function () {
-        if (FacebookServices.connected) {
+        if (FacebookServices.isConnected()) {
             $scope.facebookBtn = LoginConstants.fbLogout;
 
             FacebookServices.getUserInfo(function (userInfo) {
@@ -29,7 +29,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
     };
 
     $scope.fbLogin = function () {
-        if (FacebookServices.connected) {
+        if (FacebookServices.isConnected()) {
             FacebookServices.logout();
         } else {
             FacebookServices.login();
