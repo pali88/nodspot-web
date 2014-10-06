@@ -13,9 +13,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     //check if FB SDK is loaded, and if it is, get login status
     FacebookServices.isSDKLoaded = function () {
         try {
-            if (FB != undefined) {
-                FacebookServices.getLoginStatus();
-            }
+            FacebookServices.getLoginStatus();
         } catch (e) {
             setTimeout(function () {
                 FacebookServices.isSDKLoaded();
@@ -84,12 +82,14 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
 
 
     FacebookServices.getLoginStatus = function () {
-        FB.getLoginStatus(function (res) {
-            $rootScope.$apply(function () {
-                    return FacebookServices.connected = res.status === "connected" ? true : false;
-                }
-            );
-        });
+        if (FB != undefined) {
+            FB.getLoginStatus(function (res) {
+                $rootScope.$apply(function () {
+                        return FacebookServices.connected = res.status === "connected" ? true : false;
+                    }
+                );
+            });
+        }
     };
 
     return FacebookServices;
