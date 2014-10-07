@@ -32,6 +32,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
         });
     }
 
+
     FacebookServices.login = function (callback) {
         FB.login(function (response) {
             $rootScope.$apply(function () {
