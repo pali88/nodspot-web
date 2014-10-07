@@ -26,7 +26,6 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     FacebookServices.subscribeToStatusChange = function () {
         FB.Event.subscribe('auth.statusChange', function(response) {
             if(response.status == 'connected') {
-                console.log('speisbukas connected');
                 FacebookServices.connected = true;
             }
         });
