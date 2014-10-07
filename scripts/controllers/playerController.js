@@ -120,6 +120,9 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
                     //increase currently playing tracks index
                     PlayerServices.currentlyPlaying.track++;
                     $scope.playPlaylist();
+
+                    //updates the URL hash to reflect the real tracks URL
+                    PlayerServices.updateHash();
                 }
             });
         }
