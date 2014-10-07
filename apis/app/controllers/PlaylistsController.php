@@ -24,7 +24,7 @@ class PlaylistsController extends BaseController {
 
 
     public function addTrack($playlistId, $trackId, $trackTitle, $artistName) {
-        DB::insert('INSERT INTO ' . T_PLAYLIST_TRACKS . ' (playlist_id, track_id, track_title, artist_name)  VALUES (?, ?, ?, ?)', [$playlistId, $trackId, $trackTitle, $artistName]);
+        DB::insert('INSERT INTO ' . T_PLAYLIST_TRACKS . ' (playlist_id, track_id, track_title, artist_name) VALUES (?, ?, ?, ?)', [$playlistId, $trackId, $trackTitle, $artistName]);
     }
 
 

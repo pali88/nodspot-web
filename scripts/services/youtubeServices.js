@@ -31,6 +31,20 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
     };
 
 
+    //check if the video still exists on youtube
+    YoutubeServices.isValidVideo = function (videoId) {
+        var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey;
+
+        return $http.get(url).then(function (res) {
+            var isValid = res.data.pageInfo.totalResults > 0 ? true : false;
+
+            return isValid;
+        });
+    };
+
+    YoutubeServices.isValidVideo('lbD5k7zxatA');
+
+
     //try to fetch video from youtube
     YoutubeServices.fetchVideo = function (artistName, trackName, i, maxResults) {
         var url;

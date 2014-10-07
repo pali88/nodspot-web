@@ -90,18 +90,40 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     //currently playing track/release metadata
     $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function (newCurrentlyPlaying, oldCurrentlyPlaying) {
         try {
+            var currentTrackIndex = $scope.currentlyPlaying.track;
             $scope.currentlyPlaying = newCurrentlyPlaying;
-            $scope.currentlyPlaying.artistName = $scope.playlist[$scope.currentlyPlaying.track].artistName; //for top tracks btn
-            $scope.highlightTrack($scope.currentlyPlaying.track);
+            $scope.currentlyPlaying.artistName = $scope.playlist[currentTrackIndex].artistName; //for top tracks btn
+            $scope.isValidVideo(currentTrackIndex);
+            $scope.highlightTrack(currentTrackIndex);
 
             //do not request to get similar artists if the artistName does not change
             if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
                 ArtistServices.getSimilar(newCurrentlyPlaying.artistName);
             }
 
-        } catch (e) {
-        }
+        } catch (e) {};
     });
+
+
+    //if video is not valid, remove it from user's playlist
+    $scope.isValidVideo = function (currentTrackIndex) {
+        if (SearchServices.searchSource == SearchServices.searchSources.userPlaylist) {
+            YoutubeServices.isValidVideo($scope.playlistIds[currentTrackIndex]).then(function (isValid) {
+
+                if (!isValid) {
+                    FavouritesServices.removeTrackFromPlaylist($scope.playlistIds[currentTrackIndex], $scope.currentlyPlaying.playlistId);
+
+                    //remove a non-existing video from scope's playlists
+                    $scope.playlist.splice(currentTrackIndex, 1);
+                    $scope.playlistIds.splice(currentTrackIndex, 1);
+
+                    //increase currently playing tracks index
+                    PlayerServices.currentlyPlaying.track++;
+                    $scope.playPlaylist();
+                }
+            });
+        }
+    };
 
 
     //favourite Services > favouriting an album when not logged in
