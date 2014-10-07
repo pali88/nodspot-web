@@ -9,11 +9,12 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     };
 
     console.log('old cookie: ' + document.cookie);
+    
 
-    //check if FB SDK is loaded, and if it is, get login status
+    //check if FB SDK is loaded if it is, subscribe to FB login status change
     FacebookServices.isSDKLoaded = function () {
         try {
-            FacebookServices.getLoginStatus();
+            FacebookServices.subscribeToStatusChange();
         } catch (e) {
             setTimeout(function () {
                 FacebookServices.isSDKLoaded();
@@ -21,6 +22,15 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
         }
     };
 
+
+    FacebookServices.subscribeToStatusChange = function () {
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            if(response.status == 'connected') {
+                console.log('speisbukas connected');
+                FacebookServices.connected = true;
+            }
+        });
+    }
 
     FacebookServices.login = function (callback) {
         FB.login(function (response) {
@@ -82,7 +92,7 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
 
 
     FacebookServices.getLoginStatus = function () {
-        if (FB != undefined) {
+        if (window.FB != undefined) {
             FB.getLoginStatus(function (res) {
                 $rootScope.$apply(function () {
                         return FacebookServices.connected = res.status === "connected" ? true : false;
