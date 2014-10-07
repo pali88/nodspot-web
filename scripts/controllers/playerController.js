@@ -56,6 +56,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
         return startFrom;
     };
 
+
     //redirect user to the 3rd party website that allows them to download this video
     $scope.downloadVideo = function ($videoId) {
         event.stopPropagation();
