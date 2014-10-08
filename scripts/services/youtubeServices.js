@@ -42,8 +42,6 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         });
     };
 
-    YoutubeServices.isValidVideo('lbD5k7zxatA');
-
 
     //try to fetch video from youtube
     YoutubeServices.fetchVideo = function (artistName, trackName, i, maxResults) {
