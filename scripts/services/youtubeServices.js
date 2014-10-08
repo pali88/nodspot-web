@@ -6,12 +6,14 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
     YoutubeServices.returnedVideos = [];
     YoutubeServices.returnedVideosCounter = 0;
 
+
     //set playlist length so we can use it later on to know if we have all the tracks for the playlist or not
     YoutubeServices.setPlaylistLength = function (playlistLength) {
         YoutubeServices.returnedVideos = [];
         YoutubeServices.returnedVideosCounter = 0;
         YoutubeServices.playlistLength = playlistLength;
     };
+
 
     //wrapper function firing firing "fetchVideo" for every track in the tracklist
     YoutubeServices.findVideos = function (tracklist, maxResults) {
