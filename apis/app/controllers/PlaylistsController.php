@@ -8,7 +8,7 @@ class PlaylistsController extends BaseController {
     }
 
 
-    public function getPlaylists() {
+    public static function getPlaylists() {
         $userId = UsersController::getUserIdByHash();
 
         if ($userId) {
