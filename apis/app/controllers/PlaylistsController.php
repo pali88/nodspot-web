@@ -68,6 +68,7 @@ class PlaylistsController extends BaseController {
     }
 
 
+    //rename a playlist
     public function updatePlaylist($playlistId, $newPlaylistName) {
         $userId = UsersController::getUserIdByHash();
         DB::update('UPDATE ' . T_PLAYLISTS . ' SET playlist_name = ? WHERE (user_id = ? AND playlist_id = ?)', [$newPlaylistName, $userId, $playlistId]);
