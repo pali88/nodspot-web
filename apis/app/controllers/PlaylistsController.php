@@ -30,7 +30,7 @@ class PlaylistsController extends BaseController {
     }
 
 
-    //check if the specified playlist belongs to the currently logged in user. returns true if yes, false otherwise.
+    //check if the specified playlist belongs to the currently logged in user.
     public static function isUsersPlaylist($playlistId) {
         $usersPlaylists = PlaylistsController::getPlaylists();
 

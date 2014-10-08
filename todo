@@ -1,5 +1,4 @@
 //AngularJS todo
--authorise backend calls before executing them - anyone can do anything now
 
 //v2
 -rank albums/tracks with moods - happy/dancing/sad/brokeup, etc - people then can play music depending on the mood.
