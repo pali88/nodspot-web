@@ -24,18 +24,35 @@ class PlaylistsController extends BaseController {
 
 
     public function addTrack($playlistId, $trackId, $trackTitle, $artistName) {
-        DB::insert('INSERT INTO ' . T_PLAYLIST_TRACKS . ' (playlist_id, track_id, track_title, artist_name) VALUES (?, ?, ?, ?)', [$playlistId, $trackId, $trackTitle, $artistName]);
+        if (self::isUsersPlaylist($playlistId)) {
+            DB::insert('INSERT INTO ' . T_PLAYLIST_TRACKS . ' (playlist_id, track_id, track_title, artist_name) VALUES (?, ?, ?, ?)', [$playlistId, $trackId, $trackTitle, $artistName]);
+        }
+    }
+
+
+    //check if the specified playlist belongs to the currently logged in user. returns true if yes, false otherwise.
+    public static function isUsersPlaylist($playlistId) {
+        $usersPlaylists = PlaylistsController::getPlaylists();
+
+        foreach ($usersPlaylists as $playlist) {
+            if ($playlist->playlist_id == $playlistId) {
+                return true;
+            }
+        }
     }
 
 
     public function removeTrack($playlistId, $trackId) {
-        DB::delete('DELETE FROM ' . T_PLAYLIST_TRACKS . ' WHERE (playlist_id = ? AND track_id = ?)', [$playlistId, $trackId]);
+        if (self::isUsersPlaylist($playlistId)) {
+            DB::delete('DELETE FROM ' . T_PLAYLIST_TRACKS . ' WHERE (playlist_id = ? AND track_id = ?)', [$playlistId, $trackId]);
+        }
     }
 
 
     //returns playlists id the given track belongs to.
     public function trackBelongsTo($trackId) {
         $userId = UsersController::getUserIdByHash();
+
         return DB::select('SELECT ns_playlist_tracks.playlist_id FROM ' . T_PLAYLIST_TRACKS . '
             INNER JOIN ' . T_PLAYLISTS . ' ON ns_playlist_tracks.playlist_id = ns_playlists.playlist_id
             WHERE (ns_playlists.user_id = ? AND track_id = ?)', [$userId, $trackId]);
