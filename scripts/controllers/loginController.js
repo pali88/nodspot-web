@@ -24,11 +24,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
 
 
     $scope.toggleVisibility = function () {
-        if ($scope.loginMenuClass == 'collapsed') {
-            $scope.loginMenuClass = '';
-        } else {
-            $scope.loginMenuClass = 'collapsed';
-        }
+        $scope.loginMenuClass = ($scope.loginMenuClass == 'collapsed') ? '' : 'collapsed';
     };
 
 
@@ -38,6 +34,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
         } else {
             FacebookServices.login();
         }
+
         $scope.loginMenuVisibility = false;
     };
 
