@@ -2,6 +2,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
 
     $scope.loginMenuClass = 'collapsed';
 
+
     $scope.$watch(FacebookServices.isConnected, function () {
         if (FacebookServices.isConnected()) {
             $scope.facebookBtn = LoginConstants.fbLogout;
@@ -16,9 +17,11 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
         }
     });
 
+
     $scope.expandGenres = function () {
         window.location.href = 'http://www.nodspot.com';
     };
+
 
     $scope.toggleVisibility = function () {
         if ($scope.loginMenuClass == 'collapsed') {
@@ -28,6 +31,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
         }
     };
 
+
     $scope.fbLogin = function () {
         if (FacebookServices.isConnected()) {
             FacebookServices.logout();
@@ -36,6 +40,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
         }
         $scope.loginMenuVisibility = false;
     };
+
 
     $scope.ytLogin = function () {
         //YoutubeServices.auth();
