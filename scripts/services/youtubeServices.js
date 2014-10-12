@@ -35,7 +35,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                 if (token) {
                     deferred.resolve($http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + token));
                 } else {
-                    deferred.resolve(false);
+                    deferred.reject(false);
 
                     setTimeout(function () {
                         YoutubeServices.getUsersYoutubePlaylists();

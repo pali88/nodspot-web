@@ -16,6 +16,8 @@
         if (localStorage && (token.indexOf('#error') == -1)) {
             localStorage['ytToken'] = token;
         }
+
+        window.close();
     </script>
 
 <p id="informativePopup" style="height: 1em; text-align: center;" class="absoluteCenter">This popup should automatically close in a few seconds</p>
