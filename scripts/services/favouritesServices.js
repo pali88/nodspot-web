@@ -207,6 +207,22 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         };
 
 
+        //playlist/{playlist_name}/new
+        FavouritesServices.createPlaylist = function (playlistName, isYoutube) {
+            if (FacebookServices.isConnected()) {
+                return $http.get(baseUrl + 'playlist' +
+                    '/' + playlistName +
+                    '/' + isYoutube +
+                    '/new'
+                );
+            } else {
+                FacebookServices.login(function () {
+                    FavouritesServices.createPlaylist(playlistName);
+                });
+            }
+        };
+
+
         //playlist/{playlist_id}/{track_id}/{track_title}/{artist_name}/add
         FavouritesServices.addTrackToPlaylist = function (trackId, playlistId, playlistName, trackTitle, artistName) {
             if (FacebookServices.isConnected()) {

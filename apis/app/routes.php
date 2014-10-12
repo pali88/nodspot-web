@@ -24,7 +24,7 @@ Route::resource('user/{fb_id}/{email}/existing', 'UsersController@isExisting');
 Route::resource('playlists', 'PlaylistsController@getPlaylists');
 Route::resource('playlist', 'PlaylistsController');
 Route::resource('playlist/{playlist_name}/existing', 'PlaylistsController@isExisting');
-Route::resource('playlist/{playlist_name}/new', 'PlaylistsController@createPlaylist');
+Route::resource('playlist/{playlist_name}/{is_youtube}/new', 'PlaylistsController@createPlaylist');
 Route::resource('playlist/{playlist_id}/delete', 'PlaylistsController@deletePlaylist');
 Route::resource('playlist/{playlist_id}/{new_playlist_name}/update', 'PlaylistsController@updatePlaylist');
 Route::resource('playlist/{playlist_id}/{track_id}/{track_title}/{artist_name}/add', 'PlaylistsController@addTrack');

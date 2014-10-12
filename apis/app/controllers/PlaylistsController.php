@@ -17,9 +17,10 @@ class PlaylistsController extends BaseController {
     }
 
 
-    public function createPlaylist($playlistName) {
+    public function createPlaylist($playlistName, $isYoutube) {
         $userId = UsersController::getUserIdByHash();
-        DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name) VALUES (?, ?)', [$userId, $playlistName]);
+        $isYoutube = ($isYoutube) ? 1 : 0;
+        DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name, is_youtube) VALUES (?, ?, ?)', [$userId, $playlistName, $isYoutube]);
     }
 
 
