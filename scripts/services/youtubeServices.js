@@ -18,32 +18,32 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
         //OAuth2
         auth: function () {
-            if(!this.isConnected) {
-
-                $window.open(
-                    this.authUrl + 'client_id=' +
-                    this.clientID + '&redirect_uri=' +
-                    this.redirectUrl + '&scope=' +
-                    this.scope + '&response_type=token', 'Google Sign in', 'height=500,width=500'
-                );
-
-                this.isConnected = true;
-            }
+            $window.open(
+                this.authUrl + 'client_id=' +
+                this.clientID + '&redirect_uri=' +
+                this.redirectUrl + '&scope=' +
+                this.scope + '&response_type=token', 'Google Sign in', 'height=500,width=500'
+            );
         },
 
 
         //retrieve currently logged in user's (with Google's OAuth) youtube playlists.
         getUsersYoutubePlaylists: function () {
+            var deferred = $q.defer();
+
             YoutubeServices.getAuthTokenFromLocalStorage().then(function (token) {
-                if (token != false) {
-                    console.log(token);
-                    return $http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + YoutubeServices.getAuthTokenFromLocalStorage());
+                if (token) {
+                    deferred.resolve($http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + token));
                 } else {
+                    deferred.resolve(false);
+
                     setTimeout(function () {
                         YoutubeServices.getUsersYoutubePlaylists();
                     }, 1000);
                 }
             });
+
+            return deferred.promise;
         }
     };
 
@@ -53,7 +53,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
         var ytTokenDeferred = $q.defer();
         var ytToken = localStorage['ytToken'];
 
-        if (ytToken){
+        if (ytToken != ''){
             ytTokenDeferred.resolve(ytToken);
         } else {
             ytTokenDeferred.resolve(false);
