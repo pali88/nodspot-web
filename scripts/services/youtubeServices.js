@@ -50,8 +50,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
     //read ytToken from localStorage
     YoutubeServices.getAuthTokenFromLocalStorage = function () {
-        var ytTokenDeferred = $q.defer();
-        var ytToken = localStorage['ytToken'];
+        var ytTokenDeferred = $q.defer(),
+            ytToken = localStorage['ytToken'];
 
         if (ytToken != ''){
             ytTokenDeferred.resolve(ytToken);
