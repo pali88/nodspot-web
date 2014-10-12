@@ -50,16 +50,16 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
     //read ytToken from localStorage
     YoutubeServices.getAuthTokenFromLocalStorage = function () {
-        var ytTokenDeferred = $q.defer(),
+        var deferred = $q.defer(),
             ytToken = localStorage['ytToken'];
 
-        if (ytToken != ''){
-            ytTokenDeferred.resolve(ytToken);
+        if (ytToken != '') {
+            deferred.resolve(ytToken);
         } else {
-            ytTokenDeferred.resolve(false);
+            deferred.resolve(false);
         }
 
-        return ytTokenDeferred.promise;
+        return deferred.promise;
     };
 
     //set playlist length so we can use it later on to know if we have all the tracks for the playlist or not
