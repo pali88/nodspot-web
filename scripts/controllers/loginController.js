@@ -43,7 +43,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
         //YoutubeServices.auth();
         //YoutubeServices.getUsersYoutubePlaylists().then(function (playlists) {
         //    //console.log(playlists);
-        //    FavouritesServices.createPlaylist(playlists.data.items[0].snippet.title, 1);
+        //    FavouritesServices.createPlaylistTypeYoutube(playlists.data.items[0].snippet.title, 1);
         //});
 
     };

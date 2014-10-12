@@ -17,10 +17,18 @@ class PlaylistsController extends BaseController {
     }
 
 
-    public function createPlaylist($playlistName, $isYoutube) {
+    //create a simple nodspot playlist.
+    public function createPlaylist($playlistName) {
         $userId = UsersController::getUserIdByHash();
-        $isYoutube = ($isYoutube) ? 1 : 0;
-        DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name, is_youtube) VALUES (?, ?, ?)', [$userId, $playlistName, $isYoutube]);
+
+        DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name) VALUES (?, ?)', [$userId, $playlistName]);
+    }
+
+
+    //create a playlist that will be flagged as youtube playlist in the DB. is_youtube = 1.
+    public function createPlaylistTypeYoutube($playlistName, $youtubePlaylistId) {
+        $userId = UsersController::getUserIdByHash();
+        DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name, is_youtube, youtube_playlist_id) VALUES (?, ?, ?, ?)', [$userId, $playlistName, 1, $youtubePlaylistId]);
     }
 
 
