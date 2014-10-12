@@ -1,11 +1,66 @@
-nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', function ($http, $rootScope, EventsConstants) {
+nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$window', '$q', function ($http, $rootScope, EventsConstants, $window, $q) {
+
     var baseUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet',
-        apiKey = 'AIzaSyCqb509HUMemkHf0fEHMiE3abVWdN-aKK0',
-        YoutubeServices = {};
+        apiKey = 'AIzaSyCqb509HUMemkHf0fEHMiE3abVWdN-aKK0';
 
-    YoutubeServices.returnedVideos = [];
-    YoutubeServices.returnedVideosCounter = 0;
+    var YoutubeServices = {
+        isConnected: false,
+        authUrl: 'https://accounts.google.com/o/oauth2/auth?',
+        redirectUrl: 'http://www.nodspot.com/ytCallback.html',
+        scope: 'https://www.googleapis.com/auth/youtube.readonly',
+        API: 'AIzaSyCqb509HUMemkHf0fEHMiE3abVWdN-aKK0',
+        clientID: '944591291174.apps.googleusercontent.com',
+        token: '',
+        feedBaseUrl: '',
 
+        returnedVideos: [],
+        returnedVideosCounter: 0,
+
+        //OAuth2
+        auth: function () {
+            if(!this.isConnected) {
+
+                $window.open(
+                    this.authUrl + 'client_id=' +
+                    this.clientID + '&redirect_uri=' +
+                    this.redirectUrl + '&scope=' +
+                    this.scope + '&response_type=token', 'Google Sign in', 'height=500,width=500'
+                );
+
+                this.isConnected = true;
+            }
+        },
+
+
+        //retrieve currently logged in user's (with Google's OAuth) youtube playlists.
+        getUsersYoutubePlaylists: function () {
+            YoutubeServices.getAuthTokenFromLocalStorage().then(function (token) {
+                if (token != false) {
+                    console.log(token);
+                    return $http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + YoutubeServices.getAuthTokenFromLocalStorage());
+                } else {
+                    setTimeout(function () {
+                        YoutubeServices.getUsersYoutubePlaylists();
+                    }, 1000);
+                }
+            });
+        }
+    };
+
+
+    //read ytToken from localStorage
+    YoutubeServices.getAuthTokenFromLocalStorage = function () {
+        var ytTokenDeferred = $q.defer();
+        var ytToken = localStorage['ytToken'];
+
+        if (ytToken){
+            ytTokenDeferred.resolve(ytToken);
+        } else {
+            ytTokenDeferred.resolve(false);
+        }
+
+        return ytTokenDeferred.promise;
+    };
 
     //set playlist length so we can use it later on to know if we have all the tracks for the playlist or not
     YoutubeServices.setPlaylistLength = function (playlistLength) {
@@ -17,9 +72,11 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
 
     //wrapper function firing firing "fetchVideo" for every track in the tracklist
     YoutubeServices.findVideos = function (tracklist, maxResults) {
+
+        //check if we're dealing with a tracklist or just one track
         if (typeof (tracklist) == "object") {
             YoutubeServices.setPlaylistLength(tracklist.length);
-        } else { //it means that only one track was passed as a tracklist
+        } else {
             tracklist = [{track_title: tracklist }];
         }
 
@@ -28,17 +85,18 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
         }
 
         angular.forEach(tracklist, function (track, i) {
-            YoutubeServices.fetchVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults);
+            YoutubeServices.findVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults);
         });
     };
 
 
     //check if the video still exists on youtube
     YoutubeServices.isValidVideo = function (videoId) {
-        var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey;
+        var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey,
+            isValid;
 
         return $http.get(url).then(function (res) {
-            var isValid = res.data.pageInfo.totalResults > 0 ? true : false;
+            isValid = res.data.pageInfo.totalResults > 0 ? true : false;
 
             return isValid;
         });
@@ -46,7 +104,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
 
 
     //try to fetch video from youtube
-    YoutubeServices.fetchVideo = function (artistName, trackName, i, maxResults) {
+    YoutubeServices.findVideo = function (artistName, trackName, i, maxResults) {
         var url;
 
         url = baseUrl + '&maxResults='
@@ -66,7 +124,9 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
                         YoutubeServices.returnedVideosCounter++;
                         break;
                     }
-                    case 40: { //this means that we could not find any releases for this term, therefore we're returning 20 videos straight from youtube
+
+                    //this means that we could not find any releases for this term, therefore we're returning 20 videos straight from youtube
+                    case 40: {
                         angular.forEach(res.data.items, function (video, j) {
                             YoutubeServices.returnedVideos[j] = video;
                             YoutubeServices.returnedVideosCounter++;
@@ -88,6 +148,71 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', fu
                 YoutubeServices.returnedVideosCounter = 0;
             }
         });
+    };
+
+
+
+    var ytObj = {
+
+        validateToken: function (callback) {
+            $.ajax({
+                url: 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + ytObj.token,
+                success: function (res) {
+                    if (!res.error) {
+                        console.log(res);
+                        callback(res.expires_in);
+                    }
+                },
+                error: function (request, status, error) {
+                    helpersObj.showNotification(messagesObj.somethingWrong);
+                }
+            });
+        },
+
+        getMySubscriptions: function () {
+            ytObj.validateToken(function (res) {
+                if(res) {
+                    $.ajax({
+                        url: 'https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&maxResults=50&mine=true&key=' + ytObj.API + '&access_token=' + ytObj.token,
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    });
+                }
+            });
+        },
+
+        getAllVideosByUser: function (userName) {
+            $.ajax({
+                url: "http://gdata.youtube.com/feeds/api/users/" + userName + "/uploads?alt=json",
+                success: function (videos) {
+                    console.log(videos);
+                },
+                error: function (request, status, error) {
+                    helpersObj.showNotification(messagesObj.somethingWrong);
+                }
+            });
+        },
+
+        getVideoDataByID: function (id) {
+            $.ajax({
+                url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + id + '&key=' + ytObj.API,
+                success: function (res) {
+
+                }
+            });
+        },
+
+        getVideosFromPlaylist: function (playlistID) {
+            $.ajax({
+                url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistID + "&key=" + ytObj.API
+            }).success(function (res) {
+                console.log(res);
+                playerObj.clearPlaylist();
+                playerObj.findVideos(res);
+            });
+        }
+
     };
 
     return YoutubeServices;

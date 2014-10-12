@@ -1,4 +1,4 @@
-nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants', 'FavouritesServices', 'GenresServices', 'EventsConstants', '$rootScope', function ($scope, FacebookServices, LoginConstants, FavouritesServices, GenresServices, EventsConstants, $rootScope) {
+nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants', 'FavouritesServices', 'GenresServices', 'EventsConstants', '$rootScope', 'YoutubeServices', function ($scope, FacebookServices, LoginConstants, FavouritesServices, GenresServices, EventsConstants, $rootScope, YoutubeServices) {
 
     $scope.loginMenuClass = 'collapsed';
 
@@ -35,6 +35,11 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
             FacebookServices.login();
         }
         $scope.loginMenuVisibility = false;
+    };
+
+    $scope.ytLogin = function () {
+        //YoutubeServices.auth();
+        //YoutubeServices.getUsersYoutubePlaylists();
     };
 
 }]);
