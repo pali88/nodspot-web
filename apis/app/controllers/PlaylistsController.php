@@ -20,8 +20,9 @@ class PlaylistsController extends BaseController {
     //create a simple nodspot playlist.
     public function createPlaylist($playlistName) {
         $userId = UsersController::getUserIdByHash();
-
         DB::insert('INSERT INTO ' . T_PLAYLISTS . ' (user_id, playlist_name) VALUES (?, ?)', [$userId, $playlistName]);
+
+        return DB::getPdo()->lastInsertId();
     }
 
 

@@ -142,8 +142,10 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
 
     $scope.addTrackToNewPlaylist = function (playlistName, event) {
         if (event.which == 13 || event.which == 1) {
-            FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, '', playlistName, FavouritesServices.trackTitle, FavouritesServices.artistName).success(function () {
-                FavouritesServices.fetchPlaylists();
+            FavouritesServices.createPlaylist(playlistName).success(function (playlistId) {
+                FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, playlistId, playlistName, FavouritesServices.trackTitle, FavouritesServices.artistName).success(function () {
+                    FavouritesServices.fetchPlaylists();
+                });
             });
         }
     };
