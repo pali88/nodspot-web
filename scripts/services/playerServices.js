@@ -1,4 +1,5 @@
-nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$rootScope', function ($window, SearchServices, $location, $rootScope) {
+nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$rootScope', function ($window, SearchServices, $location, $rootScope)
+{
 
     var PlayerServices =
     {
