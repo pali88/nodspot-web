@@ -1,4 +1,5 @@
-nodspot.directive('addToPlaylist', function () {
+nodspot.directive('addToPlaylist', function ()
+{
     return {
         restrict: 'E',
         templateUrl: 'views/partials/addToPlaylist.html'
@@ -6,7 +7,8 @@ nodspot.directive('addToPlaylist', function () {
 });
 
 
-nodspot.directive('releaseItem', function () {
+nodspot.directive('releaseItem', function ()
+{
     return {
         restrict: 'E',
         templateUrl: 'views/partials/releaseItem.html',
@@ -19,7 +21,8 @@ nodspot.directive('releaseItem', function () {
 });
 
 
-nodspot.directive('playlistItemOptions', [function () {
+nodspot.directive('playlistItemOptions', [function ()
+{
     return {
         restrict: 'E',
         templateUrl: 'views/partials/playlistItemOptions.html',
@@ -35,28 +38,34 @@ nodspot.directive('playlistItemOptions', [function () {
 }]);
 
 
-nodspot.directive('suggestions', [function () {
+nodspot.directive('suggestions', [function ()
+{
     return {
         restrict: 'E',
         template: "<ul class='dropdown' ng-transclude></ul>",
         transclude: true,
 
-        link: function (scope, element, attrs) {
-            element.on('mouseleave click', function (event) {
+        link: function (scope, element, attrs)
+        {
+            element.on('mouseleave click', function (event)
+            {
                 scope.collapse();
             });
 
-            scope.collapse = function () {
+            scope.collapse = function ()
+            {
                 scope.suggestionsVisibility = false;
                 scope.$apply();
             };
 
-            scope.expand = function () {
+            scope.expand = function ()
+            {
                 scope.suggestionsVisibility = true;
                 scope.$apply();
             };
         },
-        scope: {
+        scope:
+        {
             suggestionsVisibility: "=",
             suggestions: '='
         }
@@ -65,37 +74,47 @@ nodspot.directive('suggestions', [function () {
 }]);
 
 
-nodspot.directive('lookup', [function () {
+nodspot.directive('lookup', [function ()
+{
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attrs)
+        {
 
 
             //listen for up/down arrow keys
-            element.bind('keydown', function (event) {
-                try {
-                    if (event.which === 38) {
+            element.bind('keydown', function (event)
+            {
+                try
+                {
+                    if (event.which === 38)
+                    {
                         scope.getSelectionIndex('up');
-                    } else if (event.which === 40) {
+                    }
+                    else if (event.which === 40) {
                         scope.getSelectionIndex('down');
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
             });
 
 
             //returns index of the next item that's going to be highlighted
-            scope.getSelectionIndex = function (direction) {
-                if (direction == 'down') {
+            scope.getSelectionIndex = function (direction)
+            {
+                if (direction == 'down')
+                {
                     scope.$parent.highlightedSuggestion++;
-                } else if (direction == 'up') {
+                }
+                else if (direction == 'up') {
                     scope.$parent.highlightedSuggestion--;
                 }
 
                 //allow to loop through the list items
-                if (scope.$parent.highlightedSuggestion > scope.$parent.suggestions.length - 1) {
+                if (scope.$parent.highlightedSuggestion > scope.$parent.suggestions.length - 1)
+                {
                     scope.$parent.highlightedSuggestion = 0;
-                } else if (scope.$parent.highlightedSuggestion <= -1) {
+                }
+                else if (scope.$parent.highlightedSuggestion <= -1) {
                     scope.$parent.highlightedSuggestion = scope.$parent.suggestions.length - 1;
                 }
 
@@ -104,11 +123,15 @@ nodspot.directive('lookup', [function () {
 
 
             //highlight item in the suggestions list
-            scope.highlightItem = function (index) {
-                scope.$apply(function () {
-                    angular.forEach(scope.$parent.suggestions, function (suggestion, i) {
+            scope.highlightItem = function (index)
+            {
+                scope.$apply(function ()
+                {
+                    angular.forEach(scope.$parent.suggestions, function (suggestion, i)
+                    {
                         suggestion.state = '';
                     });
+
                     scope.$parent.suggestions[index].state = 'active';
                     scope.$parent.searchTerm = scope.$parent.suggestions[index].searchTerm;
                 });
@@ -122,11 +145,13 @@ nodspot.directive('lookup', [function () {
 }]);
 
 
-nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServices, $interval) {
+nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServices, $interval)
+{
 
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attrs)
+        {
 
             var y = attrs.y,                    //dock to top or bottom
                 x = attrs.x,                    //dock left or right
@@ -140,18 +165,24 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                 colour = attrs.colour,          //docked objects colour
                 treshold = attrs.treshold;      //when to start docking
 
-            var checkScrollYInterval = $interval(function() {
-                if (PlayerServices.scrollY >= treshold) {
+            var checkScrollYInterval = $interval(function()
+            {
+                if (PlayerServices.scrollY >= treshold)
+                {
 
                     //element docking on y axis
-                    switch (y) {
-                        case 'bottom': {
+                    switch (y)
+                    {
+                        case 'bottom':
+                        {
                             element.css({
                                 bottom: dy
                             });
                             break;
                         }
-                        case 'top': {
+
+                        case 'top':
+                        {
                             element.css({
                                 top: dy
                             });
@@ -160,14 +191,18 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                     }
 
                     //element docking on x axis
-                    switch (x) {
-                        case 'left': {
+                    switch (x)
+                    {
+                        case 'left':
+                        {
                             element.css({
                                 left: dx
                             });
                             break;
                         }
-                        case 'right': {
+
+                        case 'right':
+                        {
                             element.css({
                                 right: dx
                             });
@@ -183,7 +218,8 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
                         color: colour
                     });
 
-                } else {
+                }
+                else {
                     element.css({
                         position: 'static',
                         width: w1,

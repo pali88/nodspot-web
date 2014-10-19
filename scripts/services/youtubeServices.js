@@ -3,7 +3,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
     var baseUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet',
         apiKey = 'AIzaSyCqb509HUMemkHf0fEHMiE3abVWdN-aKK0';
 
-    var YoutubeServices = {
+    var YoutubeServices =
+    {
         isConnected: false,
         authUrl: 'https://accounts.google.com/o/oauth2/auth?',
         redirectUrl: 'http://www.nodspot.com/ytCallback.html',
@@ -17,7 +18,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
         returnedVideosCounter: 0,
 
         //OAuth2
-        auth: function () {
+        auth: function ()
+        {
             $window.open(
                 this.authUrl + 'client_id=' +
                 this.clientID + '&redirect_uri=' +
@@ -28,20 +30,26 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
 
         //retrieve currently logged in user's (with Google's OAuth) youtube playlists.
-        getUsersYoutubePlaylists: function () {
+        getUsersYoutubePlaylists: function ()
+        {
             var deferred = $q.defer();
 
-            YoutubeServices.getAuthTokenFromLocalStorage().then(function (token) {
-                if (token) {
-                    deferred.resolve($http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + token));
-                } else {
-                    deferred.reject(false);
+            YoutubeServices.getAuthTokenFromLocalStorage()
+                .then(function (token)
+                {
+                    if (token)
+                    {
+                        deferred.resolve($http.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + YoutubeServices.API + '&access_token=' + token));
+                    }
+                    else {
+                        deferred.reject(false);
 
-                    setTimeout(function () {
-                        YoutubeServices.getUsersYoutubePlaylists();
-                    }, 1000);
-                }
-            });
+                        setTimeout(function ()
+                        {
+                            YoutubeServices.getUsersYoutubePlaylists();
+                        }, 1000);
+                    }
+                });
 
             return deferred.promise;
         }

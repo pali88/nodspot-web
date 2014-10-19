@@ -1,10 +1,12 @@
-nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', function ($http, $rootScope, ApiConstants) {
+nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', function ($http, $rootScope, ApiConstants)
+{
 
     var FacebookServices = {};
 
     FacebookServices.connected = false;
 
-    FacebookServices.isConnected = function () {
+    FacebookServices.isConnected = function ()
+    {
         return FacebookServices.connected;
     };
 
@@ -12,34 +14,45 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     
 
     //check if FB SDK is loaded if it is, subscribe to FB login status change
-    FacebookServices.isSDKLoaded = function () {
+    FacebookServices.isSDKLoaded = function ()
+    {
         try {
             FacebookServices.subscribeToStatusChange();
-        } catch (e) {
-            setTimeout(function () {
+        }
+        catch (e)
+        {
+            setTimeout(function ()
+            {
                 FacebookServices.isSDKLoaded();
             }, 250);
         }
     };
 
 
-    FacebookServices.subscribeToStatusChange = function () {
-        FB.Event.subscribe('auth.statusChange', function(response) {
-            if(response.status == 'connected') {
+    FacebookServices.subscribeToStatusChange = function ()
+    {
+        FB.Event.subscribe('auth.statusChange', function(response)
+        {
+            if(response.status == 'connected')
+            {
                 FacebookServices.connected = true;
             }
         });
     }
 
 
-    FacebookServices.login = function (callback) {
-        FB.login(function (response) {
-            $rootScope.$apply(function () {
-
-                if (response.authResponse) {
+    FacebookServices.login = function (callback)
+    {
+        FB.login(function (response)
+        {
+            $rootScope.$apply(function ()
+            {
+                if (response.authResponse)
+                {
                     FacebookServices.connected = true;
 
-                    if (typeof callback == "function") {
+                    if (typeof callback == "function")
+                    {
                         callback(true);
                     }
                 }
@@ -48,9 +61,12 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
     };
 
 
-    FacebookServices.getUserInfo = function (callback) {
-        FB.api('/me', function (res) {
-            FacebookServices.userInfo = {
+    FacebookServices.getUserInfo = function (callback)
+    {
+        FB.api('/me', function (res)
+        {
+            FacebookServices.userInfo =
+            {
                 firstName: res.first_name,
                 userId: res.id,
                 userEmail: res.email
@@ -58,7 +74,8 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
 
             FacebookServices.getNodspotUserId(FacebookServices.userInfo.userId, FacebookServices.userInfo.userEmail);
 
-            if (typeof (callback) == 'function') {
+            if (typeof (callback) == 'function')
+            {
                 callback(FacebookServices.userInfo);
             }
         });
@@ -66,35 +83,50 @@ nodspot.factory('FacebookServices', ['$http', '$rootScope', 'ApiConstants', func
 
 
     //check if hash cookie exists
-    FacebookServices.isCookieSet = function () {
+    FacebookServices.isCookieSet = function ()
+    {
         return document.cookie.indexOf('hash') > -1;
     };
 
-    FacebookServices.getNodspotUserId = function (fbUserId, fbEmail) {
+    FacebookServices.getNodspotUserId = function (fbUserId, fbEmail)
+    {
         var eventCookieSet = 'requestCookieSet';
 
-        $http.get(ApiConstants.baseUrlNodspot + 'user/' + fbUserId + '/' + fbEmail + '/existing').then(function (res, status, headers, config) {
-            console.log('new cookie: ' + document.cookie);
-            document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2015 12:00:00 UTC";
+        $http.get(ApiConstants.baseUrlNodspot
+        + 'user/'
+        + fbUserId + '/'
+        + fbEmail
+        + '/existing')
+            .then(function (res, status, headers, config)
+            {
+                console.log('new cookie: ' + document.cookie);
+                document.cookie = "hash=" + res.data + "; expires=Thu, 18 Dec 2015 12:00:00 UTC";
 
-            $rootScope.$broadcast(eventCookieSet);
-        });
+                $rootScope.$broadcast(eventCookieSet);
+            });
     };
 
 
-    FacebookServices.logout = function () {
-        FB.logout(function () {
-            $rootScope.$apply(function () {
+    FacebookServices.logout = function ()
+    {
+        FB.logout(function ()
+        {
+            $rootScope.$apply(function ()
+            {
                 FacebookServices.connected = false;
             });
         });
     };
 
 
-    FacebookServices.getLoginStatus = function () {
-        if (window.FB != undefined) {
-            FB.getLoginStatus(function (res) {
-                $rootScope.$apply(function () {
+    FacebookServices.getLoginStatus = function ()
+    {
+        if (window.FB != undefined)
+        {
+            FB.getLoginStatus(function (res)
+            {
+                $rootScope.$apply(function ()
+                    {
                         return FacebookServices.connected = res.status === "connected" ? true : false;
                     }
                 );

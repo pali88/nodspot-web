@@ -1,4 +1,5 @@
-nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesServices', 'YoutubeServices', 'ReleasesServices', 'PlayerServices', 'ArtistServices', 'SearchServices', 'FacebookServices', 'EventsConstants', function ($rootScope, $scope, FavouritesServices, YoutubeServices, ReleasesServices, PlayerServices, ArtistServices, SearchServices, FacebookServices, EventsConstants) {
+nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesServices', 'YoutubeServices', 'ReleasesServices', 'PlayerServices', 'ArtistServices', 'SearchServices', 'FacebookServices', 'EventsConstants', function ($rootScope, $scope, FavouritesServices, YoutubeServices, ReleasesServices, PlayerServices, ArtistServices, SearchServices, FacebookServices, EventsConstants)
+{
 
     //"your favourites will appear here" placeholder
     $scope.placeholderVisibility = true;
@@ -102,13 +103,15 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 }]);
 
 
-nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', function ($scope, FavouritesServices) {
+nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', function ($scope, FavouritesServices)
+{
 
     $scope.playlistName = '';
     $scope.myFirstPlaylistVisibility = true;
 
 
-    $scope.$watch(FavouritesServices.getPlaylists, function () {
+    $scope.$watch(FavouritesServices.getPlaylists, function ()
+    {
         $scope.playlists = FavouritesServices.playlists;
 
         if ($scope.playlists.length > 0)
@@ -133,7 +136,8 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
     };
 
 
-    $scope.addTrackToPlaylist = function (index, trackState, playlistId, event) {
+    $scope.addTrackToPlaylist = function (index, trackState, playlistId, event)
+    {
         if (event.target.localName != 'input')
         {
             if (trackState == 'notSaved' && playlistId != '')

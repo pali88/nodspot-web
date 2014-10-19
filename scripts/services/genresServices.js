@@ -1,16 +1,20 @@
-nodspot.factory('GenresServices', [function () {
+nodspot.factory('GenresServices', [function ()
+{
     var GenresServices = {};
 
     GenresServices.stylesVisibility = true;
     GenresServices.imagesPath = 'images/tag images/';
 
 
-    GenresServices.randomAccent = function () {
+    GenresServices.randomAccent = function ()
+    {
         return Math.floor(Math.random() * 8);
     };
 
-    GenresServices.setAccent = function () {
-        angular.forEach(GenresServices.styles, function (style, i) {
+    GenresServices.setAccent = function ()
+    {
+        angular.forEach(GenresServices.styles, function (style, i)
+        {
             style.accent = GenresServices.randomAccent();
         });
     };
@@ -285,15 +289,18 @@ nodspot.factory('GenresServices', [function () {
         },
     ];
 
-    GenresServices.getTags = function () {
+    GenresServices.getTags = function ()
+    {
         return GenresServices.tags;
     };
 
-    GenresServices.getStyles = function () {
+    GenresServices.getStyles = function ()
+    {
         return GenresServices.styles;
     };
 
-    GenresServices.isVisible = function () {
+    GenresServices.isVisible = function ()
+    {
         return GenresServices.stylesVisibility;
     };
 

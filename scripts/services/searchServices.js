@@ -2,11 +2,13 @@ nodspot.factory('SearchServices', ['$http', 'ApiConstants', function ($http, Api
 
     var baseUrl = ApiConstants.baseUrlNodspot;;
 
-    var SearchServices = {
+    var SearchServices =
+    {
         searchTerm: '',
         searchType: '',
         searchAttempt: 0,
-        searchSources: {
+        searchSources:
+        {
             hash: 0,
             userInput: 1,
             surpriseMe: 2,
@@ -18,11 +20,13 @@ nodspot.factory('SearchServices', ['$http', 'ApiConstants', function ($http, Api
         searchSource: 0,
 
         //used for extracting search term, search type, release id, track index
-        hash: {
+        hash:
+        {
             releaseId: '',
             startFrom: 0
         },
-        surprise: {
+        surprise:
+        {
             releaseId: undefined,
             style: undefined,
             page: undefined
@@ -30,33 +34,41 @@ nodspot.factory('SearchServices', ['$http', 'ApiConstants', function ($http, Api
         progressBarVisibility: false,
 
 
-        collapseProgressBar: function () {
+        collapseProgressBar: function ()
+        {
             SearchServices.progressBarVisibility = false;
         },
 
 
-        expandProgressBar: function () {
+        expandProgressBar: function ()
+        {
             SearchServices.progressBarVisibility = true;
         },
 
 
-        getProgressBarVisibility: function () {
+        getProgressBarVisibility: function ()
+        {
             return SearchServices.progressBarVisibility;
         }
     };
 
 
-    SearchServices.getSearchSource = function () {
+    SearchServices.getSearchSource = function ()
+    {
         return SearchServices.searchSource;
     };
 
 
     //log/{search_term}/{search_type}
-    SearchServices.logSearch = function (searchTerm, searchType) {
-        $http.get(baseUrl +
-        'log' +
-        '/' + searchTerm +
-        '/' + searchType
+    SearchServices.logSearch = function (searchTerm, searchType)
+    {
+        $http.get(
+            baseUrl
+            + 'log'
+            + '/'
+            + searchTerm
+            + '/'
+            + searchType
         );
     };
 

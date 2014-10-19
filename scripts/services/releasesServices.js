@@ -1,24 +1,30 @@
-nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', 'EventsConstants', 'GenresServices', 'ArtistServices', 'SearchServices', 'PlayerServices', function ($http, $rootScope, YoutubeServices, EventsConstants, GenresServices, ArtistServices, SearchServices, PlayerServices) {
+nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', 'EventsConstants', 'GenresServices', 'ArtistServices', 'SearchServices', 'PlayerServices', function ($http, $rootScope, YoutubeServices, EventsConstants, GenresServices, ArtistServices, SearchServices, PlayerServices)
+{
 
     var baseUrl = 'releases.php?action=',
 
-        ReleasesServices = {
+        ReleasesServices =
+        {
             returnedReleases: [] //returned releases are stored here
         },
         returnedReleasesCounter = 0;
 
-    ReleasesServices.getReleases = function () {
+    ReleasesServices.getReleases = function ()
+    {
         return ReleasesServices.returnedReleases;
     };
 
-    ReleasesServices.getSuggestions = function (searchTerm) {
+    ReleasesServices.getSuggestions = function (searchTerm)
+    {
         return $http.get(baseUrl + 'yt&term=' + searchTerm);
     };
 
     //generate initials and colour for the release thumbnail
-    ReleasesServices.generateThumbnails = function (propertyForInitials, obj) {
+    ReleasesServices.generateThumbnails = function (propertyForInitials, obj)
+    {
         var colour = 0,
-            colours = {
+            colours =
+            {
                 0: 'acc1',
                 1: 'acc2',
                 2: 'acc3'
@@ -27,7 +33,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             tempObj = obj;
 
         //workout release colour and initials
-        angular.forEach(tempObj, function (item, i) {
+        angular.forEach(tempObj, function (item, i)
+        {
             colour = Math.floor(Math.random() * 3);
             item.colour = colours[colour];
             initials = item[propertyForInitials].split(' ');
@@ -37,7 +44,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         return tempObj;
     };
 
-    ReleasesServices.getAllReleases = function (searchTerm, searchType) {
+    ReleasesServices.getAllReleases = function (searchTerm, searchType)
+    {
         var url,
             newSearchType;
 
@@ -48,18 +56,22 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
         PlayerServices.currentlyPlaying.searchType = newSearchType;
 
-        if (PlayerServices.currentlyPlaying.searchTerm == '') {
+        if (PlayerServices.currentlyPlaying.searchTerm == '')
+        {
             PlayerServices.currentlyPlaying.searchTerm = searchTerm;
         }
 
-        if (SearchServices.searchAttempt < 3) {
+        if (SearchServices.searchAttempt < 3)
+        {
             $http.get(baseUrl + 'getAllReleases&' + url)
-                .success(function (releases) {
+                .success(function (releases)
+                {
                     ReleasesServices.returnedReleases = ReleasesServices.cleanUpReleases(releases.results);
                     returnedReleasesCounter = ReleasesServices.returnedReleases.length;
 
                     //if more than 5 releases returned, broadcast them. ReleasesCtrl will be waiting.
-                    if (returnedReleasesCounter > 5) {
+                    if (returnedReleasesCounter > 5)
+                    {
                         ReleasesServices.broadcast(EventsConstants.releasesReturned, ReleasesServices.returnedReleases);
                         SearchServices.searchTerm = searchTerm;
                         SearchServices.searchType = newSearchType;
@@ -74,22 +86,27 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
             SearchServices.searchAttempt++;
         }
         //if nothing is found on the 5th attempt, grab videos from youtube.
-        else if (SearchServices.searchAttempt >= 3) {
+        else if (SearchServices.searchAttempt >= 3)
+        {
             ReleasesServices.getVideosFromYoutube(searchTerm, 40);
         }
     };
 
     //construct url for retrieving releases
-    ReleasesServices.constructUrl = function (searchTerm, newSearchType) {
+    ReleasesServices.constructUrl = function (searchTerm, newSearchType)
+    {
         var perPage = 50, url = '';
 
-        switch (newSearchType) {
+        switch (newSearchType)
+        {
             case "masters":
                 url = 'type=' + newSearchType + '&artist=' + searchTerm + "&per_page=" + perPage;
                 break;
+
             case "releases":
                 url = 'type=' + newSearchType + '&artist=' + searchTerm + "&per_page=" + perPage;
                 break;
+
             case "simple":
                 url = 'type=' + newSearchType + "&q=" + searchTerm + "&per_page=" + perPage;
                 break;
@@ -102,17 +119,22 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
 
     //work out what should the search type be for the next search.
-    ReleasesServices.workoutSearchType = function (searchType) {
+    ReleasesServices.workoutSearchType = function (searchType)
+    {
         var newSearchType = '';
 
-            if (SearchServices.searchAttempt <= 3 && SearchServices.searchAttempt < 5) {
-                switch (SearchServices.searchAttempt) {
+            if (SearchServices.searchAttempt <= 3 && SearchServices.searchAttempt < 5)
+            {
+                switch (SearchServices.searchAttempt)
+                {
                     case 0 :
                         newSearchType = "masters";
                         break;
+
                     case 1 :
                         newSearchType = "releases";
                         break;
+
                     case 2 :
                         newSearchType = "simple";
                         break;
@@ -124,11 +146,13 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
 
     //filters out labels, also removes ([0-9]) from the artist name
-    ReleasesServices.cleanUpReleases = function (releases) {
+    ReleasesServices.cleanUpReleases = function (releases)
+    {
         var cleanReleases = [];
 
         angular.forEach(releases, function (release, i) {
-            if (release.type == 'master' || release.type == 'release') {
+            if (release.type == 'master' || release.type == 'release')
+            {
             //\([0-9]+\)
                 release.title = release.title.replace(/\([0-9]+\)/g, '').replace('  ', ' ');
                 cleanReleases.push(release);
@@ -138,20 +162,24 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     };
 
 
-    ReleasesServices.getReleaseTypeById = function (releaseId) {
+    ReleasesServices.getReleaseTypeById = function (releaseId)
+    {
         var searchType;
 
         SearchServices.expandProgressBar();
 
-        for (var i = 0; i < ReleasesServices.returnedReleases.length; i++) {
-            if (ReleasesServices.returnedReleases[i].id == releaseId) {
+        for (var i = 0; i < ReleasesServices.returnedReleases.length; i++)
+        {
+            if (ReleasesServices.returnedReleases[i].id == releaseId)
+            {
                 searchType = ReleasesServices.returnedReleases[i].type;
                 break;
             }
         }
 
         //if release was removed from the interwebs, just use the searchType that came with the url.
-        if (searchType == undefined) {
+        if (searchType == undefined)
+        {
             searchType = SearchServices.searchType;
         }
 
@@ -159,7 +187,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     };
 
 
-    ReleasesServices.getVideosFromYoutube = function (searchTerm, maxResults) {
+    ReleasesServices.getVideosFromYoutube = function (searchTerm, maxResults)
+    {
         SearchServices.expandProgressBar();
         YoutubeServices.findVideos(searchTerm, maxResults);
 
@@ -174,7 +203,8 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     };
 
 
-    ReleasesServices.getReleasesByStyle = function (style, pageNumber, releaseId) {
+    ReleasesServices.getReleasesByStyle = function (style, pageNumber, releaseId)
+    {
         var tmpPageNumber = 0,
             randomReleaseIndex = 0;
 
@@ -183,40 +213,56 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
         PlayerServices.resetCurrentlyPlaying();
         SearchServices.searchSource = SearchServices.searchSources.surpriseMe;
 
-        $http.get(baseUrl + 'getAllReleasesByStyle&style=' + encodeURIComponent(style)).success(function (releases) {
-            if (pageNumber == 0 || pageNumber == undefined) {
-                //generate random page number - we will retrieve releases from that page for that selected genre
-                tmpPageNumber = Math.floor((Math.random() * releases.pagination.pages) + 1);
-            } else {
-                tmpPageNumber = pageNumber;
-            }
-            SearchServices.surprise.page = tmpPageNumber;
-
-            $http.get(baseUrl + 'getAllReleasesByStyle&style=' + encodeURIComponent(style) + '&page=' + tmpPageNumber).then(function (returnedReleases) {
-                randomReleaseIndex = Math.floor((Math.random() * returnedReleases.data.results.length) + 1);
-                SearchServices.surprise.style = style;
-
-                if (releaseId != undefined) {
-                    SearchServices.surprise.releaseId = releaseId;
+        $http.get(
+            baseUrl
+            + 'getAllReleasesByStyle&style='
+            + encodeURIComponent(style))
+            .success(function (releases)
+            {
+                if (pageNumber == 0 || pageNumber == undefined)
+                {
+                    //generate random page number - we will retrieve releases from that page for that selected genre
+                    tmpPageNumber = Math.floor((Math.random() * releases.pagination.pages) + 1);
                 } else {
-                    SearchServices.surprise.releaseId = returnedReleases.data.results[randomReleaseIndex].id;
-                    SearchServices.searchType = returnedReleases.data.results[randomReleaseIndex].type;
+                    tmpPageNumber = pageNumber;
                 }
 
-                ReleasesServices.returnedReleases = returnedReleases.data.results;
-                ReleasesServices.broadcast(EventsConstants.releasesReturned, ReleasesServices.returnedReleases);
-                SearchServices.searchAttempt = 0;
+                SearchServices.surprise.page = tmpPageNumber;
+
+                $http.get(
+                    baseUrl
+                    + 'getAllReleasesByStyle&style='
+                    + encodeURIComponent(style)
+                    + '&page=' + tmpPageNumber)
+                    .then(function (returnedReleases)
+                    {
+                        randomReleaseIndex = Math.floor((Math.random() * returnedReleases.data.results.length) + 1);
+                        SearchServices.surprise.style = style;
+
+                        if (releaseId != undefined)
+                        {
+                            SearchServices.surprise.releaseId = releaseId;
+                        } else {
+                            SearchServices.surprise.releaseId = returnedReleases.data.results[randomReleaseIndex].id;
+                            SearchServices.searchType = returnedReleases.data.results[randomReleaseIndex].type;
+                        }
+
+                        ReleasesServices.returnedReleases = returnedReleases.data.results;
+                        ReleasesServices.broadcast(EventsConstants.releasesReturned, ReleasesServices.returnedReleases);
+                        SearchServices.searchAttempt = 0;
+                    });
             });
-        });
     };
 
 
-    ReleasesServices.broadcast = function (eventName, object) {
+    ReleasesServices.broadcast = function (eventName, object)
+    {
         $rootScope.$broadcast(eventName, object);
     };
 
 
-    ReleasesServices.getReleaseTracklist = function (releaseId, releaseType) {
+    ReleasesServices.getReleaseTracklist = function (releaseId, releaseType)
+    {
         SearchServices.expandProgressBar();
 
         return $http.get(baseUrl
@@ -229,37 +275,46 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
     };
 
 
-    ReleasesServices.playRelease = function (releaseId, releaseType) {
+    ReleasesServices.playRelease = function (releaseId, releaseType)
+    {
         SearchServices.expandProgressBar();
 
-        ReleasesServices.getReleaseTracklist(releaseId, releaseType).success(function (tracklist) {
-            var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
-            PlayerServices.currentlyPlaying.releaseId = releaseId;
-            PlayerServices.currentlyPlaying.releaseType = releaseType;
-            YoutubeServices.findVideos(friendlyTracklist);
-            ReleasesServices.highlightRelease(releaseId);
-        });
+        ReleasesServices.getReleaseTracklist(releaseId, releaseType)
+            .success(function (tracklist)
+            {
+                var friendlyTracklist = ReleasesServices.makeTracklistNodspotFriendly(tracklist);
+                PlayerServices.currentlyPlaying.releaseId = releaseId;
+                PlayerServices.currentlyPlaying.releaseType = releaseType;
+                YoutubeServices.findVideos(friendlyTracklist);
+                ReleasesServices.highlightRelease(releaseId);
+            });
     };
 
 
-    ReleasesServices.highlightRelease = function (releaseId) {
-        angular.forEach(ReleasesServices.returnedReleases, function (release) {
-            if (releaseId == release.id) {
+    ReleasesServices.highlightRelease = function (releaseId)
+    {
+        angular.forEach(ReleasesServices.returnedReleases, function (release)
+        {
+            if (releaseId == release.id)
+            {
                 release.state = 'active';
-            } else {
+            }
+            else {
                 release.state = '';
             }
         });
     };
 
 
-    ReleasesServices.makeTracklistNodspotFriendly = function (releaseObj) {
+    ReleasesServices.makeTracklistNodspotFriendly = function (releaseObj)
+    {
         var originalTracklist = [],
             artistName = '',
             trackName = '',
             release = releaseObj;
 
-        if (release.artists) {
+        if (release.artists)
+        {
             PlayerServices.currentlyPlaying.artistName = release.artists[0].name.split(" (")[0];
         }
 
@@ -270,10 +325,13 @@ nodspot.factory('ReleasesServices', ['$http', '$rootScope', 'YoutubeServices', '
 
 
         //build up a playlist, including artistNames that will be used for topTracksBtn
-        angular.forEach(release.tracklist, function (track, i) {
-            if (track.artists != undefined) {
+        angular.forEach(release.tracklist, function (track, i)
+        {
+            if (track.artists != undefined)
+            {
                 artistName = track.artists[0].name;
-            } else {
+            }
+            else {
                 artistName = release.artists[0].name;
             }
 

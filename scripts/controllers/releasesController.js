@@ -1,4 +1,5 @@
-nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstants', 'SearchServices', 'PlayerServices', function ($scope, ReleasesServices, EventsConstants, SearchServices, PlayerServices) {
+nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstants', 'SearchServices', 'PlayerServices', function ($scope, ReleasesServices, EventsConstants, SearchServices, PlayerServices)
+{
 
     //show/hide releases sidebar
     $scope.sidebarVisibility = false;
@@ -7,27 +8,33 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     $scope.searchType = undefined;
     $scope.releaseId = undefined;
 
-    $scope.collapseReleases = function () {
+    $scope.collapseReleases = function ()
+    {
         $scope.releasesVisibility = false;
     };
 
-    $scope.expandReleases = function () {
+    $scope.expandReleases = function ()
+    {
         $scope.releasesVisibility = true;
     };
 
-    $scope.collapseSidebar = function () {
+    $scope.collapseSidebar = function ()
+    {
         $scope.sidebarVisibility = false;
     };
 
-    $scope.expandSidebar = function () {
+    $scope.expandSidebar = function ()
+    {
         $scope.sidebarVisibility = true;
     };
 
-    $scope.playRelease = function (releaseId, releaseType) {
+    $scope.playRelease = function (releaseId, releaseType)
+    {
         PlayerServices.currentlyPlaying.track = 0;
 
         //if coming from surprise me, the searchSource should be persisted so that correct url is constructed
-        if (SearchServices.searchSource != SearchServices.searchSources.surpriseMe) {
+        if (SearchServices.searchSource != SearchServices.searchSources.surpriseMe)
+        {
             SearchServices.searchSource = SearchServices.searchSources.userInput;
         }
 
@@ -37,18 +44,22 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     //@@@@@@ WATCHERS
 
     //when releases are returned, start playing
-    $scope.$on(EventsConstants.releasesReturned, function (event, releases) {
+    $scope.$on(EventsConstants.releasesReturned, function (event, releases)
+    {
         $scope.releases = releases;
 
         $scope.expandSidebar();
 
         $scope.releases = ReleasesServices.generateThumbnails('title', releases);
 
-        if (SearchServices.hash.releaseId != '') {
+        if (SearchServices.hash.releaseId != '')
+        {
             $scope.releaseId = SearchServices.hash.releaseId;
-        } else if (SearchServices.surprise.releaseId != '') {
+        }
+        else if (SearchServices.surprise.releaseId != '') {
             $scope.releaseId = SearchServices.surprise.releaseId;
-        } else {
+        }
+        else {
             $scope.releaseId = releases[0].id;
             $scope.searchType = releases[0].type;
         }
@@ -58,16 +69,19 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     });
 
 
-    $scope.$on(EventsConstants.similarArtistsReturned, function () {
+    $scope.$on(EventsConstants.similarArtistsReturned, function ()
+    {
         $scope.expandSidebar();
     });
 
 
-    $scope.$watch(ReleasesServices.getReleases, function (newValue, oldValue) {
+    $scope.$watch(ReleasesServices.getReleases, function (newValue, oldValue)
+    {
         $scope.releases = ReleasesServices.getReleases();
         if ($scope.releases.length > 0) {
             $scope.expandReleases();
-        } else {
+        }
+        else {
             $scope.collapseReleases();
         }
     });

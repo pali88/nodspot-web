@@ -1,12 +1,14 @@
 nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices', 'SearchServices', function ($http, YoutubeServices, PlayerServices, SearchServices) {
 
-    var LastfmServices = {
+    var LastfmServices =
+    {
         api: '364727cc40706da6eb7d5829f7435bd0',
         baseUrl: 'http://ws.audioscrobbler.com/2.0/?method=',
         tagsTopTracks: []
     };
 
-    LastfmServices.getTagsTopTracks = function (tagName) {
+    LastfmServices.getTagsTopTracks = function (tagName)
+    {
         SearchServices.expandProgressBar();
         PlayerServices.currentlyPlaying.title = tagName;
         PlayerServices.currentlyPlaying.releaseTitle = 'top tracks';
@@ -14,39 +16,53 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
         SearchServices.searchSource = SearchServices.searchSources.tag;
         SearchServices.searchTerm = tagName;
 
-        return $http.get(LastfmServices.baseUrl +
-            'tag.gettoptracks&tag=' + tagName +
-            "&api_key=" + LastfmServices.api +
-            "&format=json"
+        return $http.get(
+            LastfmServices.baseUrl
+            + 'tag.gettoptracks&tag='
+            + tagName
+            + "&api_key="
+            + LastfmServices.api
+            + "&format=json"
         );
     };
 
 
-    LastfmServices.playTagsTopTracks = function (tagName) {
-        LastfmServices.getTagsTopTracks(tagName).then(function (topTracks) {
+    LastfmServices.playTagsTopTracks = function (tagName)
+    {
+        LastfmServices.getTagsTopTracks(tagName).then(function (topTracks)
+        {
             YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag'));
         });
+
         SearchServices.logSearch(tagName, 'tag');
         PlayerServices.currentlyPlaying.releaseTitle = tagName;
         PlayerServices.currentlyPlaying.releaseYear = 'Top tracks, all good :)';
     };
 
-    LastfmServices.lastfmPlaylistToNodspot = function (artistName, topTracks, type) {
+    LastfmServices.lastfmPlaylistToNodspot = function (artistName, topTracks, type)
+    {
         var newPlaylist = [];
 
-        switch (type) {
-            case 'artist': {
-                angular.forEach(topTracks.toptracks.track, function (track, i) {
-                    newPlaylist[i] = {
+        switch (type)
+        {
+            case 'artist':
+            {
+                angular.forEach(topTracks.toptracks.track, function (track, i)
+                {
+                    newPlaylist[i] =
+                    {
                         track_title: artistName + ' ' + track.name,
                         artist_name: artistName
                     };
                 });
                 break
             }
-            case 'tag': {
-                angular.forEach(topTracks.data.toptracks.track, function (track, i) {
-                    newPlaylist[i] = {
+            case 'tag':
+            {
+                angular.forEach(topTracks.data.toptracks.track, function (track, i)
+                {
+                    newPlaylist[i] =
+                    {
                         track_title: track.artist.name + ' ' + track.name,
                         artist_name: track.artist.name
                     };
@@ -54,6 +70,7 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
                 break
             }
         }
+
         return newPlaylist;
     };
 
