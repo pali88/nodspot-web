@@ -57,13 +57,16 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
 
     //read ytToken from localStorage
-    YoutubeServices.getAuthTokenFromLocalStorage = function () {
+    YoutubeServices.getAuthTokenFromLocalStorage = function ()
+    {
         var deferred = $q.defer(),
             ytToken = localStorage['ytToken'];
 
-        if (ytToken != '') {
+        if (ytToken != '')
+        {
             deferred.resolve(ytToken);
-        } else {
+        }
+        else {
             deferred.resolve(false);
         }
 
@@ -71,7 +74,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
     };
 
     //set playlist length so we can use it later on to know if we have all the tracks for the playlist or not
-    YoutubeServices.setPlaylistLength = function (playlistLength) {
+    YoutubeServices.setPlaylistLength = function (playlistLength)
+    {
         YoutubeServices.returnedVideos = [];
         YoutubeServices.returnedVideosCounter = 0;
         YoutubeServices.playlistLength = playlistLength;
@@ -79,31 +83,37 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
 
     //wrapper function firing firing "fetchVideo" for every track in the tracklist
-    YoutubeServices.findVideos = function (tracklist, maxResults) {
+    YoutubeServices.findVideos = function (tracklist, maxResults)
+    {
 
         //check if we're dealing with a tracklist or just one track
-        if (typeof (tracklist) == "object") {
+        if (typeof (tracklist) == "object")
+        {
             YoutubeServices.setPlaylistLength(tracklist.length);
         } else {
             tracklist = [{track_title: tracklist }];
         }
 
-        if (maxResults == undefined) {
+        if (maxResults == undefined)
+        {
             maxResults = 1;
         }
 
-        angular.forEach(tracklist, function (track, i) {
+        angular.forEach(tracklist, function (track, i)
+        {
             YoutubeServices.findVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults);
         });
     };
 
 
     //check if the video still exists on youtube
-    YoutubeServices.isValidVideo = function (videoId) {
+    YoutubeServices.isValidVideo = function (videoId)
+    {
         var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey,
             isValid;
 
-        return $http.get(url).then(function (res) {
+        return $http.get(url).then(function (res)
+        {
             isValid = res.data.pageInfo.totalResults > 0 ? true : false;
 
             return isValid;
@@ -112,7 +122,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
 
     //try to fetch video from youtube
-    YoutubeServices.findVideo = function (artistName, trackName, i, maxResults) {
+    YoutubeServices.findVideo = function (artistName, trackName, i, maxResults)
+    {
         var url;
 
         url = baseUrl + '&maxResults='
@@ -122,11 +133,15 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
             + "&type=video&key="
             + apiKey;
 
-        $http.get(encodeURI(url)).then(function (res) {
-            if (res.data.pageInfo.totalResults > 0) {
+        $http.get(encodeURI(url)).then(function (res)
+        {
+            if (res.data.pageInfo.totalResults > 0)
+            {
 
-                switch (maxResults) {
-                    case 1: {
+                switch (maxResults)
+                {
+                    case 1:
+                    {
                         YoutubeServices.returnedVideos[i] = res.data.items[0];
                         YoutubeServices.returnedVideos[i].artistName = artistName;
                         YoutubeServices.returnedVideosCounter++;
@@ -134,8 +149,10 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                     }
 
                     //this means that we could not find any releases for this term, therefore we're returning 20 videos straight from youtube
-                    case 40: {
-                        angular.forEach(res.data.items, function (video, j) {
+                    case 40:
+                    {
+                        angular.forEach(res.data.items, function (video, j)
+                        {
                             YoutubeServices.returnedVideos[j] = video;
                             YoutubeServices.returnedVideosCounter++;
                             YoutubeServices.playlistLength = maxResults;
@@ -144,13 +161,15 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                     }
                 }
 
-            } else {
+            }
+            else {
                 YoutubeServices.playlistLength--;
             }
 
 
             //check if we've built the playlist we were expected to. If yes, broadcast. PlayerCtrl will be waiting.
-            if (YoutubeServices.returnedVideosCounter == YoutubeServices.playlistLength) {
+            if (YoutubeServices.returnedVideosCounter == YoutubeServices.playlistLength)
+            {
                 $rootScope.$broadcast(EventsConstants.playlistReady, YoutubeServices.returnedVideos);
                 YoutubeServices.returnedVideos = [];
                 YoutubeServices.returnedVideosCounter = 0;
