@@ -29,10 +29,11 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
 
     LastfmServices.playTagsTopTracks = function (tagName)
     {
-        LastfmServices.getTagsTopTracks(tagName).then(function (topTracks)
-        {
-            YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag'));
-        });
+        LastfmServices.getTagsTopTracks(tagName)
+            .then(function (topTracks)
+            {
+                YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag'));
+            });
 
         SearchServices.logSearch(tagName, 'tag');
         PlayerServices.currentlyPlaying.releaseTitle = tagName;
