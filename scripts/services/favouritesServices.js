@@ -139,6 +139,13 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         };
 
 
+        //load youtube playlist
+        FavouritesServices.getYoutubePlaylistTracks = function (playlistId)
+        {
+            return YoutubeServices.getVideosFromYoutubePlaylist(playlistId);
+        };
+
+
         FavouritesServices.playPlaylist = function (playlistId)
         {
             FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistsTracks)

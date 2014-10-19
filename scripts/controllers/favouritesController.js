@@ -62,14 +62,24 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
     $scope.getPlaylistTracks = function (index, playlistId)
     {
-        FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistTracks)
-        {
-            PlayerServices.currentlyPlaying.title = $scope.playlists[index].playlist_name;
-            PlayerServices.currentlyPlaying.releaseTitle = playlistTracks.length + ' tracks';
-            PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
-            PlayerServices.currentlyPlaying.track = 0;
-            SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
-        });
+        if (!$scope.playlists[index].is_youtube) {
+            console.log('it ok')
+            FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistTracks) {
+                PlayerServices.currentlyPlaying.title = $scope.playlists[index].playlist_name;
+                PlayerServices.currentlyPlaying.releaseTitle = playlistTracks.length + ' tracks';
+                PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
+                PlayerServices.currentlyPlaying.track = 0;
+                SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
+            });
+        } else {
+            FavouritesServices.getYoutubePlaylistTracks($scope.playlists[index].youtube_playlist_id).then(function (playlistTracks) {
+                ytPlayer.loadPlaylist({
+                    list: $scope.playlists[index].youtube_playlist_id,
+                    listType: 'playlist'
+                });
+                //console.log(playlistTracks.data);
+            });
+        }
     };
 
 

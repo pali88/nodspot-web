@@ -50,7 +50,6 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                         }, 1000);
                     }
                 });
-
             return deferred.promise;
         }
     };
@@ -177,24 +176,18 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
         });
     };
 
+    YoutubeServices.getVideosFromYoutubePlaylist = function (playlistId)
+    {
+        return $http.get(
+            "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="
+            + playlistId
+            + "&key="
+            + this.API
+        );
+    }
 
 
     var ytObj = {
-
-        validateToken: function (callback) {
-            $.ajax({
-                url: 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + ytObj.token,
-                success: function (res) {
-                    if (!res.error) {
-                        console.log(res);
-                        callback(res.expires_in);
-                    }
-                },
-                error: function (request, status, error) {
-                    helpersObj.showNotification(messagesObj.somethingWrong);
-                }
-            });
-        },
 
         getMySubscriptions: function () {
             ytObj.validateToken(function (res) {
