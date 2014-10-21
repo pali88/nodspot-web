@@ -161,7 +161,8 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                 }
 
             }
-            else {
+            else
+            {
                 YoutubeServices.playlistLength--;
             }
 
@@ -184,7 +185,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
             + "&key="
             + this.API
         );
-    }
+    };
 
 
     var ytObj = {

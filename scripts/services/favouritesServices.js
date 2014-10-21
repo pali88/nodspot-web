@@ -139,13 +139,6 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         };
 
 
-        //load youtube playlist
-        FavouritesServices.getYoutubePlaylistTracks = function (playlistId)
-        {
-            return YoutubeServices.getVideosFromYoutubePlaylist(playlistId);
-        };
-
-
         FavouritesServices.playPlaylist = function (playlistId)
         {
             FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistsTracks)
@@ -166,7 +159,8 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
             {
                 FavouritesServices.playlists[index].editMode = true;
             }
-            else {
+            else
+            {
                 FavouritesServices.playlists[index].editMode = false;
             }
         };
@@ -193,7 +187,8 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                         FavouritesServices.fetchFavourites();
                     });
             }
-            else {
+            else
+            {
                 FacebookServices.login(function ()
                 {
                     FavouritesServices.addReleaseToFavourites(releaseTitle, artistName, releaseId, releaseYear, releaseType, searchTerm)
@@ -243,7 +238,8 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                         + '/'
                         + playlistId
                         + '/delete'
-                    ).then(function () {
+                    ).then(function ()
+                        {
                             FavouritesServices.playlists.splice(index, 1);
                         });
                 }
