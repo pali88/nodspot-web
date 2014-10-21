@@ -162,7 +162,8 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
                 {
                     $scope.playlists[index].state = 'saved';
                 });
-            } else if (trackState == 'saved')
+            }
+            else if (trackState == 'saved')
             {
                 FavouritesServices.removeTrackFromPlaylist(FavouritesServices.trackId, playlistId);
                 $scope.playlists[index].state = 'notSaved';
