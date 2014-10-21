@@ -78,14 +78,13 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
         //means, it's an imported playlist from youtube
         else {
-            FavouritesServices.getYoutubePlaylistTracks(playlist.youtube_playlist_id).then(function (playlistTracks) {
+            YoutubeServices.getVideosFromYoutubePlaylist(playlist.youtube_playlist_id).then(function (playlistTracks) {
                 ytPlayer.loadPlaylist({
                     list: playlist.youtube_playlist_id,
                     listType: 'playlist'
                 });
                 //console.log(playlistTracks.data);
             });
-            YoutubeServices.getVideosFromYoutubePlaylist()
         }
     };
 
