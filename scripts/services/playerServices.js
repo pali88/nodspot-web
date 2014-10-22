@@ -147,6 +147,14 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
                     + separator + 'track=' + PlayerServices.currentlyPlaying.track;
                 break;
             }
+
+            case SearchServices.searchSources.youtubePlaylist:
+            {
+                hash = type + 'youtubePlaylist'
+                    + separator + 'id=' + PlayerServices.currentlyPlaying.playlistId
+                    + separator + 'track=' + PlayerServices.currentlyPlaying.track;
+                break;
+            }
         }
 
         hash = hash.replace(/ /g, '-');

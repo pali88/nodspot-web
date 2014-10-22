@@ -179,12 +179,31 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
     YoutubeServices.getVideosFromYoutubePlaylist = function (playlistId)
     {
-        return $http.get(
-            "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="
+        var deferred = $q.defer();
+
+        $http.get(
+            "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId="
             + playlistId
             + "&key="
             + this.API
-        );
+        ).then(function (res) {
+                var returnedVideos = [];
+
+                angular.forEach(res.data.items, function (video, key)
+                {
+                    returnedVideos[key] =
+                    {
+                        artistName: '',
+                        id: video.snippet.resourceId,
+                        snippet: video.snippet
+                    };
+                });
+
+                $rootScope.$broadcast(EventsConstants.playlistReady, returnedVideos);
+                deferred.resolve(returnedVideos);
+            });
+
+        return deferred.promise;
     };
 
 

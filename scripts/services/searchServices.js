@@ -15,7 +15,8 @@ nodspot.factory('SearchServices', ['$http', 'ApiConstants', function ($http, Api
             userPlaylist: 3,
             directYoutube: 4,
             topTracks: 5,
-            tag: 6
+            tag: 6,
+            youtubePlaylist: 7
         },
         searchSource: 0,
 

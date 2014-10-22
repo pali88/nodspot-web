@@ -66,26 +66,28 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
         //check if we're trying to play a nodspot playlist
         if (!$scope.playlists[index].is_youtube) {
-            console.log('it ok')
             FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistTracks) {
+                PlayerServices.currentlyPlaying.playlistId = playlistId;
                 PlayerServices.currentlyPlaying.title = playlist.playlist_name;
                 PlayerServices.currentlyPlaying.releaseTitle = playlistTracks.length + ' tracks';
-                PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
-                PlayerServices.currentlyPlaying.track = 0;
                 SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
             });
         }
 
         //means, it's an imported playlist from youtube
         else {
-            YoutubeServices.getVideosFromYoutubePlaylist(playlist.youtube_playlist_id).then(function (playlistTracks) {
-                ytPlayer.loadPlaylist({
-                    list: playlist.youtube_playlist_id,
-                    listType: 'playlist'
+            YoutubeServices.getVideosFromYoutubePlaylist(playlist.youtube_playlist_id)
+                .then(function (res)
+                {
+                    PlayerServices.currentlyPlaying.releaseTitle = res.length + ' tracks';
                 });
-                //console.log(playlistTracks.data);
-            });
+
+            PlayerServices.currentlyPlaying.playlistId = playlist.youtube_playlist_id;
+            SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
         }
+
+        PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
+        PlayerServices.currentlyPlaying.track = 0;
     };
 
 
@@ -124,7 +126,6 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
 
     $scope.playlistName = '';
     $scope.myFirstPlaylistVisibility = true;
-
 
     $scope.$watch(FavouritesServices.getPlaylists, function ()
     {

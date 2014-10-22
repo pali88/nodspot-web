@@ -38,40 +38,49 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
         FacebookServices.isSDKLoaded();
 
         //change background image once the playlist is ready
-        $scope.$on(EventsConstants.playlistReady, function () {
+        $scope.$on(EventsConstants.playlistReady, function ()
+        {
             $scope.appBackground = "searchBackground";
             $scope.progressBarVisibility = false;
         });
 
         //show/hide the progress bar
-        $scope.$watch(SearchServices.getProgressBarVisibility, function (newValue, oldValue) {
+        $scope.$watch(SearchServices.getProgressBarVisibility, function (newValue, oldValue)
+        {
             $scope.progressBarVisibility = SearchServices.getProgressBarVisibility();
         });
 
 
-        $scope.$on(EventsConstants.showPlayer, function (event) {
+        $scope.$on(EventsConstants.showPlayer, function (event)
+        {
             $scope.appBackground = "searchBackground";
         });
 
 
-        $scope.closeOverlays = function () {
+        $scope.closeOverlays = function ()
+        {
             $scope.$broadcast(EventsConstants.mainCtrlClicked);
         };
 
 
         //parse the URL when nodspot first launches, to see if there's any request to play an album or a playlist
-        $scope.newUrlParser = function () {
+        $scope.newUrlParser = function ()
+        {
             var urlParams = $location.search();
 
-            if (urlParams.term != undefined || urlParams.term == '') {
+            if (urlParams.term != undefined || urlParams.term == '')
+            {
                 SearchServices.searchTerm = urlParams.term.replace(/-/g, ' ');
             }
 
             PlayerServices.currentlyPlaying.track = urlParams.track;
 
-            switch (urlParams.type) {
-                case 'search': {
-                    try {
+            switch (urlParams.type)
+            {
+                case 'search':
+                {
+                    try
+                    {
                         SearchServices.searchType = urlParams.searchType;
                         SearchServices.hash.releaseId = urlParams.id;
                         SearchServices.searchSource = SearchServices.searchSources.userInput;
@@ -79,27 +88,50 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     } catch (e) {}
                     break;
                 }
-                case 'playlist': {
-                    try {
+
+                case 'playlist':
+                {
+                    try
+                    {
                         FavouritesServices.playPlaylist(urlParams.id);
                     } catch (e) {}
                     break;
                 }
-                case 'surprise':{
-                    try {
+
+                case 'youtubePlaylist':
+                {
+                    try
+                    {
+                        SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
+                        PlayerServices.currentlyPlaying.playlistId = urlParams.id;
+                        FavouritesServices.getVideosFromYoutubePlaylist(urlParams.id);
+                    } catch (e) {}
+                    break;
+                }
+
+                case 'surprise':
+                {
+                    try
+                    {
                         ReleasesServices.getReleasesByStyle(urlParams.style, urlParams.page, urlParams.id);
                     } catch (e) {}
                     break;
                 }
-                case 'youtube':{
-                    try {
+
+                case 'youtube':
+                {
+                    try
+                    {
                         ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 40);
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
                     } catch (e) {}
                     break;
                 }
-                case 'topTracks':{
-                    try {
+
+                case 'topTracks':
+                {
+                    try
+                    {
                         SearchServices.searchSource = SearchServices.searchSources.topTracks;
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
                         ArtistServices.getTopTracks(SearchServices.searchTerm);
@@ -107,8 +139,11 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     } catch (e) {}
                     break;
                 }
-                case 'tag':{
-                    try {
+
+                case 'tag':
+                {
+                    try
+                    {
                         SearchServices.searchSource = SearchServices.searchSources.tag;
                         PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
                         LastfmServices.playTagsTopTracks(SearchServices.searchTerm);
@@ -118,7 +153,8 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
             }
 
             //log searches that have searchTerm
-            if (SearchServices.searchTerm != '') {
+            if (SearchServices.searchTerm != '')
+            {
                 SearchServices.logSearch(SearchServices.searchTerm, urlParams.type);
             }
         };

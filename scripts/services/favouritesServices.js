@@ -103,7 +103,6 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         FavouritesServices.getPlaylistTracks = function (playlistId)
         {
             SearchServices.expandProgressBar();
-            PlayerServices.currentlyPlaying.playlistId = playlistId;
 
             return $http.get(baseUrl
             + 'playlist/'
@@ -136,6 +135,12 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                     //return playlist tracks
                     return youtubeLikePlaylist;
                 });
+        };
+
+
+        //get videos from youtube playlist
+        FavouritesServices.getVideosFromYoutubePlaylist = function (playlistId) {
+            YoutubeServices.getVideosFromYoutubePlaylist(playlistId);
         };
 
 
