@@ -28,6 +28,7 @@ switch ($action) {
 
         if ($type != 'simple') {
             $url = $baseSearchURL . 'type=' . $type . '&artist=' . urlencode($artist) . '&per_page=' . $per_page;
+            var_dump($url);
         } else {
             $url = $baseSearchURL . 'q=' . urlencode($query) . '&per_page=' . $per_page;
         }

@@ -47,11 +47,9 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     $scope.$on(EventsConstants.releasesReturned, function (event, releases)
     {
         $scope.releases = releases;
-
-        $scope.expandSidebar();
-
         $scope.releases = ReleasesServices.generateThumbnails('title', releases);
 
+        $scope.expandSidebar();
         if (SearchServices.hash.releaseId != '')
         {
             $scope.releaseId = SearchServices.hash.releaseId;
@@ -64,9 +62,34 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
             $scope.searchType = releases[0].type;
         }
 
-        $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId)
+        $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId);
         ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
     });
+
+
+    //$scope.$on(EventsConstants.releasesReturned, function (event, releases)
+    //{
+    //    $scope.releases = releases;
+    //
+    //    $scope.expandSidebar();
+    //
+    //    $scope.releases = ReleasesServices.generateThumbnails('title', releases);
+    //
+    //    if (SearchServices.hash.releaseId != '')
+    //    {
+    //        $scope.releaseId = SearchServices.hash.releaseId;
+    //    }
+    //    else if (SearchServices.surprise.releaseId != '') {
+    //        $scope.releaseId = SearchServices.surprise.releaseId;
+    //    }
+    //    else {
+    //        $scope.releaseId = releases[0].id;
+    //        $scope.searchType = releases[0].type;
+    //    }
+    //
+    //    $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId)
+    //    ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
+    //});
 
 
     $scope.$on(EventsConstants.similarArtistsReturned, function ()

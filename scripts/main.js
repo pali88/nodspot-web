@@ -85,6 +85,10 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                         SearchServices.hash.releaseId = urlParams.id;
                         SearchServices.searchSource = SearchServices.searchSources.userInput;
                         ReleasesServices.getAllReleases(SearchServices.searchTerm, SearchServices.searchType);
+                            //.success(function (releases)
+                            //{
+                            //    ReleasesServices.playRelease(releases);
+                            //});
                     } catch (e) {}
                     break;
                 }

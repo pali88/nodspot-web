@@ -152,6 +152,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                     {
                         angular.forEach(res.data.items, function (video, j)
                         {
+                            video.artistName = video.snippet.title.split(' -')[0],
                             YoutubeServices.returnedVideos[j] = video;
                             YoutubeServices.returnedVideosCounter++;
                             YoutubeServices.playlistLength = maxResults;
@@ -186,14 +187,15 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
             + playlistId
             + "&key="
             + this.API
-        ).then(function (res) {
+        ).then(function (res)
+            {
                 var returnedVideos = [];
 
                 angular.forEach(res.data.items, function (video, key)
                 {
                     returnedVideos[key] =
                     {
-                        artistName: video.snippet.title.split('-')[0],
+                        artistName: video.snippet.title.split(' -')[0],
                         id: video.snippet.resourceId,
                         snippet: video.snippet
                     };
