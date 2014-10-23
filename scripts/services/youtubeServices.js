@@ -193,7 +193,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                 {
                     returnedVideos[key] =
                     {
-                        artistName: '',
+                        artistName: video.snippet.title.split('-')[0],
                         id: video.snippet.resourceId,
                         snippet: video.snippet
                     };
