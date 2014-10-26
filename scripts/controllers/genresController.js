@@ -1,4 +1,4 @@
-nodspot.controller('GenresCtrl', ['$scope', 'ReleasesServices', 'EventsConstants', 'GenresServices', 'LastfmServices', '$rootScope', function ($scope, ReleasesServices, EventsConstants, GenresServices, LastfmServices, $rootScope)
+nodspot.controller('GenresCtrl', ['$scope', 'ReleasesServices', 'EventsConstants', 'GenresServices', 'LastfmServices', '$rootScope', 'PlayerServices', function ($scope, ReleasesServices, EventsConstants, GenresServices, LastfmServices, $rootScope, PlayerServices)
 {
 
     $scope.visibility = true;
@@ -18,7 +18,9 @@ nodspot.controller('GenresCtrl', ['$scope', 'ReleasesServices', 'EventsConstants
 
     $scope.playTagsTopTracks = function (tagName)
     {
-        LastfmServices.playTagsTopTracks(tagName);
+        LastfmServices.getTagsTopTracksVideos(tagName).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
         $scope.collapseTagsAndGenres();
     };
 
@@ -48,11 +50,5 @@ nodspot.controller('GenresCtrl', ['$scope', 'ReleasesServices', 'EventsConstants
         ReleasesServices.getReleasesByStyle(style);
         $scope.collapseTagsAndGenres();
     };
-
-
-    $scope.$on(EventsConstants.playlistReady, function ()
-    {
-        $scope.visibility = false;
-    });
 
 }]);

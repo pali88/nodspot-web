@@ -1,4 +1,4 @@
-nodspot.factory('ArtistServices', ['$http', '$rootScope', 'LastfmServices', 'YoutubeServices', 'PlayerServices', 'SearchServices', 'EventsConstants', function ($http, $rootScope, LastfmServices, YoutubeServices, PlayerServices, SearchServices, EventsConstants)
+nodspot.factory('ArtistServices', ['$http', '$rootScope', 'LastfmServices', 'YoutubeServices', 'PlayerServices', 'SearchServices', 'EventsConstants', '$q', function ($http, $rootScope, LastfmServices, YoutubeServices, PlayerServices, SearchServices, EventsConstants, $q)
 {
 
     var ArtistServices =
@@ -41,9 +41,11 @@ nodspot.factory('ArtistServices', ['$http', '$rootScope', 'LastfmServices', 'You
 
     ArtistServices.getTopTracks = function (searchTerm)
     {
+        var d = $q.defer();
+
         SearchServices.expandProgressBar();
         PlayerServices.currentlyPlaying.title = searchTerm;
-        PlayerServices.currentlyPlaying.releaseTitle = 'Top tracks';
+        PlayerServices.currentlyPlaying.albumName = 'Top tracks';
         PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
         SearchServices.searchTerm = searchTerm;
         SearchServices.searchSource = SearchServices.searchSources.topTracks;
@@ -57,11 +59,15 @@ nodspot.factory('ArtistServices', ['$http', '$rootScope', 'LastfmServices', 'You
             .success(function (topTracks)
             {
                 var playlist = LastfmServices.lastfmPlaylistToNodspot(searchTerm, topTracks, 'artist');
-                YoutubeServices.findVideos(playlist);
+
+                YoutubeServices.findVideos(playlist).then(function (playlistIds) {
+                    d.resolve(playlistIds);
+                });
             });
 
         SearchServices.logSearch(searchTerm, 'topTracks');
 
+        return d.promise;
     };
 
 

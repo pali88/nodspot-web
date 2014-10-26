@@ -1,17 +1,17 @@
-nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$rootScope', function ($window, SearchServices, $location, $rootScope)
+nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$rootScope', 'HelperServices', 'GenresServices', 'EventsConstants', function ($window, SearchServices, $location, $rootScope, HelperServices, GenresServices, EventsConstants)
 {
 
     var PlayerServices =
     {
-        scrollY: 0
+        scrollY: 0,
+        playerVisibility: false
     };
 
     PlayerServices.currentlyPlaying =
     { //used when favouriting an album
         artistName: '',
-        releaseTitle: '',
-        releaseId: '',
-        releaseType: '',
+        albumName: '',
+        albumId: '',
         releaseYear: '',
         searchType: '',
         searchTerm: '',
@@ -37,6 +37,12 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     };
 
 
+    PlayerServices.getPlayerVisibility = function ()
+    {
+       return PlayerServices.playerVisibility;
+    };
+
+
     PlayerServices.onReady = function ()
     {
         ytPlayer.addEventListener('onStateChange', function (e) {});
@@ -46,9 +52,6 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
 
     PlayerServices.resetCurrentlyPlaying = function ()
     {
-        SearchServices.hash.releaseId = '';
-        SearchServices.hash.startFrom = 0;
-        SearchServices.surprise.releaseId = '';
         PlayerServices.currentlyPlaying.track = 0;
     };
 
@@ -64,6 +67,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         if (newState.data == 1 || newState.data == 3 || newState.data == 5)
         {
             PlayerServices.currentlyPlaying.track = ytPlayer.getPlaylistIndex();
+            $rootScope.$broadcast(EventsConstants.trackChanged); //for changing the main website background from image to grey
             PlayerServices.updateHash();
         } else if (newState.data == 0 || newState.data == -1) {
 
@@ -101,7 +105,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
                 hash = type + 'search'
                     + separator + 'searchType=' + SearchServices.searchType
                     + separator + 'term=' + SearchServices.searchTerm
-                    + separator + 'id=' + PlayerServices.currentlyPlaying.releaseId
+                    + separator + 'id=' + PlayerServices.currentlyPlaying.albumId
                     + separator + 'track=' + PlayerServices.currentlyPlaying.track;
                 break;
             }
@@ -119,7 +123,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
                 hash = type + 'surprise'
                     + separator + 'style=' + SearchServices.surprise.style
                     + separator + 'page=' + SearchServices.surprise.page
-                    + separator + 'id=' + PlayerServices.currentlyPlaying.releaseId
+                    + separator + 'id=' + PlayerServices.currentlyPlaying.albumId
                     + separator + 'track=' + PlayerServices.currentlyPlaying.track;
                 break;
             }
@@ -163,10 +167,33 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     };
 
 
+    //load nodspot playlist
+    PlayerServices.loadPlaylist = function (videos, startFrom)
+    {
+        var playlistIds = HelperServices.extractVideoIds(videos);
+
+        GenresServices.stylesVisibility = false;
+        PlayerServices.playerVisibility = true;
+
+        var interval = setInterval(function ()
+        {
+            try
+            {
+                if (ytPlayer.loadPlaylist != undefined)
+                {
+                    ytPlayer.loadPlaylist(playlistIds, startFrom);
+                    clearInterval(interval);
+                }
+            }
+            catch (e) { }
+        }, 120);
+    };
+
+
     PlayerServices.playTrack = function (index)
     {
-          ytPlayer.setLoop(true);
-          ytPlayer.playVideoAt(index);
+        ytPlayer.setLoop(true);
+        ytPlayer.playVideoAt(index);
     };
 
 

@@ -6,6 +6,7 @@ var nodspot = angular.module('nodspot', ['ngTouch']);
 
 nodspot.constant('EventsConstants', {
     playlistReady: "playlistReady",
+    trackChanged: "trackChanged",
     releasesReturned: "releasesReturned",
     similarArtistsReturned: "similarArtistsReturned",
     artistBioReturned: "artistBioReturned",
@@ -37,12 +38,14 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
 
         FacebookServices.isSDKLoaded();
 
+
         //change background image once the playlist is ready
         $scope.$on(EventsConstants.playlistReady, function ()
         {
             $scope.appBackground = "searchBackground";
             $scope.progressBarVisibility = false;
         });
+
 
         //show/hide the progress bar
         $scope.$watch(SearchServices.getProgressBarVisibility, function (newValue, oldValue)
@@ -66,7 +69,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
         //parse the URL when nodspot first launches, to see if there's any request to play an album or a playlist
         $scope.newUrlParser = function ()
         {
-            var urlParams = $location.search();
+            var urlParams = $location.search(), id = urlParams.id;
 
             if (urlParams.term != undefined || urlParams.term == '')
             {
@@ -82,14 +85,26 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     try
                     {
                         SearchServices.searchType = urlParams.searchType;
-                        SearchServices.hash.releaseId = urlParams.id;
-                        SearchServices.searchSource = SearchServices.searchSources.userInput;
-                        ReleasesServices.getAllReleases(SearchServices.searchTerm, SearchServices.searchType);
-                            //.success(function (releases)
-                            //{
-                            //    ReleasesServices.playRelease(releases);
-                            //});
-                    } catch (e) {}
+                        ReleasesServices.getAlbumTracklist(id).then(function (tracklist)
+                        {
+                            ReleasesServices.findVideos(tracklist).then(function (videos) {
+                                PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
+                            });
+
+                            ReleasesServices.findAlbums(SearchServices.searchTerm).then(function ()
+                            {
+                                angular.forEach(ReleasesServices.returnedReleases, function (release, key) {
+                                    if (release.id == id)
+                                    {
+                                        PlayerServices.currentlyPlaying.albumName = release.name;
+                                    }
+                                });
+                                ReleasesServices.highlightRelease(id);
+                            });
+                        });
+
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -97,8 +112,13 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        FavouritesServices.playPlaylist(urlParams.id);
-                    } catch (e) {}
+                        FavouritesServices.getPlaylistTracks(id).then(function (videos)
+                        {
+                            PlayerServices.currentlyPlaying.playlistId = id;
+                            PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
+                        });
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -106,10 +126,12 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
-                        PlayerServices.currentlyPlaying.playlistId = urlParams.id;
-                        FavouritesServices.getVideosFromYoutubePlaylist(urlParams.id);
-                    } catch (e) {}
+                        FavouritesServices.getVideosFromYoutubePlaylist(id).then(function (videos)
+                        {
+                            PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
+                        });
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -117,8 +139,9 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        ReleasesServices.getReleasesByStyle(urlParams.style, urlParams.page, urlParams.id);
-                    } catch (e) {}
+                        ReleasesServices.getReleasesByStyle(urlParams.style, urlParams.page, id);
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -126,9 +149,12 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 40);
-                        PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                    } catch (e) {}
+                        ReleasesServices.getVideosFromYoutube(SearchServices.searchTerm, 40).then(function (videos)
+                        {
+                            PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
+                        });
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -136,11 +162,13 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        SearchServices.searchSource = SearchServices.searchSources.topTracks;
-                        PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                        ArtistServices.getTopTracks(SearchServices.searchTerm);
+                        ArtistServices.getTopTracks(SearchServices.searchTerm).then(function (videos) {
+                            PlayerServices.loadPlaylist(videos, 0);
+                        });
+
                         ArtistServices.getSimilar(SearchServices.searchTerm);
-                    } catch (e) {}
+                    }
+                    catch (e) {}
                     break;
                 }
 
@@ -148,10 +176,11 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                 {
                     try
                     {
-                        SearchServices.searchSource = SearchServices.searchSources.tag;
-                        PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
-                        LastfmServices.playTagsTopTracks(SearchServices.searchTerm);
-                    } catch (e) {}
+                        LastfmServices.getTagsTopTracksVideos(SearchServices.searchTerm).then(function (videos) {
+                            PlayerServices.loadPlaylist(videos, 0);
+                        });
+                    }
+                    catch (e) {}
                     break;
                 }
             }

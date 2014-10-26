@@ -129,8 +129,12 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
                         }
                     });
 
-                    //Notify PlayerCtrl about a new playlist he needs to play. Also, send it.
-                    $rootScope.$broadcast(EventsConstants.playlistReady, youtubeLikePlaylist);
+                    YoutubeServices.returnedVideos = youtubeLikePlaylist;
+
+                    PlayerServices.currentlyPlaying.title = "Someone's playlist";
+                    PlayerServices.currentlyPlaying.albumName = playlistTracks.length + ' tracks';
+                    PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
+                    SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
 
                     //return playlist tracks
                     return youtubeLikePlaylist;
@@ -140,19 +144,9 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
         //get videos from youtube playlist
         FavouritesServices.getVideosFromYoutubePlaylist = function (playlistId) {
-            YoutubeServices.getVideosFromYoutubePlaylist(playlistId);
-        };
-
-
-        FavouritesServices.playPlaylist = function (playlistId)
-        {
-            FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistsTracks)
-            {
-                PlayerServices.currentlyPlaying.title = "Someone's playlist";
-                PlayerServices.currentlyPlaying.releaseTitle = playlistsTracks.length + ' tracks';
-                PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
-                SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
-            });
+            PlayerServices.currentlyPlaying.playlistId = playlistId;
+            SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
+            return YoutubeServices.getVideosFromYoutubePlaylist(playlistId);
         };
 
 

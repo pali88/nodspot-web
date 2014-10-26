@@ -55,8 +55,8 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
     $scope.$watch(FavouritesServices.getFavourites, function ()
     {
         $scope.releases = FavouritesServices.getFavourites();
-        $scope.hidePlaceholder();
         $scope.releases = ReleasesServices.generateThumbnails('artist_name', $scope.releases);
+        $scope.hidePlaceholder();
     });
 
 
@@ -66,10 +66,12 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
 
         //check if we're trying to play a nodspot playlist
         if (!$scope.playlists[index].is_youtube) {
-            FavouritesServices.getPlaylistTracks(playlistId).then(function (playlistTracks) {
-                PlayerServices.currentlyPlaying.playlistId = playlistId;
+            FavouritesServices.getPlaylistTracks(playlistId).then(function (videos)
+            {
+                PlayerServices.loadPlaylist(videos, 0);
+                PlayerServices.currentlyPlaying.albumName = videos.length + ' tracks';
                 PlayerServices.currentlyPlaying.title = playlist.playlist_name;
-                PlayerServices.currentlyPlaying.releaseTitle = playlistTracks.length + ' tracks';
+                PlayerServices.currentlyPlaying.playlistId = playlistId;
                 SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
             });
         }
@@ -77,17 +79,15 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
         //means, it's an imported playlist from youtube
         else {
             YoutubeServices.getVideosFromYoutubePlaylist(playlist.youtube_playlist_id)
-                .then(function (res)
+                .then(function (videos)
                 {
-                    PlayerServices.currentlyPlaying.releaseTitle = res.length + ' tracks';
+                    PlayerServices.loadPlaylist(videos, 0);
+                    PlayerServices.currentlyPlaying.albumName = videos.length + ' tracks';
+                    PlayerServices.currentlyPlaying.playlistId = playlist.youtube_playlist_id;
+                    SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
                 });
-
-            PlayerServices.currentlyPlaying.playlistId = playlist.youtube_playlist_id;
-            SearchServices.searchSource = SearchServices.searchSources.youtubePlaylist;
         }
-
         PlayerServices.currentlyPlaying.releaseYear = 'all good :)';
-        PlayerServices.currentlyPlaying.track = 0;
     };
 
 
@@ -115,7 +115,6 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
         ReleasesServices.playRelease(releaseId, searchType);
         SearchServices.searchType = searchType;
         SearchServices.searchTerm = searchTerm;
-        SearchServices.searchSource = SearchServices.searchSources.userInput;
         PlayerServices.currentlyPlaying.track = 0;
     };
 }]);
@@ -130,11 +129,7 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
     $scope.$watch(FavouritesServices.getPlaylists, function ()
     {
         $scope.playlists = FavouritesServices.playlists;
-
-        if ($scope.playlists.length > 0)
-        {
-            $scope.myFirstPlaylistVisibility = false;
-        }
+        $scope.myFirstPlaylistVisibility = ($scope.playlists.length > 0) ? false : true;
     });
 
 
@@ -159,10 +154,11 @@ nodspot.controller('AddToPlaylistCtrl', ['$scope', 'FavouritesServices', functio
         {
             if (trackState == 'notSaved' && playlistId != '')
             {
-                FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, playlistId, null, FavouritesServices.trackTitle, FavouritesServices.artistName).success(function ()
-                {
-                    $scope.playlists[index].state = 'saved';
-                });
+                FavouritesServices.addTrackToPlaylist(FavouritesServices.trackId, playlistId, null, FavouritesServices.trackTitle, FavouritesServices.artistName)
+                    .success(function ()
+                        {
+                            $scope.playlists[index].state = 'saved';
+                        });
             }
             else if (trackState == 'saved')
             {

@@ -36,14 +36,7 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
 
 
     $scope.fbLogin = function () {
-        if (FacebookServices.isConnected())
-        {
-            FacebookServices.logout();
-        }
-        else {
-            FacebookServices.login();
-        }
-
+        FacebookServices.isConnected() ? FacebookServices.logout() : FacebookServices.login();
         $scope.loginMenuVisibility = false;
     };
 
@@ -51,12 +44,14 @@ nodspot.controller('LoginCtrl', ['$scope', 'FacebookServices', 'LoginConstants',
     $scope.ytLogin = function ()
     {
         YoutubeServices.auth();
-        YoutubeServices.getUsersYoutubePlaylists().then(function (playlists) {
-            console.log(playlists);
-            FavouritesServices.createPlaylistTypeYoutube(playlists.data.items[0].snippet.title, playlists.data.items[0].id)
-                .then(function () {
-                    FavouritesServices.fetchPlaylists();
-                });
-        });
+        YoutubeServices.getUsersYoutubePlaylists()
+            .then(function (playlists)
+            {
+                FavouritesServices.createPlaylistTypeYoutube(playlists.data.items[0].snippet.title, playlists.data.items[0].id)
+                    .then(function ()
+                    {
+                        FavouritesServices.fetchPlaylists();
+                    });
+            });
     };
 }]);

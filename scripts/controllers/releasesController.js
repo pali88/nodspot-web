@@ -28,68 +28,20 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
         $scope.sidebarVisibility = true;
     };
 
-    $scope.playRelease = function (releaseId, releaseType)
+    $scope.playRelease = function (albumId, searchTerm, index)
     {
-        PlayerServices.currentlyPlaying.track = 0;
+        ReleasesServices.getAlbumTracklist(albumId).then(function (tracklist) {
 
-        //if coming from surprise me, the searchSource should be persisted so that correct url is constructed
-        if (SearchServices.searchSource != SearchServices.searchSources.surpriseMe)
-        {
+            ReleasesServices.findVideos(tracklist).then(function (videos) {
+                PlayerServices.loadPlaylist(videos, 0);
+            })
+
             SearchServices.searchSource = SearchServices.searchSources.userInput;
-        }
-
-        ReleasesServices.playRelease(releaseId, releaseType);
+            PlayerServices.currentlyPlaying.albumId = albumId;
+            PlayerServices.currentlyPlaying.albumName = ReleasesServices.returnedReleases[index].name;
+            ReleasesServices.highlightRelease(albumId);
+        });
     };
-
-    //@@@@@@ WATCHERS
-
-    //when releases are returned, start playing
-    $scope.$on(EventsConstants.releasesReturned, function (event, releases)
-    {
-        $scope.releases = releases;
-        $scope.releases = ReleasesServices.generateThumbnails('title', releases);
-
-        $scope.expandSidebar();
-        if (SearchServices.hash.releaseId != '')
-        {
-            $scope.releaseId = SearchServices.hash.releaseId;
-        }
-        else if (SearchServices.surprise.releaseId != '') {
-            $scope.releaseId = SearchServices.surprise.releaseId;
-        }
-        else {
-            $scope.releaseId = releases[0].id;
-            $scope.searchType = releases[0].type;
-        }
-
-        $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId);
-        ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
-    });
-
-
-    //$scope.$on(EventsConstants.releasesReturned, function (event, releases)
-    //{
-    //    $scope.releases = releases;
-    //
-    //    $scope.expandSidebar();
-    //
-    //    $scope.releases = ReleasesServices.generateThumbnails('title', releases);
-    //
-    //    if (SearchServices.hash.releaseId != '')
-    //    {
-    //        $scope.releaseId = SearchServices.hash.releaseId;
-    //    }
-    //    else if (SearchServices.surprise.releaseId != '') {
-    //        $scope.releaseId = SearchServices.surprise.releaseId;
-    //    }
-    //    else {
-    //        $scope.releaseId = releases[0].id;
-    //        $scope.searchType = releases[0].type;
-    //    }
-    //
-    //    $scope.searchType = ReleasesServices.getReleaseTypeById($scope.releaseId)
-    //    ReleasesServices.playRelease($scope.releaseId, $scope.searchType);
-    //});
 
 
     $scope.$on(EventsConstants.similarArtistsReturned, function ()
@@ -101,8 +53,10 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     $scope.$watch(ReleasesServices.getReleases, function (newValue, oldValue)
     {
         $scope.releases = ReleasesServices.getReleases();
+
         if ($scope.releases.length > 0) {
             $scope.expandReleases();
+            $scope.releases.searchTerm = SearchServices.searchTerm;
         }
         else {
             $scope.collapseReleases();

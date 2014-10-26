@@ -18,6 +18,7 @@
 
     <script src="scripts/libs/angular.min.js"></script>
     <script src="scripts/libs/angular-touch.js"></script>
+    <script src="scripts/libs/spotify-web-api.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/services/favouritesServices.js"></script>
     <script src="scripts/services/youtubeServices.js"></script>
@@ -28,6 +29,8 @@
     <script src="scripts/services/facebookServices.js"></script>
     <script src="scripts/services/genresServices.js"></script>
     <script src="scripts/services/searchServices.js"></script>
+    <script src="scripts/services/helperServices.js"></script>
+    <script src="scripts/services/spotifyServices.js"></script>
     <script src="scripts/directives/directives.js"></script>
     <script src="scripts/controllers/favouritesController.js"></script>
     <script src="scripts/controllers/playerController.js"></script>
@@ -110,14 +113,14 @@
                         <li class="suggestion-buttons" ng-show="suggestionButtonsVisibility">
                             <button id="tagPlaylistBtn" ng-click="playTagsTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn">{{searchTerm}} playlist</button>
                             <button ng-click="playTopTracks(searchTerm)" ng-show="tagBtnVisibility" class="btn topTracksBtn">{{searchTerm}} top tracks</button>
-                            <button id="onYtBtn" ng-click="getVideosFromYoutube(searchTerm)" class="btn">{{searchTerm}} on YouTube</button>
+                            <!--<button id="onYtBtn" ng-click="getVideosFromYoutube(searchTerm)" class="btn">{{searchTerm}} on YouTube</button>-->
                         </li>
                         <div class="suggestion-searchterm">suggestions</div>
                         <li ng-repeat="suggestion in suggestions" ng-class="{active: suggestion.state == 'active'}" ng-click="search(suggestion.searchTerm, '', $event)">{{suggestion.searchTerm}}</li>
                     </suggestions>
-                    <div id="surpriseMeWrapper" ng-show="surpriseMeVisibility" title="Select a genre and get surprised!">
-                        <div id="surpriseMe" ng-show="surpriseMeVisibility" class="btn btnDark darkTheme" ng-click="toggleStylesDropdown()">Surprise Me</div>
-                    </div>
+                    <!--<div id="surpriseMeWrapper" ng-show="surpriseMeVisibility" title="Select a genre and get surprised!">-->
+                        <!--<div id="surpriseMe" ng-show="surpriseMeVisibility" class="btn btnDark darkTheme" ng-click="toggleStylesDropdown()">Surprise Me</div>-->
+                    <!--</div>-->
                 </div>
             </div>
 
@@ -153,18 +156,18 @@
                             <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px" z="9999999999" colour="white" treshold="650" title="{{currentlyPlaying.title}}">{{currentlyPlaying.title}}</h2>
                         </div>
                         <div>
-                            <div id="favouriteAlbum"
-                                 ng-click="addReleaseToFavourites(
-                                 currentlyPlaying.releaseTitle,
-                                 currentlyPlaying.artistName,
-                                 currentlyPlaying.releaseId,
-                                 currentlyPlaying.releaseYear,
-                                 currentlyPlaying.releaseType)"
-                                 ng-class="currentlyPlaying.state"
-                                 ng-show="favouriteBtnVisibility"
-                                 title="{{currentlyPlaying.favouriteBtnTitle}}">
-                            </div>
-                            <p id="releaseName">{{currentlyPlaying.releaseTitle}}, {{currentlyPlaying.releaseYear}}</p>
+                            <!--<div id="favouriteAlbum"-->
+                                 <!--ng-click="addReleaseToFavourites(-->
+                                 <!--currentlyPlaying.albumName,-->
+                                 <!--currentlyPlaying.artistName,-->
+                                 <!--currentlyPlaying.albumId,-->
+                                 <!--currentlyPlaying.releaseYear,-->
+                                 <!--currentlyPlaying.releaseType)"-->
+                                 <!--ng-class="currentlyPlaying.state"-->
+                                 <!--ng-show="favouriteBtnVisibility"-->
+                                 <!--title="{{currentlyPlaying.favouriteBtnTitle}}">-->
+                            <!--</div>-->
+                            <p id="releaseName">{{currentlyPlaying.albumName}}</p>
                             <button id="topTracks" class="btn darkTheme topTracksBtn" ng-show="topTracksBtnVisibility" ng-click="playTopTracks(currentlyPlaying.artistName)">{{currentlyPlaying.artistName}} top tracks</button>
                         </div>
 
@@ -217,12 +220,12 @@
                         <img class="absoluteCenter" src="{{tag.src}}" alt="{{tag.name}}"/>
                     </li>
                 </ul>
-                <h2 class="center">...or select a genre and be surprised with a random release!</h2>
-                <ul class="surprise center">
-                    <li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">
-                        <div class="surprise tag-name">{{style.name}}</div>
-                    </li>
-                </ul>
+                <!--<h2 class="center">...or select a genre and be surprised with a random release!</h2>-->
+                <!--<ul class="surprise center">-->
+                    <!--<li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">-->
+                        <!--<div class="surprise tag-name">{{style.name}}</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
             </div>
         </div>
     </div>
@@ -245,9 +248,9 @@
             <playlist-Item-Options index="$index" playlist="playlist" rename-Playlist="renamePlaylist" delete-Playlist="deletePlaylist" playlist-Edit-Mode="playlistEditMode"></playlist-Item-Options>
         </li>
     </ul>
-    <ul id="favourites" title="Sign in to see your favourites" class="verticalStretch">
-        <release-item releases="releases" search-Favourites="searchFavourites" play-Release="playRelease"></release-item>
-    </ul>
+    <!--<ul id="favourites" title="Sign in to see your favourites" class="verticalStretch">-->
+        <!--<release-item releases="releases" search-Favourites="searchFavourites" play-Release="playRelease"></release-item>-->
+    <!--</ul>-->
 </div>
 
 <div id="whyNodSpotWrapper" class="darkTheme">

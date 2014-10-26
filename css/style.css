@@ -445,7 +445,7 @@ input:hover {
     width: 100%;
     font-size: 2.2em;
     border: 1px solid rgba(50,50,80,.3);
-    padding: 12px 80px 14px 150px;
+    padding: 12px 80px 14px 40px;
     text-transform: capitalize;
     box-sizing: border-box;
 }

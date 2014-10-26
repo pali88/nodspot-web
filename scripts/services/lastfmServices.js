@@ -1,4 +1,4 @@
-nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices', 'SearchServices', function ($http, YoutubeServices, PlayerServices, SearchServices) {
+nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices', 'SearchServices', '$q', function ($http, YoutubeServices, PlayerServices, SearchServices, $q) {
 
     var LastfmServices =
     {
@@ -11,7 +11,7 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
     {
         SearchServices.expandProgressBar();
         PlayerServices.currentlyPlaying.title = tagName;
-        PlayerServices.currentlyPlaying.releaseTitle = 'top tracks';
+        PlayerServices.currentlyPlaying.albumName = 'top tracks';
         PlayerServices.currentlyPlaying.releaseYear = 'all good';
         SearchServices.searchSource = SearchServices.searchSources.tag;
         SearchServices.searchTerm = tagName;
@@ -27,17 +27,25 @@ nodspot.factory('LastfmServices', ['$http', 'YoutubeServices', 'PlayerServices',
     };
 
 
-    LastfmServices.playTagsTopTracks = function (tagName)
+    LastfmServices.getTagsTopTracksVideos = function (tagName)
     {
+        var d = $q.defer();
+
         LastfmServices.getTagsTopTracks(tagName)
             .then(function (topTracks)
             {
-                YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag'));
+                YoutubeServices.findVideos(LastfmServices.lastfmPlaylistToNodspot(undefined, topTracks, 'tag')).then(function (videos) {
+                    d.resolve(videos);
+                });
             });
 
         SearchServices.logSearch(tagName, 'tag');
-        PlayerServices.currentlyPlaying.releaseTitle = tagName;
+        PlayerServices.currentlyPlaying.albumName = tagName;
+        PlayerServices.currentlyPlaying.title = tagName;
         PlayerServices.currentlyPlaying.releaseYear = 'Top tracks, all good :)';
+        SearchServices.searchSource = SearchServices.searchSources.tag;
+
+        return d.promise;
     };
 
     LastfmServices.lastfmPlaylistToNodspot = function (artistName, topTracks, type)

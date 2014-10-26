@@ -23,21 +23,17 @@ nodspot.controller('ArtistsCtrl', ['$scope', 'ReleasesServices', 'EventsConstant
         } catch (e) {};
     });
 
+
     $scope.$on(EventsConstants.artistBioReturned, function (event, response)
     {
         $scope.artist = response.artist;
     });
 
+
     $scope.$watch(ArtistServices.getImages, function (newValue, oldValue)
     {
         $scope.images = ArtistServices.getImages();
-
-        if ($scope.images.length > 0) {
-            $scope.artistImagesVisibility = true;
-        } else
-        {
-            $scope.artistImagesVisibility = false;
-        }
+        $scope.artistImagesVisibility = ($scope.images.length > 0) ? true : false;
     });
 
 
@@ -46,7 +42,12 @@ nodspot.controller('ArtistsCtrl', ['$scope', 'ReleasesServices', 'EventsConstant
         SearchServices.logSearch(artistName, 'similar');
         PlayerServices.resetCurrentlyPlaying();
         SearchServices.searchSource = SearchServices.searchSources.userInput;
-        ReleasesServices.getAllReleases(artistName);
+
+        ReleasesServices.getVideosFromYoutube(artistName, 40).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
+
+        ReleasesServices.findAlbums(artistName);
     }
 
 }]);

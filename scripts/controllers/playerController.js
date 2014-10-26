@@ -7,37 +7,13 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.playerVisibility = false;
     $scope.favouriteBtnVisibility = false;
     $scope.playerClass = '';
+    $scope.playlist = [];
 
     //store currently playing release info
     $scope.currentlyPlaying =
     {
         state: 'unfavourited'
     };
-
-
-    $scope.playlist = [];
-    $scope.playlistIds = [];
-
-
-    //build a playlist ids array from youtube's returned videos and load them to yt player
-    $scope.$on(EventsConstants.playlistReady, function (event, returnedVideos)
-    {
-        $scope.playlist = PlayerServices.removeEmptyItemsFromArray(returnedVideos);
-        $scope.playerVisibility = true;
-        $scope.playlistIds = []; //clear playlist ids
-        GenresServices.stylesVisibility = false;
-
-        angular.forEach($scope.playlist, function (track, index)
-        {
-            $scope.playlistIds.push(track.id.videoId);
-        });
-
-        $scope.playPlaylist();
-        $scope.highlightTrack($scope.getStartFrom());
-        $scope.isReleaseFavourite($scope.currentlyPlaying.releaseId);
-        SearchServices.collapseProgressBar();
-    });
-
 
     $scope.collapseFavouriteBtn = function ()
     {
@@ -51,20 +27,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    //get the track where we have to start playing the playlist from
-    $scope.getStartFrom = function ()
-    {
-        if ($scope.playlist.length >= PlayerServices.currentlyPlaying.track) {
-            startFrom = PlayerServices.currentlyPlaying.track;
-        }
-        else {
-            startFrom = 0;
-        }
-
-        return startFrom;
-    };
-
-
     //redirect user to the 3rd party website that allows them to download this video
     $scope.downloadVideo = function ($videoId)
     {
@@ -74,59 +36,25 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    $scope.playPlaylist = function ()
-    {
-        var interval = setInterval(function ()
-        {
-            try
-            {
-                if (ytPlayer.loadPlaylist != undefined)
-                {
-                    ytPlayer.loadPlaylist($scope.playlistIds, $scope.getStartFrom());
-                    clearInterval(interval);
-                }
-            }
-            catch (e) { }
-        }, 120);
-    };
-
-
     $scope.playTopTracks = function (artistName)
     {
         event.stopPropagation();
-        ArtistServices.getTopTracks(artistName);
+
+        ArtistServices.getTopTracks(artistName).then(function (playlistIds) {
+            PlayerServices.loadPlaylist(playlistIds, 0);
+        });
     };
 
 
     $scope.playTagsTopTracks = function (tagName)
     {
-        LastfmServices.playTagsTopTracks(tagName);
+        LastfmServices.getTagsTopTracksVideos(tagName).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
     };
 
 
-    //currently playing track/release metadata
-    $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function (newCurrentlyPlaying, oldCurrentlyPlaying)
-    {
-        try
-        {
-            var currentTrackIndex = $scope.currentlyPlaying.track;
-            $scope.currentlyPlaying = newCurrentlyPlaying;
-            $scope.currentlyPlaying.artistName = $scope.playlist[currentTrackIndex].artistName; //for top tracks btn
-            $scope.isValidVideo(currentTrackIndex);
-            $scope.highlightTrack(currentTrackIndex);
-
-            //do not request to get similar artists if the artistName does not change
-            if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName)
-            {
-                ArtistServices.getSimilar(newCurrentlyPlaying.artistName);
-            }
-
-        }
-        catch (e) {};
-    });
-
-
-    //if video is not valid, remove it from user's playlist
+    //if video does not exist on youtube anymore, remove it from user's playlist
     $scope.isValidVideo = function (currentTrackIndex)
     {
         if (SearchServices.searchSource == SearchServices.searchSources.userPlaylist)
@@ -153,39 +81,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    //favourite Services > favouriting an album when not logged in
-    $scope.$on(EventsConstants.releaseFavourited, function ()
-    {
-        $scope.currentlyPlaying.state = 'favourited';
-    });
-
-
-    //listen for the search source change - if there is nothing to favourite, the favourite btn is collapsed
-    $scope.$watch(SearchServices.getSearchSource, function ()
-    {
-        var searchSource = SearchServices.getSearchSource();
-
-        if (searchSource == SearchServices.searchSources.tag || searchSource == SearchServices.searchSources.topTracks || searchSource == SearchServices.searchSources.directYoutube || searchSource == SearchServices.searchSources.userPlaylist)
-        {
-            $scope.collapseFavouriteBtn();
-        }
-        else {
-            $scope.expandFavouriteBtn();
-        }
-
-        //hide toptracks btn for youtube searches
-        $scope.topTracksBtnVisibility = (searchSource == SearchServices.searchSources.directYoutube) ? false : true;
-
-    });
-
-
-    //show player wrapper once the tag or suprise me has been clicked on the home page
-    $scope.$on(EventsConstants.showPlayer, function (event)
-    {
-        $scope.playerVisibility = true;
-    });
-
-
     $scope.highlightTrack = function (index)
     {
         if ($scope.playlist)
@@ -196,9 +91,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             });
 
             $scope.playlist[index].state = 'active';
-
-            //update currentlyPlaying track's title so that it can be displayed in the UI - under the player.
-            PlayerServices.currentlyPlaying.title = $scope.playlist[index].snippet.title;
         }
     };
 
@@ -206,7 +98,6 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.playTrack = function (index)
     {
         PlayerServices.playTrack(index);
-        $scope.highlightTrack(index);
     };
 
 
@@ -214,11 +105,13 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     $scope.captureTrackInfo = function (index, trackId, trackTitle, artistName)
     {
         event.stopPropagation();
+
         FavouritesServices.fetchTracksPlaylists(trackId);
         FavouritesServices.trackId = trackId;
         FavouritesServices.trackIndex = index;
         FavouritesServices.trackTitle = encodeURIComponent(trackTitle);
         FavouritesServices.artistName = encodeURIComponent(artistName);
+
         $rootScope.$broadcast(EventsConstants.trackInfoCaptured);
     };
 
@@ -267,7 +160,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
             default:
             {
-                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' album ' + PlayerServices.currentlyPlaying.releaseTitle + ' containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
+                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' album ' + PlayerServices.currentlyPlaying.albumName + ' containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
                 break;
             }
 
@@ -325,6 +218,79 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             });
         }
     };
+
+
+    //currently playing track/release metadata
+    $scope.$watchCollection(PlayerServices.getCurrentlyPlaying, function (newCurrentlyPlaying, oldCurrentlyPlaying)
+    {
+
+        try {
+            var currentTrackIndex = PlayerServices.currentlyPlaying.track;
+
+            try {
+                $scope.highlightTrack(currentTrackIndex);
+            } catch (e) {}
+
+            $scope.isValidVideo(currentTrackIndex);
+
+            //do not request to get similar artists if the artistName does not change
+            if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
+                ArtistServices.getSimilar(newCurrentlyPlaying.artistName);
+            }
+
+        }
+        catch (e) {};
+    });
+
+    $scope.$on(EventsConstants.trackChanged, function ()
+    {
+        var currentTrackIndex = PlayerServices.currentlyPlaying.track;
+        $scope.highlightTrack(currentTrackIndex);
+
+        //update currentlyPlaying track's title so that it can be displayed in the UI - under the player.
+        $scope.currentlyPlaying = PlayerServices.currentlyPlaying;
+        $scope.currentlyPlaying.title = $scope.playlist[currentTrackIndex].snippet.title;
+        $scope.currentlyPlaying.artistName = $scope.playlist[currentTrackIndex].artistName; //for top tracks btn
+    });
+
+
+    //favourite Services > favouriting an album when not logged in
+    $scope.$on(EventsConstants.releaseFavourited, function ()
+    {
+        $scope.currentlyPlaying.state = 'favourited';
+    });
+
+
+    //listen for the search source change - if there is nothing to favourite, the favourite btn is collapsed
+    $scope.$watch(SearchServices.getSearchSource, function ()
+    {
+        var searchSource = SearchServices.getSearchSource();
+
+        if (searchSource == SearchServices.searchSources.tag || searchSource == SearchServices.searchSources.topTracks || searchSource == SearchServices.searchSources.directYoutube || searchSource == SearchServices.searchSources.userPlaylist)
+        {
+            $scope.collapseFavouriteBtn();
+        }
+        else {
+            $scope.expandFavouriteBtn();
+        }
+
+        //hide toptracks btn for youtube searches
+        $scope.topTracksBtnVisibility = (searchSource == SearchServices.searchSources.directYoutube) ? false : true;
+
+    });
+
+
+    $scope.$watch(PlayerServices.getPlayerVisibility, function (newValue, oldValue)
+    {
+        $scope.playerVisibility = PlayerServices.getPlayerVisibility();
+    });
+
+
+    $scope.$watchCollection(YoutubeServices.getReturnedVideos, function (newValue, oldValue)
+    {
+        $scope.playlist = YoutubeServices.getReturnedVideos();
+        SearchServices.collapseProgressBar();
+    });
 
 
     //react to keypresses

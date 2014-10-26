@@ -1,4 +1,26 @@
-nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices', 'GenresServices', 'SearchServices', 'PlayerServices', 'LastfmServices', '$window', '$http' , function ($scope, ReleasesServices, ArtistServices, GenresServices, SearchServices, PlayerServices, LastfmServices, $window, $http)
+nodspot.controller('SearchCtrl',
+    [
+        '$scope',
+        'ReleasesServices',
+        'ArtistServices',
+        'GenresServices',
+        'SearchServices',
+        'PlayerServices',
+        'LastfmServices',
+        '$window',
+        '$http',
+        'SpotifyServices',
+        function (
+            $scope,
+            ReleasesServices,
+            ArtistServices,
+            GenresServices,
+            SearchServices,
+            PlayerServices,
+            LastfmServices,
+            $window,
+            $http,
+            SpotifyServices)
 {
 
     //visibility
@@ -80,33 +102,35 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
             $scope.suggestionButtonsVisibility = true;
         }
 
-        if (words > 3)
-        {
-            $scope.tagBtnVisibility = false;
-        }
-        else {
-            $scope.tagBtnVisibility = true;
-        }
+        //$scope.tagBtnVisibility = ($scope.tagBtnVisibility > 5) ? false : true;
     };
 
 
     $scope.playTagsTopTracks = function (tagName)
     {
-        LastfmServices.playTagsTopTracks(tagName);
+        LastfmServices.getTagsTopTracksVideos(tagName).then(function (videos)
+        {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
         $scope.searchSubmitted = true;
     };
 
 
     $scope.playTopTracks = function (searchTerm)
     {
-        ArtistServices.getTopTracks(searchTerm);
+        ArtistServices.getTopTracks(searchTerm).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
         $scope.searchSubmitted = true;
     };
 
 
     $scope.getVideosFromYoutube = function (searchTerm)
     {
-        ReleasesServices.getVideosFromYoutube(searchTerm, 40);
+        ReleasesServices.getVideosFromYoutube(searchTerm, 40).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
+
         SearchServices.logSearch(searchTerm, 'youtube');
         $scope.searchSubmitted = true;
     };
@@ -114,22 +138,32 @@ nodspot.controller('SearchCtrl', ['$scope', 'ReleasesServices', 'ArtistServices'
 
     $scope.search = function (searchTerm, searchType, event)
     {
-        $scope.searchTerm = searchTerm;
+        $scope.searchSubmitted = true;
+        $scope.collapseSuggestions();
+
         SearchServices.searchSource = SearchServices.searchSources.userInput;
+
+        ReleasesServices.getVideosFromYoutube(searchTerm, 40).then(function (videos) {
+            PlayerServices.loadPlaylist(videos, 0);
+        });
+
+
+        //ReleasesServices.getAllReleases(searchTerm, searchType);
+        ReleasesServices.findAlbums(searchTerm).then(function (res)
+        {
+            ReleasesServices.returnedReleases = res.albums.items;
+            ReleasesServices.returnedReleases.searchTerm = searchTerm;
+            console.log(res);
+        });
+
         SearchServices.logSearch(searchTerm, 'search');
         PlayerServices.resetCurrentlyPlaying();
-        ReleasesServices.getAllReleases(searchTerm, searchType);
-        $scope.collapseSuggestions();
-        $scope.searchSubmitted = true;
     };
 
 
     $scope.expandSuggestions = function ()
     {
-        if ($scope.suggestions.length > 0)
-        {
-            $scope.suggestionsVisibility = true;
-        }
+        $scope.suggestionsVisibility = ($scope.suggestions.length > 0) ? true : false;
     };
 
 

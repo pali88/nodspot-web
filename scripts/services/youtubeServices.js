@@ -84,6 +84,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
     //wrapper function firing firing "fetchVideo" for every track in the tracklist
     YoutubeServices.findVideos = function (tracklist, maxResults)
     {
+        var d = $q.defer()
 
         //check if we're dealing with a tracklist or just one track
         if (typeof (tracklist) == "object")
@@ -93,37 +94,23 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
             tracklist = [{track_title: tracklist }];
         }
 
-        if (maxResults == undefined)
-        {
-            maxResults = 1;
-        }
+        if (maxResults == undefined) { maxResults = 1; }
 
         angular.forEach(tracklist, function (track, i)
         {
-            YoutubeServices.findVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults);
+            YoutubeServices.findVideo(track.artist_name, decodeURIComponent(track.track_title), i, maxResults).then(function (returnedVideos) {
+                d.resolve(returnedVideos);
+            });
         });
-    };
 
-
-    //check if the video still exists on youtube
-    YoutubeServices.isValidVideo = function (videoId)
-    {
-        var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey,
-            isValid;
-
-        return $http.get(url).then(function (res)
-        {
-            isValid = res.data.pageInfo.totalResults > 0 ? true : false;
-
-            return isValid;
-        });
+        return d.promise;
     };
 
 
     //try to fetch video from youtube
     YoutubeServices.findVideo = function (artistName, trackName, i, maxResults)
     {
-        var url;
+        var url, d = $q.defer();
 
         url = baseUrl + '&maxResults='
             + maxResults
@@ -162,21 +149,43 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                 }
 
             }
-            else
-            {
+            else {
                 YoutubeServices.playlistLength--;
             }
-
 
             //check if we've built the playlist we were expected to. If yes, broadcast. PlayerCtrl will be waiting.
             if (YoutubeServices.returnedVideosCounter == YoutubeServices.playlistLength)
             {
-                $rootScope.$broadcast(EventsConstants.playlistReady, YoutubeServices.returnedVideos);
-                YoutubeServices.returnedVideos = [];
+                d.resolve(YoutubeServices.returnedVideos);
                 YoutubeServices.returnedVideosCounter = 0;
             }
         });
+
+        return d.promise;
     };
+
+
+    //check if the video still exists on youtube
+    YoutubeServices.isValidVideo = function (videoId)
+    {
+        var url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + videoId + '&key=' + apiKey,
+            isValid;
+
+        return $http.get(url).then(function (res)
+        {
+            isValid = res.data.pageInfo.totalResults > 0 ? true : false;
+
+            return isValid;
+        });
+    };
+
+
+    YoutubeServices.getReturnedVideos = function ()
+    {
+        $rootScope.$broadcast(EventsConstants.playlistReady); //for changing the main website background from image to grey
+        return YoutubeServices.returnedVideos;
+    }
+
 
     YoutubeServices.getVideosFromYoutubePlaylist = function (playlistId)
     {
@@ -201,7 +210,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                     };
                 });
 
-                $rootScope.$broadcast(EventsConstants.playlistReady, returnedVideos);
+                YoutubeServices.returnedVideos = returnedVideos;
                 deferred.resolve(returnedVideos);
             });
 
