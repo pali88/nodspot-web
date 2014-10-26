@@ -75,7 +75,6 @@ nodspot.factory('ReleasesServices',
         SearchServices.searchSource = SearchServices.searchSources.directYoutube;
         SearchServices.searchTerm = searchTerm;
 
-        PlayerServices.currentlyPlaying.title = SearchServices.searchTerm;
         PlayerServices.currentlyPlaying.artistName = searchTerm;
         PlayerServices.currentlyPlaying.albumName = 'Tracks straight from youtube';
 
