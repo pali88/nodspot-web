@@ -235,6 +235,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
             //do not request to get similar artists if the artistName does not change
             if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
+                ReleasesServices.findAlbums(newCurrentlyPlaying.artistName);
                 ArtistServices.getSimilar(newCurrentlyPlaying.artistName);
             }
 
