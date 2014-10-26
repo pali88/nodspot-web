@@ -30,9 +30,11 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
 
     $scope.playRelease = function (albumId, searchTerm, index)
     {
-        ReleasesServices.getAlbumTracklist(albumId).then(function (tracklist) {
+        ReleasesServices.getAlbumTracklist(albumId).then(function (tracklist)
+        {
 
-            ReleasesServices.findVideos(tracklist).then(function (videos) {
+            ReleasesServices.findVideos(tracklist).then(function (videos)
+            {
                 PlayerServices.loadPlaylist(videos, 0);
             })
 
