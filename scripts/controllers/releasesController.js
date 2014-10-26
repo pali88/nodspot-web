@@ -52,14 +52,14 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     });
 
 
-    $scope.$watch(ReleasesServices.getReleases, function (newValue, oldValue)
+    $scope.$watchCollection(ReleasesServices.getReleases, function (newValue, oldValue)
     {
         $scope.releases = ReleasesServices.getReleases();
 
         if ($scope.releases.length > 0)
         {
             $scope.expandReleases();
-            $scope.releases.searchTerm = SearchServices.searchTerm;
+            $scope.releases.searchTerm = PlayerServices.currentlyPlaying.artistName;
         }
         else {
             $scope.collapseReleases();
