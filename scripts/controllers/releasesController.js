@@ -56,7 +56,8 @@ nodspot.controller('ReleasesCtrl', ['$scope', 'ReleasesServices', 'EventsConstan
     {
         $scope.releases = ReleasesServices.getReleases();
 
-        if ($scope.releases.length > 0) {
+        if ($scope.releases.length > 0)
+        {
             $scope.expandReleases();
             $scope.releases.searchTerm = SearchServices.searchTerm;
         }
