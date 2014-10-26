@@ -135,16 +135,6 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     break;
                 }
 
-                case 'surprise':
-                {
-                    try
-                    {
-                        ReleasesServices.getReleasesByStyle(urlParams.style, urlParams.page, id);
-                    }
-                    catch (e) {}
-                    break;
-                }
-
                 case 'youtube':
                 {
                     try
@@ -163,10 +153,13 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     try
                     {
                         ArtistServices.getTopTracks(SearchServices.searchTerm).then(function (videos) {
-                            PlayerServices.loadPlaylist(videos, 0);
+                            PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
+                            ReleasesServices.findAlbums(SearchServices.searchTerm).then(function ()
+                            {
+                                ArtistServices.getSimilar(SearchServices.searchTerm);
+                            });
                         });
 
-                        ArtistServices.getSimilar(SearchServices.searchTerm);
                     }
                     catch (e) {}
                     break;
@@ -177,7 +170,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                     try
                     {
                         LastfmServices.getTagsTopTracksVideos(SearchServices.searchTerm).then(function (videos) {
-                            PlayerServices.loadPlaylist(videos, 0);
+                            PlayerServices.loadPlaylist(videos, PlayerServices.currentlyPlaying.track);
                         });
                     }
                     catch (e) {}
