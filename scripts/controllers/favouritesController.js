@@ -69,8 +69,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
             FavouritesServices.getPlaylistTracks(playlistId).then(function (videos)
             {
                 PlayerServices.loadPlaylist(videos, 0);
-                PlayerServices.currentlyPlaying.albumName = videos.length + ' tracks';
-                PlayerServices.currentlyPlaying.title = playlist.playlist_name;
+                PlayerServices.currentlyPlaying.albumName =  playlist.playlist_name + ' ' + videos.length + ' tracks';
                 PlayerServices.currentlyPlaying.playlistId = playlistId;
                 SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
             });
@@ -109,14 +108,6 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
         FavouritesServices.renamePlaylist(index, playlistId, newPlaylistName, event);
     };
 
-
-    $scope.playRelease = function (releaseId, searchType, searchTerm, artistName)
-    {
-        ReleasesServices.playRelease(releaseId, searchType);
-        SearchServices.searchType = searchType;
-        SearchServices.searchTerm = searchTerm;
-        PlayerServices.currentlyPlaying.track = 0;
-    };
 }]);
 
 
