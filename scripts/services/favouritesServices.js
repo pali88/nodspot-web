@@ -131,8 +131,7 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
 
                     YoutubeServices.returnedVideos = youtubeLikePlaylist;
 
-                    PlayerServices.currentlyPlaying.title = "Someone's playlist";
-                    PlayerServices.currentlyPlaying.albumName = 'All tracks are good';
+                    PlayerServices.currentlyPlaying.albumName = "Someone's playlist, all tracks are good";
                     SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
 
                     //return playlist tracks

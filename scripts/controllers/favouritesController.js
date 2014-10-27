@@ -69,7 +69,7 @@ nodspot.controller('FavouritesCtrl', ['$rootScope', '$scope', 'FavouritesService
             FavouritesServices.getPlaylistTracks(playlistId).then(function (videos)
             {
                 PlayerServices.loadPlaylist(videos, 0);
-                PlayerServices.currentlyPlaying.albumName =  playlist.playlist_name + ' ' + videos.length + ' tracks';
+                PlayerServices.currentlyPlaying.albumName =  playlist.playlist_name + ', ' + videos.length + ' tracks';
                 PlayerServices.currentlyPlaying.playlistId = playlistId;
                 SearchServices.searchSource = SearchServices.searchSources.userPlaylist;
             });
