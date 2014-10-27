@@ -71,7 +71,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
                     //increase currently playing tracks index
                     PlayerServices.currentlyPlaying.track++;
-                    $scope.playPlaylist();
+                    PlayerServices.loadPlaylist(YoutubeServices.returnedVideos, PlayerServices.currentlyPlaying.track)
 
                     //updates the URL hash to reflect the real tracks URL
                     PlayerServices.updateHash();
@@ -231,14 +231,16 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
                 $scope.highlightTrack(currentTrackIndex);
             } catch (e) {}
 
-            $scope.isValidVideo(currentTrackIndex);
+
+            ReleasesServices.findAlbums($scope.playlist[currentTrackIndex].artistName);
+            ArtistServices.getSimilar($scope.playlist[currentTrackIndex].artistName);
 
             //do not request to get similar artists if the artistName does not change
             if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
-                ReleasesServices.findAlbums(newCurrentlyPlaying.artistName);
-                PlayerServices.currentlyPlaying.artistName = newCurrentlyPlaying.artistName;
-                ArtistServices.getSimilar(newCurrentlyPlaying.artistName);
+                PlayerServices.currentlyPlaying.artistName = $scope.playlist[currentTrackIndex].artistName;
             }
+
+            $scope.isValidVideo(currentTrackIndex);
 
         }
         catch (e) {};
