@@ -28,7 +28,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     //redirect user to the 3rd party website that allows them to download this video
-    $scope.downloadVideo = function ($videoId)
+    $scope.downloadVideo = function ($videoId, event)
     {
         event.stopPropagation();
         window.location.target = '_blank';
@@ -36,7 +36,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     };
 
 
-    $scope.playTopTracks = function (artistName)
+    $scope.playTopTracks = function (artistName, event)
     {
         event.stopPropagation();
 
@@ -102,7 +102,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     //once "add to playlist" is clicked, capture the tracks info and retrieve playlist ids this track belongs to.
-    $scope.captureTrackInfo = function (index, trackId, trackTitle, artistName)
+    $scope.captureTrackInfo = function (index, trackId, trackTitle, artistName, event)
     {
         event.stopPropagation();
 
