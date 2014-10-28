@@ -232,12 +232,11 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             } catch (e) {}
 
 
-            ReleasesServices.findAlbums($scope.playlist[currentTrackIndex].artistName);
-            ArtistServices.getSimilar($scope.playlist[currentTrackIndex].artistName);
-
             //do not request to get similar artists if the artistName does not change
             if (newCurrentlyPlaying.artistName != oldCurrentlyPlaying.artistName) {
                 PlayerServices.currentlyPlaying.artistName = $scope.playlist[currentTrackIndex].artistName;
+                ReleasesServices.findAlbums($scope.playlist[currentTrackIndex].artistName);
+                ArtistServices.getSimilar($scope.playlist[currentTrackIndex].artistName);
             }
 
             $scope.isValidVideo(currentTrackIndex);

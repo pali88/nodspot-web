@@ -149,12 +149,7 @@ nodspot.controller('SearchCtrl',
 
 
         //ReleasesServices.getAllReleases(searchTerm, searchType);
-        ReleasesServices.findAlbums(searchTerm).then(function (res)
-        {
-            ReleasesServices.returnedReleases = res.albums.items;
-            ReleasesServices.returnedReleases.searchTerm = searchTerm;
-            console.log(res);
-        });
+        ReleasesServices.findAlbums(searchTerm);
 
         SearchServices.logSearch(searchTerm, 'search');
         PlayerServices.resetCurrentlyPlaying();
