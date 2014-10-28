@@ -291,7 +291,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
     $scope.$watchCollection(YoutubeServices.getReturnedVideos, function (newValue, oldValue)
     {
-        $scope.playlist = YoutubeServices.getReturnedVideos();
+        $scope.playlist = PlayerServices.removeEmptyItemsFromArray(YoutubeServices.getReturnedVideos());
         SearchServices.collapseProgressBar();
     });
 
