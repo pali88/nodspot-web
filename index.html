@@ -168,7 +168,7 @@
                                  <!--title="{{currentlyPlaying.favouriteBtnTitle}}">-->
                             <!--</div>-->
                             <p id="releaseName">{{currentlyPlaying.albumName}}</p>
-                            <button id="topTracks" class="btn darkTheme topTracksBtn" ng-show="topTracksBtnVisibility" ng-click="playTopTracks(currentlyPlaying.artistName)">{{currentlyPlaying.artistName}} top tracks</button>
+                            <button id="topTracks" class="btn darkTheme topTracksBtn" ng-show="topTracksBtnVisibility" ng-click="playTopTracks(currentlyPlaying.artistName, $event)">{{currentlyPlaying.artistName}} top tracks</button>
                         </div>
 
                         <ol id="ytTrackList">
