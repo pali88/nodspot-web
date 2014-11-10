@@ -172,7 +172,7 @@
                         </div>
 
                         <ol id="ytTrackList">
-                            <li ng-repeat="track in playlist"  ng-click="playTrack($index)" thumbnail="true" ng-class="track.state">
+                            <li ng-repeat="track in playlist" ng-click="playTrack($index)" thumbnail="true" ng-class="track.state">
                                 <div>{{track.snippet.title}}</div>
                                 <div class="options">
                                     <button ng-click="captureTrackInfo($index, track.id.videoId, track.snippet.title, track.artistName, $event)" class="btn btnDark darkTheme addToPlaylist" title="Add {{track.snippet.title}} to playlist">&nbsp;</button>
