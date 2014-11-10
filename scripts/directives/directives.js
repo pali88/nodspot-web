@@ -154,8 +154,7 @@ nodspot.directive('thumbnail', ['HelperServices', '$timeout', function (HelperSe
         link: function (scope, element, attrs)
         {
 
-
-            //listen for up/down arrow keys
+            //show track's thumbnail on mouse enter
             element.bind('mouseenter', function (event)
             {
                 var el = element[0].children[2];
@@ -170,6 +169,7 @@ nodspot.directive('thumbnail', ['HelperServices', '$timeout', function (HelperSe
 
             });
 
+            //hide track's thumbnail on mouse leave
             element.bind('mouseleave', function (event)
             {
                 scope.$parent.track.thumbVisiblity = false;
