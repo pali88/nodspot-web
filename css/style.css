@@ -341,14 +341,17 @@ button.delete {
     background: rgba(255,255,255,.5) url('../images/delete.png') no-repeat center;
 }
 
+button.addToPlaylist, button.download {
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 button.addToPlaylist {
     background-image: url('../images/addToPlaylist.png');
-    background-repeat: no-repeat;
 }
 
 button.download {
     background-image: url('../images/download.png');
-    background-repeat: no-repeat;
 }
 
 button.repeat {
