@@ -146,11 +146,10 @@ nodspot.directive('lookup', [function ()
 
 
 //show video thumbnail when a track in the playlist is mouse hovered
-nodspot.directive('thumbnail', ['HelperServices', function (HelperServices)
+nodspot.directive('thumbnail', ['HelperServices', '$timeout', function (HelperServices, $timeout)
 {
     return {
         restrict: "A",
-        //template: "<div><img src=''{{snippet.thumbnails.default.url}}'/></div>",
 
         link: function (scope, element, attrs)
         {
@@ -164,6 +163,11 @@ nodspot.directive('thumbnail', ['HelperServices', function (HelperServices)
                 scope.$parent.track.thumbVisiblity = true;
                 el.style.top = event.clientY - 30 + 'px';
                 el.style.left = HelperServices.getTracklistsAbsolutePosition().left - 130 + 'px';
+
+                $timeout(function () {
+                    scope.$parent.track.thumbVisiblity = false;
+                }, 1300);
+
             });
 
             element.bind('mouseleave', function (event)
