@@ -81,7 +81,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
     };
 
 
-    //wrapper function firing firing "fetchVideo" for every track in the tracklist
+    //wrapper function firing "fetchVideo" for every track in the tracklist
     YoutubeServices.findVideos = function (tracklist, maxResults)
     {
         var d = $q.defer()
@@ -153,9 +153,15 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
                 YoutubeServices.playlistLength--;
             }
 
-            //check if we've built the playlist we were expected to. If yes, broadcast. PlayerCtrl will be waiting.
+            //check if we've built the playlist we were expected to.
             if (YoutubeServices.returnedVideosCounter == YoutubeServices.playlistLength)
             {
+
+                //initiate thumbnail visibility = false
+                angular.forEach(YoutubeServices.returnedVideos, function (video, key) {
+                    video.thumbVisiblity = false;
+                });
+
                 d.resolve(YoutubeServices.returnedVideos);
                 YoutubeServices.returnedVideosCounter = 0;
             }
@@ -163,6 +169,7 @@ nodspot.factory('YoutubeServices', ['$http', '$rootScope', 'EventsConstants', '$
 
         return d.promise;
     };
+
 
 
     //check if the video still exists on youtube

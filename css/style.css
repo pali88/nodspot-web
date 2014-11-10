@@ -659,6 +659,12 @@ ul.dropdown li:hover, ul.dropdown li.active {
     padding: 10px 10px 10px 0;
 }
 
+.trackThumbnail {
+    position: fixed;
+    left: 50px;
+    bottom: 50px;
+}
+
 #scTrackList li { padding: 10px 10px 10px 0; }
 
 #ytTrackList li div:first-child { width: 100%; }

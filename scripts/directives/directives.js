@@ -145,6 +145,39 @@ nodspot.directive('lookup', [function ()
 }]);
 
 
+//show video thumbnail when a track in the playlist is mouse hovered
+nodspot.directive('thumbnail', [function ()
+{
+    var thumnail;
+    return {
+        restrict: "A",
+        //template: "<div><img src=''{{snippet.thumbnails.default.url}}'/></div>",
+
+        link: function (scope, element, attrs)
+        {
+
+
+            //listen for up/down arrow keys
+            element.bind('mouseenter', function (event)
+            {
+                scope.$parent.track.thumbVisiblity = true;
+                element[0].children[2].style.top = event.clientY - 30 + 'px';
+            });
+
+            element.bind('mouseleave', function (event)
+            {
+                scope.$parent.track.thumbVisiblity = false;
+            });
+        },
+
+        scope: {
+
+        }
+    };
+}]);
+
+
+
 nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServices, $interval)
 {
 
@@ -231,3 +264,4 @@ nodspot.directive('dock', ['PlayerServices', '$interval', function (PlayerServic
         }
     };
 }]);
+
