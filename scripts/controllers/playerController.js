@@ -57,17 +57,18 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
     //if video does not exist on youtube anymore, remove it from user's playlist
     $scope.isValidVideo = function (currentTrackIndex)
     {
+        var videoId = $scope.playlist[currentTrackIndex].id.videoId;
+
         if (SearchServices.searchSource == SearchServices.searchSources.userPlaylist)
         {
-            YoutubeServices.isValidVideo($scope.playlistIds[currentTrackIndex]).then(function (isValid)
+            YoutubeServices.isValidVideo(videoId).then(function (isValid)
             {
                 if (!isValid)
                 {
-                    FavouritesServices.removeTrackFromPlaylist($scope.playlistIds[currentTrackIndex], $scope.currentlyPlaying.playlistId);
+                    FavouritesServices.removeTrackFromPlaylist(videoId, $scope.currentlyPlaying.playlistId);
 
                     //remove a non-existing video from scope's playlists
                     $scope.playlist.splice(currentTrackIndex, 1);
-                    $scope.playlistIds.splice(currentTrackIndex, 1);
 
                     //increase currently playing tracks index
                     PlayerServices.currentlyPlaying.track++;
