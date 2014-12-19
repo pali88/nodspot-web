@@ -47,10 +47,13 @@ class UsersController extends BaseController
     //will be used for every other API request, that requires the user id
     public static function getUserIdByHash()
     {
-        $hash = $_COOKIE['hash'];
-        $userId = self::lookupUserIdByHash($hash);
+        if (isset($_COOKIE['hash'])) {
+            $hash_cookie = $_COOKIE['hash'];
+            $hash = $hash_cookie;
+            $userId = self::lookupUserIdByHash($hash);
 
-        return $userId;
+            return $userId;
+        }
     }
 
 
