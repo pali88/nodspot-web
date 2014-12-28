@@ -212,11 +212,9 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         if (localStorage != undefined) {
 
             //increase counter with every play
-            if (localStorage[playsCounterLS] == undefined && (localStorage[showTips] == undefined || localStorage[showTips] == 1)) {
-
+            if (localStorage[playsCounterLS] == undefined && localStorage[showTips] == undefined) {
                 localStorage[playsCounterLS] = 1;
                 localStorage[showTips] = 1;
-
                 return PlayerServices.firstTimePlay = true;
             }
             else if (localStorage[showTips] == 0) {
