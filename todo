@@ -1,14 +1,3 @@
-//AngularJS todo
-
-//v2
--rank albums/tracks with moods - happy/dancing/sad/brokeup, etc - people then can play music depending on the mood.
--SC - hide artist images wrapper
--whilst on SC - find artist on Nodspot
--do something cool with timed comments - when playing a track, comments start flying in.
-
--Noretusi scrobblinimo i Last.fm
--embed nodspot into a forum
--loop albums. option to choose whether to loop it or not. If set to not loop, play another album after the current one finishes.
 
 //echoes
 Your API Key: XWUQOOGI1QGIHXQBY

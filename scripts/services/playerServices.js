@@ -4,8 +4,10 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     var PlayerServices =
     {
         scrollY: 0,
-        playerVisibility: false
+        playerVisibility: false,
+        firstTimePlay: false
     };
+
 
     PlayerServices.currentlyPlaying =
     { //used when favouriting an album
@@ -20,6 +22,10 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
         playlistId: undefined
     };
 
+
+    PlayerServices.getFirstTimePlay = function () {
+        return PlayerServices.firstTimePlay;
+    }
 
     $window.ytPlayer = undefined;
     $window.onYouTubeIframeAPIReady = function ()
@@ -190,15 +196,34 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     };
 
 
-    PlayerServices.playTrack = function (index)
-    {
+    PlayerServices.playTrack = function (index) {
         ytPlayer.setLoop(true);
         ytPlayer.playVideoAt(index);
+        PlayerServices.isFirstTimePlay();
     };
 
 
-    PlayerServices.getScrollY = function (index)
-    {
+    //check if this is the first play.
+    // True if yes, false otherwise.
+    PlayerServices.isFirstTimePlay = function () {
+        var playsCounterLS = "playsCounter";
+
+        if (localStorage != undefined) {
+
+            //increase counter with every play
+            if (localStorage[playsCounterLS] == undefined) {
+                localStorage[playsCounterLS] = 1;
+                return PlayerServices.firstTimePlay = true;
+            }
+            else {
+                localStorage[playsCounterLS]++;
+                return PlayerServices.firstTimePlay = false;
+            }
+        }
+    };
+
+
+    PlayerServices.getScrollY = function (index) {
         return PlayerServices.scrollY;
     };
 

@@ -40,6 +40,7 @@
     <script src="scripts/controllers/genresController.js"></script>
     <script src="scripts/controllers/overlayController.js"></script>
     <script src="scripts/controllers/loginController.js"></script>
+    <script src="scripts/controllers/tipsController.js"></script>
     <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-animate.js"></script>-->
 
     <script>
@@ -176,7 +177,7 @@
                             <li ng-repeat="track in playlist" ng-click="playTrack($index)" thumbnail="true" ng-class="track.state">
                                 <div>{{track.snippet.title}}</div>
                                 <div class="options">
-                                    <button ng-click="captureTrackInfo($index, track.id.videoId, track.snippet.title, track.artistName, $event)" class="btn btnDark darkTheme addToPlaylist" title="Add {{track.snippet.title}} to playlist">&nbsp;</button>
+                                    <button ng-click="captureTrackInfo($index, $event)" class="btn btnDark darkTheme addToPlaylist" title="Add {{track.snippet.title}} to playlist">&nbsp;</button>
                                     <button ng-click="downloadVideo(track.id.videoId, $event)" class="btn btnDark darkTheme download" title="Download {{track.snippet.title}}"></button>
                                     <button ng-click="playTopTracks(track.artistName, $event)" class="btn darkTheme topTracksBtn" title="Play {{track.artistName}} top tracks"></button>
                                 </div>
@@ -222,11 +223,14 @@
                         <img class="absoluteCenter" src="{{tag.src}}" alt="{{tag.name}}"/>
                     </li>
                 </ul>
-                <!--<h2 class="center">...or select a genre and be surprised with a random release!</h2>-->
+                <!--<h2 class="center">...or see what nodspot staff is into :)</h2>-->
                 <!--<ul class="surprise center">-->
-                    <!--<li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">-->
-                        <!--<div class="surprise tag-name">{{style.name}}</div>-->
-                    <!--</li>-->
+                    <!--&lt;!&ndash;<li ng-repeat="playlist in playlists | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="surprise tag-name">{{playlist.name}}</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li ng-repeat="style in styles | orderBy: 'name'" class="tag-wrapper darkTheme acc{{style.accent}}" ng-click="getReleasesByStyle(style.name)">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="surprise tag-name">{{style.name}}</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
                 <!--</ul>-->
             </div>
         </div>
@@ -250,34 +254,30 @@
             <playlist-Item-Options index="$index" playlist="playlist" rename-Playlist="renamePlaylist" delete-Playlist="deletePlaylist" playlist-Edit-Mode="playlistEditMode"></playlist-Item-Options>
         </li>
     </ul>
-    <!--<ul id="favourites" title="Sign in to see your favourites" class="verticalStretch">-->
-        <!--<release-item releases="releases" search-Favourites="searchFavourites" play-Release="playRelease"></release-item>-->
-    <!--</ul>-->
 </div>
 
 <div id="whyNodSpotWrapper" class="darkTheme">
     <div class="center">
         <h1>Why NODSPOT.COM</h1>
         <ul class="whyNodSpot">
-            <li>Unlimited, free music streaming</li>
-            <li>Tens of millions of albums, singles and film soundtracks. Growing every day!</li>
-            <li>Loads of people curated music playlists, such as "rain", "night", "acoustic" and many more..</li>
-            <li>Great "Surprise me" feature that allows you to play a random release in a genre you like!</li>
-            <li>Millions of songs with official video clips</li>
-            <li>We have "The Beatles" & "Led Zeppelin" so you do not need to go elsewhere</li>
-            <li>We do not show any video ads!</li>
-            <li>Incredibly fast & super easy to use!</li>
-            <li>Finally, your friends are probably already using nodspot and they can't all be wrong ;)</li>
+            <li>Unlimited, free music streaming.</li>
+            <li>Tens of millions of albums, singles and film soundtracks and growing every day.</li>
+            <li>Loads of people curated music playlists, such as "rain", "night", "acoustic" and many more.</li>
+            <li>Tons of songs with official video clips.</li>
+            <li>We do not show any video ads.</li>
+            <li>Finally, your friends are probably already using it, check it out.</li>
         </ul>
         <div class="fb-like" data-colorscheme="dark" data-href="https://www.facebook.com/nodspot" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
         <a target="_blank" href="https://twitter.com/kondencuotas">contact us @kondencuotas</a>
     </div>
 </div>
 
-<!--<div id="tipWrapper" title="Close & don't show it again." class="popup">-->
-    <!--<h3>DID YOU KNOW?</h3>-->
-    <!--<p>Hover the leftmost or the rightmost corner of a track in the playlist to reveal additional features.</p>-->
-<!--</div>-->
+<div id="tipWrapper" class="darkTheme" ng-controller="TipsCtrl" ng-show="tipVisibility">
+    <h3>Welcome & Congratulations!</h3>
+    <p>If you like this track, why not add it to a playlist?</p>
+    <button ng-click="addTrackToPlaylist()" class="btn btnDark">Add to Playlist</button>
+    <button ng-click="collapseTip()" class="btn btnDark">No, thanks</button>
+</div>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <button class="btn btnDark close" ng-click="closeOverlay($event)"></button>
-<h3>Add to playlist</h3>
+<h2>Add to playlist</h2>
 <input id="newPlaylistName" type="text" ng-model="playlistName" ng-keypress="addTrackToNewPlaylist(playlistName, $event)" title="add to a new playlist (type and press enter)" placeholder="add to a new playlist">
 <ul id="playlistsForSaving" class="dropdown acc1">
     <li ng-click="addTrackToNewPlaylist('My first nodspot playlist', $event)" ng-show="myFirstPlaylistVisibility">My first nodspot playlist</li>

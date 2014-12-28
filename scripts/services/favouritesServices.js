@@ -16,6 +16,21 @@ nodspot.factory('FavouritesServices', ['$http', 'FacebookServices', '$rootScope'
         FavouritesServices.favourites = [];
 
 
+        //gather the currently playing track's info that is about to be added to a playlist
+        FavouritesServices.captureTrackInfo = function (index) {
+
+            var track = YoutubeServices.returnedVideos[index];
+
+            FavouritesServices.trackIndex = index;
+            FavouritesServices.trackId = track.id.videoId;
+            FavouritesServices.trackTitle = encodeURIComponent(track.snippet.title);
+            FavouritesServices.artistName = encodeURIComponent(track.artistName);
+            FavouritesServices.fetchTracksPlaylists(FavouritesServices.trackId);
+
+            $rootScope.$broadcast(EventsConstants.trackInfoCaptured);
+        };
+
+
         FavouritesServices.fetchFavourites = function ()
         {
             $http.get(baseUrl + 'favourites').success(function (favourites)

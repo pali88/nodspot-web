@@ -316,14 +316,6 @@ footer .fb-like {
     top: 0; bottom: 0; ;
 }
 
-.popup {
-    position: absolute;
-    border: 1px solid rgba(102,110,128, 0.3);
-    background: #ffffff;
-    z-index: 99;
-    text-transform: none;
-}
-
 .fadeOut {
     opacity: 0;
     transition: opacity .3s ease;
@@ -801,7 +793,7 @@ add-to-playlist.collapsed {
     display: none;
 }
 
-add-to-playlist h3 {
+add-to-playlist h2 {
     margin: 5px 20px 0 20px;
     padding: 10px 0;
 }
@@ -883,8 +875,8 @@ input#newPlaylistName {
 }
 
 h3 {
-    font-size: 1.2em;
-    font-weight: 100;
+    font-size: .8em;
+    font-weight: 500;
 }
 
 #releasesWrapper {
@@ -1226,15 +1218,13 @@ ul.whyNodSpot {
 
 /* START TIPS POPUP */
 #tipWrapper {
-    background: #666e80;
-    bottom: 40px;
+    bottom: 0;
     color: #ffffff;
     cursor: pointer;
-    opacity: 0;
+    opacity: 1;
     padding: 10px 20px 13px 20px;
     position: fixed;
-    right: -400px;
-    width: 350px;    
+    width: 100%;
     transition: right 1.5s ease-out;
     -moz-transition: all 1.5s ease-out;
     -webkit-transition: all 1.5s ease-out;
@@ -1243,23 +1233,25 @@ ul.whyNodSpot {
 
 #tipWrapper h3 {
     font-size: .7em;
-    font-weight: bold;
+    color: rgba(255,255,255,.3);
+    text-transform: uppercase;
 }
 
 #tipWrapper p {
     font-size: .8em;
-    margin: 0;
+    margin: 0 15px 0 0;
     opacity: .7;
     padding-top: 5px;
+    display: inline;
 }
 
-#tipWrapper.popupAnimateIn {
-    right: 0;
-    opacity: 1;
-}
-
-#tipWrapper.popupAnimateIn:hover {
-    opacity: .8;
+#tipWrapper button {
+    font-size: .7em;
+    display: inline;
+    border: 2px solid rgba(255,255,255, 1);
+    padding: 5px 10px;
+    text-transform: uppercase;
+    margin-right: 5px;
 }
 /* END TIPS POPUP */
 

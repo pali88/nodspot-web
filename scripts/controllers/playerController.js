@@ -103,17 +103,10 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
 
     //once "add to playlist" is clicked, capture the tracks info and retrieve playlist ids this track belongs to.
-    $scope.captureTrackInfo = function (index, trackId, trackTitle, artistName, event)
+    $scope.captureTrackInfo = function (index, event)
     {
         event.stopPropagation();
-
-        FavouritesServices.fetchTracksPlaylists(trackId);
-        FavouritesServices.trackId = trackId;
-        FavouritesServices.trackIndex = index;
-        FavouritesServices.trackTitle = encodeURIComponent(trackTitle);
-        FavouritesServices.artistName = encodeURIComponent(artistName);
-
-        $rootScope.$broadcast(EventsConstants.trackInfoCaptured);
+        FavouritesServices.captureTrackInfo(index);
     };
 
 
