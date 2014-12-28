@@ -9,6 +9,7 @@ nodspot.controller('TipsCtrl', ['$scope', 'FavouritesServices', 'PlayerServices'
 
     $scope.collapseTip = function () {
         $scope.tipVisibility = false;
+        localStorage["showTips"] = 0;
     }
 
     $scope.$watch(PlayerServices.getFirstTimePlay, function (newValue, oldValue) {

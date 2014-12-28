@@ -206,18 +206,26 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
     //check if this is the first play.
     // True if yes, false otherwise.
     PlayerServices.isFirstTimePlay = function () {
-        var playsCounterLS = "playsCounter";
+        var playsCounterLS = "playsCounter",
+            showTips = "showTips";
 
         if (localStorage != undefined) {
 
             //increase counter with every play
-            if (localStorage[playsCounterLS] == undefined) {
+            if (localStorage[playsCounterLS] == undefined && (localStorage[showTips] == undefined || localStorage[showTips] == 1)) {
+
                 localStorage[playsCounterLS] = 1;
+                localStorage[showTips] = 1;
+
                 return PlayerServices.firstTimePlay = true;
+            }
+            else if (localStorage[showTips] == 0) {
+                localStorage[playsCounterLS]++;
+                return PlayerServices.firstTimePlay = false;
             }
             else {
                 localStorage[playsCounterLS]++;
-                return PlayerServices.firstTimePlay = false;
+                return PlayerServices.firstTimePlay = true;
             }
         }
     };
