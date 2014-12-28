@@ -161,7 +161,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
 
             default:
             {
-                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' album ' + PlayerServices.currentlyPlaying.albumName + ' containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
+                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' album ' + PlayerServices.currentlyPlaying.albumName + ' containing ' + $scope.playlist.length + ' tracks at nodspot.com.';
                 break;
             }
 
@@ -182,7 +182,7 @@ nodspot.controller('PlayerCtrl', ['$scope', '$window', '$rootScope', 'ReleasesSe
             case SearchServices.searchSources.tag:
             {
                 imgUrl = 'http://www.nodspot.com/' + GenresServices.imagesPath + PlayerServices.currentlyPlaying.title.replace(/ /g, '-') + '1.jpg';
-                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' playlist, containing ' + $scope.playlistIds.length + ' tracks at nodspot.com.';
+                caption = 'Listen to ' + PlayerServices.currentlyPlaying.title + ' playlist, containing ' + $scope.playlist.length + ' tracks at nodspot.com.';
                 break
             }
         }
