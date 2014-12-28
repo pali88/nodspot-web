@@ -1221,7 +1221,7 @@ ul.whyNodSpot {
     bottom: 0;
     color: #ffffff;
     opacity: 1;
-    padding: 10px 20px 13px 20px;
+    padding: 10px 20px;
     position: fixed;
     width: 100%;
     transition: right 1.5s ease-out;

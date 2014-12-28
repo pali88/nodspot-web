@@ -215,6 +215,10 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
             if (localStorage[playsCounterLS] == undefined && localStorage[showTips] == undefined) {
                 localStorage[playsCounterLS] = 1;
                 localStorage[showTips] = 1;
+                return PlayerServices.firstTimePlay = false;
+            }
+            else if (localStorage[showTips] == 1 && localStorage[playsCounterLS] == 2) {
+                localStorage[playsCounterLS]++;
                 return PlayerServices.firstTimePlay = true;
             }
             else if (localStorage[showTips] == 0) {
