@@ -144,17 +144,17 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'autumn',
-            src: GenresServices.imagesPath + 'autumn1.jpg',
+            src: GenresServices.imagesPath + 'autumn2.jpg',
             source: 'http://web.stagram.com/p/301329562910091684_2906305'
         },
         {
             name: 'summer',
-            src: GenresServices.imagesPath + 'summer1.jpg',
+            src: GenresServices.imagesPath + 'summer2.jpg',
             source: 'http://dreamdoterra.hubpages.com/hub/Alternative-Antidepressant-Natural-Safer-and-No-Side-Effects'
         },
         {
             name: 'winter',
-            src: GenresServices.imagesPath + 'winter1.jpg',
+            src: GenresServices.imagesPath + 'winter2.jpg',
             source: 'http://websta.me/p/626075998912539155_2906305#jaQUlKDLCx7WJJtV.32'
         },
         {
@@ -164,7 +164,7 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'walking',
-            src: GenresServices.imagesPath + 'walking1.jpg',
+            src: GenresServices.imagesPath + 'walking2.jpg',
             source: 'https://www.guarantorloansonline.co.uk/Blog/15-Ways-To-Save-Money'
         },
         {
@@ -174,7 +174,7 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'confusion',
-            src: GenresServices.imagesPath + 'confusion1.jpg',
+            src: GenresServices.imagesPath + 'confusion2.jpg',
             source: 'http://www.pinterest.com/jasonmpeterson/'
         },
         {
@@ -184,12 +184,12 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'sunday morning',
-            src: GenresServices.imagesPath + 'sunday-morning1.jpg',
+            src: GenresServices.imagesPath + 'sunday-morning2.jpg',
             source: 'http://theaccidentalexecutive.tumblr.com/post/50821316276'
         },
         {
             name: 'city',
-            src: GenresServices.imagesPath + 'city1.jpg',
+            src: GenresServices.imagesPath + 'city2.jpg',
             source: 'http://web.stagram.com/p/466484148783314198_3281308#J06bKlbyBSGOxSKt.32'
         },
         {
@@ -199,7 +199,7 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'london',
-            src: GenresServices.imagesPath + 'london1.jpg',
+            src: GenresServices.imagesPath + 'london2.jpg',
             source: 'http://media-cache-ec0.pinimg.com/736x/04/8d/c0/048dc0d9cc86d33b2f9ab251433b4d5c.jpg'
         },
         {
@@ -209,37 +209,37 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'romantic',
-            src: GenresServices.imagesPath + 'romantic1.jpg',
+            src: GenresServices.imagesPath + 'romantic2.jpg',
             source: 'http://www.pinterest.com/pin/360921357609600838/'
         },
         {
             name: 'happy',
-            src: GenresServices.imagesPath + 'happy2.jpg',
+            src: GenresServices.imagesPath + 'happy3.jpg',
             source: 'http://favimages.com/image/164901/'
         },
         {
             name: 'sad',
-            src: GenresServices.imagesPath + 'sad1.jpg',
+            src: GenresServices.imagesPath + 'sad2.jpg',
             source: 'http://2ndbook.tumblr.com/post/22707280772'
         },
         {
             name: 'lonely',
-            src: GenresServices.imagesPath + 'lonely1.jpg',
+            src: GenresServices.imagesPath + 'lonely2.jpg',
             source: 'http://weheartit.com/entry/49356465/via/l0vefashion'
         },
         {
             name: 'erotic lounge',
-            src: GenresServices.imagesPath + 'erotic-lounge1.jpg',
+            src: GenresServices.imagesPath + 'erotic-lounge2.jpg',
             source: 'http://krane-inner-sanctum.tumblr.com/page/5'
         },
         {
             name: 'soothing',
-            src: GenresServices.imagesPath + 'soothing1.jpg',
+            src: GenresServices.imagesPath + 'soothing2.jpg',
             source: 'http://weheartit.com/entry/5087416/via/melinwonderland'
         },
         {
             name: 'on the road',
-            src: GenresServices.imagesPath + 'on-the-road1.jpg',
+            src: GenresServices.imagesPath + 'on-the-road2.jpg',
             source: 'http://www.brightboldbeautiful.com/2013/07/13/weekend-roundup-18/'
         },
         {
@@ -259,7 +259,7 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: 'chill',
-            src: GenresServices.imagesPath + 'chill1.jpg',
+            src: GenresServices.imagesPath + 'chill2.jpg',
             source: 'http://www.pinterest.com/60sthrowback/'
         },
         {
@@ -284,7 +284,7 @@ nodspot.factory('GenresServices', [function ()
         },
         {
             name: '80s',
-            src: GenresServices.imagesPath + '80s1.jpg',
+            src: GenresServices.imagesPath + '80s2.jpg',
             source: 'http://www.pinterest.com/pin/304344887290563996/'
         },
     ];
