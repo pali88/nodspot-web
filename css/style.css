@@ -738,10 +738,14 @@ h2#artistName {
     -ms-transition: all 0.3 ease-out;
     -o-transition: all 0.3 ease-out;
     transition: all 0.3 ease-out;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
     width: 100%;
-    white-space: nowrap;
+}
+
+#artistNameWrapper {
+    /*height: 3.2em;*/
 }
 
 #artistName:hover { color: rgba(102,110,128, 0.8); }
@@ -1134,7 +1138,7 @@ h3 {
 }
 
 .tag-wrapper:hover img {
-    width: 220px;
+    width: 110%;
     opacity: 0.3;
 }
 
@@ -1360,6 +1364,19 @@ ul.whyNodSpot {
         font-size: 2em;
     }
 
+    header {
+        height: 3.5em;
+    }
+
+    .surprise .tag-wrapper {
+        height: 500px;
+        width: 50%;
+    }
+
+    .tag-wrapper img {
+        width: 100%;
+    }
+
 
     #logo {
         height: 1.45em;
@@ -1370,14 +1387,45 @@ ul.whyNodSpot {
         width: 10em;
     }
 
+    h2#artistName {
+        white-space: normal;
+    }
+
+    #releaseName, h2#artistName {
+        margin-left: 20px;
+    }
+
+    #artistName {
+        font-size: 2.7em;
+        margin-bottom: 20px;
+    }
+
+    #releaseName {
+        float: none;
+        font-size: 1.3em;
+    }
+
+    #topTracks {
+        height: 4em;
+        font-size: 1em;
+        width: 100%;
+        margin: 0;
+    }
+
     #mainWrapper {
-        width: 75%;
-        padding-top: 12%;
+        width: 100%;
+        padding-top: 140px;
     }
 
     #searchInput {
-        font-size: 1em;
+        font-size: 1.3em;
+        padding: 50px 0 45px 50px;
+        /*margin: 0 20px;*/
     }
+
+    /*#videoListWrapper {*/
+        /*padding-left: 20px;*/
+    /*}*/
 
     #surpriseMe {
         top: 14px;
@@ -1388,6 +1436,7 @@ ul.whyNodSpot {
     #sideBarWrapper {
         clear: both;
         width: 100%;
+        margin-left: 10px;
     }
 
     #playerWrapper, #suggestions {
@@ -1406,7 +1455,8 @@ ul.whyNodSpot {
     }
 
     #ytTrackList li {
-        padding: 20px 10px 20px 0;
+        padding: 35px 10px 35px 20px;
+        font-size: 1.5em;
     }
 
     #ytTrackList li.active, #ytTrackList li:hover {
@@ -1433,6 +1483,7 @@ ul.whyNodSpot {
 
     .thumbWrapper {
         width: 100%;
+        font-size: 1.7em;
     }
 
     #artistImagesWrapper, #favouritesWrapper {
@@ -1456,13 +1507,6 @@ ul.whyNodSpot {
         padding: 20px;
     }
 
-    .surprise li {
-        text-align: left;
-        width: 30%;
-        display: inline-block;
-        /*float: left;*/
-    }
-
     #whyNodSpotWrapper > div {
         margin-left: auto;
     }
@@ -1473,6 +1517,16 @@ ul.whyNodSpot {
 
     #artistImagesWrapper.expanded {
         left: 0%;
+    }
+
+    #sideBarWrapper h2, h2 {
+        font-size: 2.5em;
+        margin-left: 1px;
+    }
+
+    #whyNodSpotWrapper ul.whyNodSpot li {
+        font-size: .8em;
+        padding-top: 40px;
     }
 
 }

@@ -132,6 +132,7 @@
                     <div style="height: 480px">
                         <div id="embeddedPlayerWrapper"
                              dock="true"
+                             active="true"
                              y="bottom"
                              x="right"
                              dy="5%"
@@ -155,8 +156,9 @@
                     <button id="shareFacebook" ng-click="share()" class="fadeOut">share</button>
 
                     <div id="videoListWrapper">
-                        <div style="height: 55px">
-                            <h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px" z="9999999999" colour="white" treshold="650" title="{{currentlyPlaying.title}}">{{currentlyPlaying.title}}</h2>
+                        <div id="artistNameWrapper">
+                            <h2 id="artistName" class="artistName" title="{{currentlyPlaying.title}}">{{currentlyPlaying.title}}</h2>
+                            <!--<h2 id="artistName" class="artistName" dock="true" y="top" x="left" dy="-18px" z="9999999999" colour="white" treshold="650" title="{{currentlyPlaying.title}}">{{currentlyPlaying.title}}</h2>-->
                         </div>
                         <div>
                             <!--<div id="favouriteAlbum"-->
