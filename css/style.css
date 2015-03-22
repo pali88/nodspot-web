@@ -67,7 +67,7 @@ html.mainBackground {
 }
 
 html.searchBackground {
-    background: #f4f4f4;
+    background: #f4f4f4 url("../images/backgroundSearch.jpg") fixed no-repeat;
     background-size: 100%;
 }
 
