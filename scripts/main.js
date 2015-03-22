@@ -94,8 +94,7 @@ nodspot.controller('MainCtrl', ['$scope', 'EventsConstants', '$location', 'Relea
                             ReleasesServices.findAlbums(SearchServices.searchTerm).then(function ()
                             {
                                 angular.forEach(ReleasesServices.returnedReleases, function (release, key) {
-                                    if (release.id == id)
-                                    {
+                                    if (release.id == id) {
                                         PlayerServices.currentlyPlaying.albumName = release.name;
                                     }
                                 });

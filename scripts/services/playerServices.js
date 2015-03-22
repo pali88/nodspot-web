@@ -109,7 +109,7 @@ nodspot.factory('PlayerServices',  ['$window', 'SearchServices', '$location', '$
             case SearchServices.searchSources.userInput:
             {
                 hash = type + 'search'
-                    + separator + 'searchType=' + SearchServices.searchType
+                    //+ separator + 'searchType=' + SearchServices.searchType
                     + separator + 'term=' + SearchServices.searchTerm
                     + separator + 'id=' + PlayerServices.currentlyPlaying.albumId
                     + separator + 'track=' + PlayerServices.currentlyPlaying.track;

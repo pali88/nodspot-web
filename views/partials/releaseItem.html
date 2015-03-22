@@ -3,7 +3,6 @@
     ng-click="playRelease(release.id, releases.searchTerm, $index)"
     ng-class="release.state">
     <div class="thumbWrapper">
-        <!--<button class="thumb btn darkTheme {{release.colour}}">{{release.initials}}</button>-->
         <img src="{{release.images[2].url}}" class="thumb {{release.colour}}"/>
         <!--<div class="year">{{release.year}}</div>-->
         <div title="{{release.name}}" class="title">{{release.name}}
